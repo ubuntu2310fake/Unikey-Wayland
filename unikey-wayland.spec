@@ -1,16 +1,36 @@
 Name:           unikey-wayland
-Version:        1.0.0
+Version:        1.0.0_hf
 Release:        1%{?dist}
 Summary:        Unikey Wayland Input Method for Vietnamese
 
 License:        GPL
-URL:            https://github.com/truonghieu/unikey-wayland
+URL:            https://github.com/ubuntu2310fake/Unikey-Wayland
 
 # Disable debuginfo package generation
 %define debug_package %{nil}
 
 %description
 Unikey-Wayland is a lightweight Vietnamese input method for Wayland environments, powered by the UniKey engine and Qt 6 GUI.
+
+%post
+# Comment out fcitx and ibus in system-wide profiles
+sed -i 's/^export.*fcitx/#&/g' /etc/profile.d/*.sh 2>/dev/null || true
+sed -i 's/^export.*ibus/#&/g' /etc/profile.d/*.sh 2>/dev/null || true
+
+# Disable fcitx and ibus in user directories and hide autostart
+for d in /home/*; do
+    if [ -d "$d" ]; then
+        sed -i 's/^export.*fcitx/#&/g' "$d/.bashrc" "$d/.profile" "$d/.xprofile" 2>/dev/null || true
+        sed -i 's/^export.*ibus/#&/g' "$d/.bashrc" "$d/.profile" "$d/.xprofile" 2>/dev/null || true
+        
+        mkdir -p "$d/.config/autostart"
+        echo -e "[Desktop Entry]\nHidden=true" > "$d/.config/autostart/org.fcitx.Fcitx5.desktop"
+        echo -e "[Desktop Entry]\nHidden=true" > "$d/.config/autostart/imsettings-start.desktop"
+        
+        # Try to fix permissions
+        chown -R $(stat -c "%U:%G" "$d") "$d/.config/autostart" 2>/dev/null || true
+    fi
+done
 
 %prep
 # Nothing to prepare since we are packaging precompiled binaries

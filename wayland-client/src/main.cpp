@@ -374,14 +374,20 @@ int main(int argc, char **argv) {
 
     int fd = wl_display_get_fd(state.display);
     QSocketNotifier notifier(fd, QSocketNotifier::Read);
-    QObject::connect(&notifier, &QSocketNotifier::activated, [&state]() {
-        if (wl_display_dispatch(state.display) != -1) {
-            wl_display_flush(state.display);
+    QObject::connect(&notifier, &QSocketNotifier::activated, [&state, &app]() {
+        if (wl_display_dispatch(state.display) == -1) {
+            std::cerr << "Wayland display disconnected or error." << std::endl;
+            app.quit();
+            return;
         }
+        while (wl_display_dispatch_pending(state.display) > 0) {
+            // Keep dispatching pending events
+        }
+        wl_display_flush(state.display);
     });
 
     // We must dispatch any pending events before entering the event loop
-    wl_display_dispatch_pending(state.display);
+    while (wl_display_dispatch_pending(state.display) > 0) {}
     wl_display_flush(state.display);
 
     int ret = app.exec();
