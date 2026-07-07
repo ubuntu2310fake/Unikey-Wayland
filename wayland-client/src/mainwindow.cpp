@@ -149,7 +149,8 @@ void MainWindow::applySettings() {
     m_engine->setOptions(
         m_freeMarkingCheck->isChecked(),
         m_modernStyleCheck->isChecked(),
-        m_macroCheck->isChecked()
+        m_macroCheck->isChecked(),
+        m_macroWithConsonantCheck->isChecked()
     );
     
     m_engine->setAutoRestore(m_autoRestoreCheck->isChecked());

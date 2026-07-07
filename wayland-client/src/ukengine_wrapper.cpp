@@ -1,3 +1,4 @@
+#include <vector>
 #include "ukengine_wrapper.h"
 
 #include "../include/windows.h"
@@ -152,11 +153,12 @@ void UkEngineWrapper::setCharset(int charset) {
     }
 }
 
-void UkEngineWrapper::setOptions(bool freeMarking, bool modernStyle, bool macroEnabled) {
+void UkEngineWrapper::setOptions(bool freeMarking, bool modernStyle, bool macroEnabled, bool alwaysMacro) {
     if (pShMem) {
         pShMem->options.freeMarking = freeMarking ? 1 : 0;
         pShMem->options.modernStyle = modernStyle ? 1 : 0;
         pShMem->options.macroEnabled = macroEnabled ? 1 : 0;
+        pShMem->options.alwaysMacro = alwaysMacro ? 1 : 0;
         reset();
     }
 }
@@ -171,31 +173,46 @@ void UkEngineWrapper::setSpellingCheck(bool check) {
     // Similar to above, mock it.
 }
 
+
 void UkEngineWrapper::setMacroTable(const std::map<std::string, std::string>& macroTable) {
     if (!pShMem) return;
     
-    // Clear existing
     pShMem->macroCount = 0;
-    
-    // Convert std::map to HookMacroDef
-    // Note: Actually writing to macroMem is complex because it requires storing strings contiguously.
-    // We will do a basic mock or simple implementation.
     int memOffset = 0;
     for (const auto& pair : macroTable) {
         if (pShMem->macroCount >= MAX_MACRO_ITEMS) break;
         
         int keyLen = pair.first.length() + 1;
-        int textLen = pair.second.length() + 1;
+        
+        std::vector<WORD> textUtf16;
+        for (size_t i = 0; i < pair.second.length(); ) {
+            unsigned char c = pair.second[i];
+            if (c < 0x80) {
+                textUtf16.push_back(c);
+                i += 1;
+            } else if ((c & 0xE0) == 0xC0) {
+                if (i + 1 >= pair.second.length()) break;
+                textUtf16.push_back(((c & 0x1F) << 6) | (pair.second[i+1] & 0x3F));
+                i += 2;
+            } else if ((c & 0xF0) == 0xE0) {
+                if (i + 2 >= pair.second.length()) break;
+                textUtf16.push_back(((c & 0x0F) << 12) | ((pair.second[i+1] & 0x3F) << 6) | (pair.second[i+2] & 0x3F));
+                i += 3;
+            } else {
+                i += 4;
+            }
+        }
+        textUtf16.push_back(0);
+        
+        int textLen = textUtf16.size() * sizeof(WORD);
         
         if (memOffset + keyLen + textLen > MACRO_MEM_SIZE) break;
         
-        // Copy key
         memcpy(pShMem->macroMem + memOffset, pair.first.c_str(), keyLen);
         pShMem->macroTable[pShMem->macroCount].keyOffset = memOffset;
         memOffset += keyLen;
         
-        // Copy text
-        memcpy(pShMem->macroMem + memOffset, pair.second.c_str(), textLen);
+        memcpy(pShMem->macroMem + memOffset, textUtf16.data(), textLen);
         pShMem->macroTable[pShMem->macroCount].textOffset = memOffset;
         memOffset += textLen;
         

@@ -26,7 +26,7 @@ public:
     bool getVietMode();
     void setMethod(int method);
     void setCharset(int charset);
-    void setOptions(bool freeMarking, bool modernStyle, bool macroEnabled);
+    void setOptions(bool freeMarking, bool modernStyle, bool macroEnabled, bool alwaysMacro = false);
     
     // EVKey missing features mock / mapping
     void setAutoRestore(bool restore);
