@@ -8,3 +8,5 @@ Terminal=false
 Type=Application
 Categories=System;Utility;
 X-KDE-Wayland-VirtualKeyboard=true
+X-AppStream-DeveloperName=Trương Hiếu
+X-Developer-Name=Trương Hiếu

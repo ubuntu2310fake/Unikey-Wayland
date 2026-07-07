@@ -2,6 +2,8 @@ Name:           unikey-wayland
 Version:        1.0.0_hf
 Release:        1%{?dist}
 Summary:        Unikey Wayland Input Method for Vietnamese
+Packager:       Trương Hiếu
+Vendor:         Trương Hiếu
 
 License:        GPL-2.0-or-later
 URL:            https://github.com/ubuntu2310fake/Unikey-Wayland
