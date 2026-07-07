@@ -283,7 +283,7 @@ static void input_method_activate(void* data, struct zwp_input_method_v1* input_
     state->active = true;
 
     if (state->keyboard) {
-        wl_keyboard_release(state->keyboard);
+        wl_proxy_destroy((struct wl_proxy*)state->keyboard);
         state->keyboard = nullptr;
     }
 
@@ -305,7 +305,7 @@ static void input_method_deactivate(void* data, struct zwp_input_method_v1* inpu
     state->active = false;
     
     if (state->keyboard) {
-        wl_keyboard_release(state->keyboard);
+        wl_proxy_destroy((struct wl_proxy*)state->keyboard);
         state->keyboard = nullptr;
     }
     
@@ -393,7 +393,7 @@ int main(int argc, char **argv) {
     int ret = app.exec();
 
     if (state.keyboard) {
-        wl_keyboard_release(state.keyboard);
+        wl_proxy_destroy((struct wl_proxy*)state.keyboard);
     }
     if (state.context) {
         zwp_input_method_context_v1_destroy(state.context);
