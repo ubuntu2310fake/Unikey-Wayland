@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>unikey-wayland</id>
+  <name>Unikey-Wayland</name>
+  <summary>Vietnamese Input Method for Wayland</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0-or-later</project_license>
+  <developer id="truonghieu">
+    <name>Trương Hiếu</name>
+  </developer>
+  <description>
+    <p>
+      Unikey-Wayland is a lightweight Vietnamese input method for Wayland environments, powered by the UniKey engine and Qt 6 GUI.
+    </p>
+  </description>
+  <launchable type="desktop-id">unikey-wayland.desktop</launchable>
+</component>
