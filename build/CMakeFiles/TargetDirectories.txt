@@ -1,0 +1,3 @@
+/home/truonghieu/Downloads/Uk362/build/CMakeFiles/uk-wayland-im.dir
+/home/truonghieu/Downloads/Uk362/build/CMakeFiles/edit_cache.dir
+/home/truonghieu/Downloads/Uk362/build/CMakeFiles/rebuild_cache.dir

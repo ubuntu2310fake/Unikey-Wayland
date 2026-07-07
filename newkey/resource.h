@@ -1,0 +1,126 @@
+//{{NO_DEPENDENCIES}}
+// Microsoft Visual C++ generated include file.
+// Used by NewKey.rc
+//
+#define IDS_APP_TITLE                   102
+#define IDR_MAINFRAME                   103
+#define IDS_ABOUT                       103
+#define IDM_ABOUT                       103
+#define IDR_KEY_MENU                    104
+#define IDD_ABOUT                       105
+#define ID_CONFIRM_PANEL                105
+#define IDI_CANCEL                      117
+#define IDI_OK                          118
+#define IDC_HAND_CURSOR                 119
+#define IDI_HELP                        120
+#define IDI_RESET                       125
+#define IDI_VIET                        129
+#define IDD_KEY_DIALOG                  129
+#define IDI_EN                          130
+#define IDI_CONTRACT                    131
+#define IDI_EXPAND                      132
+#define IDD_TOOLKIT                     135
+#define IDD_MACRO                       136
+#define IDI_ADD                         138
+#define IDI_DELETE                      139
+#define IDI_OPEN_FOLDER                 140
+#define IDI_CONVERT                     142
+#define IDI_INFO                        143
+#define IDI_ICON1                       144
+#define ID_END_KEY                      1000
+#define IDC_SHOW_DLG                    1001
+#define IDC_CODE_TABLE                  1002
+#define IDC_SW_KEY1                     1004
+#define IDC_SW_KEY2                     1005
+#define IDC_ABOUT                       1008
+#define IDC_FREE_MARKING                1010
+#define IDC_MAIL_LINK                   1011
+#define IDC_WEB_LINK                    1012
+#define IDC_OPEN_HELP                   1013
+#define IDC_EXIT                        1014
+#define IDC_TONE_CTRL                   1018
+#define IDC_RESET                       1019
+#define IDC_MODERN_STYLE                1020
+#define IDC_COMPACT_FRAME               1022
+#define IDC_EXPAND                      1023
+#define IDC_FOOTER_FRAME                1024
+#define IDC_VIET_GUI                    1026
+#define IDC_CONTROL_GROUP               1028
+#define IDC_CHARSET_PROMPT              1029
+#define IDC_KEYMODE_PROMPT              1030
+#define IDC_SWITCHKEY_PROMPT            1031
+#define IDC_OPTION_GROUP                1032
+#define IDC_AUTHOR                      1036
+#define IDC_COPYRIGHT                   1037
+#define IDC_INFO                        1038
+#define IDC_AUTO_START                  1040
+#define IDC_INPUT_METHOD                1042
+#define IDC_IN_FILE                     1043
+#define IDC_IN_BROWSE                   1044
+#define IDC_IN_CHARSET                  1045
+#define IDC_CHECK1                      1046
+#define IDC_CLIPBOARD                   1046
+#define IDC_MACRO_CHECK                 1046
+#define IDC_ALWAYS_MACRO                1046
+#define IDC_OUT_FILE                    1047
+#define IDC_OUT_BROWSE                  1048
+#define IDC_CONVERT                     1049
+#define IDC_OUT_CHARSET                 1050
+#define IDC_MACRO_BTN                   1055
+#define IDC_ITEMLIST                    1056
+#define IDC_KEY                         1057
+#define IDC_TEXT                        1058
+#define IDC_STATIC_REPLACE              1059
+#define IDC_STATIC_WITH                 1060
+#define IDC_EDIT                        1061
+#define IDC_DELETE                      1062
+#define IDC_NOTE                        1063
+#define IDC_STATIC_SOURCE               1064
+#define IDC_STATIC_DEST                 1065
+#define IDC_STATIC_IN_CHARSET           1066
+#define IDC_STATIC_IN_FILE              1067
+#define IDC_STATIC_OUT_CHARSET          1068
+#define IDC_STATIC_OUT_FILE             1069
+#define IDC_USE_CLIPBOARD               1070
+#define IDC_SUPPORT_LINK                1071
+#define IDC_SUPPORT_PROVIDER            1072
+#define IDC_SWAP_CHARSET                1073
+#define IDC_TO_UPPER                    1074
+#define IDC_TO_LOWER                    1075
+#define IDC_REMOVE_TONE                 1077
+#define IDC_NO_RICH_TEXT                1078
+#define IDC_MINIMAL_FONTSET             1079
+#define IDC_STATIC_CHARSET              1081
+#define IDC_STATIC_FILE                 1082
+#define IDC_STATIC_OPTION               1083
+#define IDC_FILE_NOTE                   1085
+#define IDC_SELECT_FILE                 1086
+#define IDC_SELECT_DEFAULT              1087
+#define IDC_FILE_NAME                   1088
+#define IDC_PATH_LABEL                  1089
+#define ID_KEY_PANEL                    40002
+#define ID_KEY_TCVN                     40008
+#define ID_KEY_UNICODE                  40009
+#define ID_KEY_OTHER                    40010
+#define ID_TELEX_TYPING                 40011
+#define ID_VNI_TYPING                   40012
+#define ID_OPEN_HELP                    40015
+#define ID_KEY_VIQR                     40016
+#define ID_VIQR_TYPING                  40017
+#define ID_KEY_VNI                      40018
+#define ID_TOOLKIT                      40019
+#define ID_FLY_CONVERT                  40020
+#define ID_KEY_UNICODE_UTF8             40021
+#define ID_VIQR_STAR_TYPING             40024
+#define ID_KEY_CP1258                   40025
+
+// Next default values for new objects
+// 
+#ifdef APSTUDIO_INVOKED
+#ifndef APSTUDIO_READONLY_SYMBOLS
+#define _APS_NEXT_RESOURCE_VALUE        145
+#define _APS_NEXT_COMMAND_VALUE         40026
+#define _APS_NEXT_CONTROL_VALUE         1090
+#define _APS_NEXT_SYMED_VALUE           106
+#endif
+#endif

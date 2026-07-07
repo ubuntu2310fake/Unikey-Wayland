@@ -1,0 +1,27 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: byteio - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "d:\temp\RSPFD.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /Fp"Release/byteio.pch" /Yu"prehdr.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\Projects\UniKey\byteio\byteio.cpp"
+]
+Creating command line "cl.exe @d:\temp\RSPFD.tmp" 
+Creating command line "link.exe -lib /nologo /out:"..\Release\byteio.lib"  .\Release\byteio.obj .\Release\prehdr.obj "
+<h3>Output Window</h3>
+Compiling...
+byteio.cpp
+Creating library...
+
+
+
+<h3>Results</h3>
+byteio.lib - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

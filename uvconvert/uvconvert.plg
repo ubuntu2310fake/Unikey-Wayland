@@ -1,0 +1,35 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: uvconvert - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "D:\TEMP\RSP483.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /I "../vnconv" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Release/uvconvert.pch" /Yu"prehdr.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\Projects\UniKey\uvconvert\uvconvert.cpp"
+]
+Creating command line "cl.exe @D:\TEMP\RSP483.tmp" 
+Creating temporary file "D:\TEMP\RSP484.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /I "../vnconv" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Release/uvconvert.pch" /Yc"prehdr.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\Projects\UniKey\uvconvert\prehdr.cpp"
+]
+Creating command line "cl.exe @D:\TEMP\RSP484.tmp" 
+Creating command line "link.exe /nologo /subsystem:console /incremental:no /pdb:"../Release/uvconv.pdb" /machine:I386 /out:"../Release/uvconv.exe"  .\Release\prehdr.obj .\Release\uvconvert.obj ..\Release\vnconv.lib \Projects\UniKey\byteio\Release\byteio.lib "
+<h3>Output Window</h3>
+Compiling...
+prehdr.cpp
+Compiling...
+uvconvert.cpp
+Linking...
+
+
+
+<h3>Results</h3>
+uvconv.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

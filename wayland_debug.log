@@ -1,0 +1,512 @@
+[4034091.426] {Default Queue}  -> wl_display#1.get_registry(new id wl_registry#2)
+[4034091.792] {Default Queue}  -> wl_display#1.sync(new id wl_callback#3)
+[4034102.494] {Display Queue} wl_display#1.delete_id(3)
+[4034102.556] {Default Queue} wl_registry#2.global(1, "wl_compositor", 6)
+[4034102.571] {Default Queue} wl_registry#2.global(3, "zwp_tablet_manager_v2", 2)
+[4034102.577] {Default Queue} wl_registry#2.global(4, "zwp_keyboard_shortcuts_inhibit_manager_v1", 1)
+[4034102.583] {Default Queue} wl_registry#2.global(5, "xdg_session_manager_v1", 1)
+[4034102.589] {Default Queue} wl_registry#2.global(6, "zxdg_decoration_manager_v1", 2)
+[4034102.594] {Default Queue} wl_registry#2.global(7, "wp_viewporter", 1)
+[4034102.599] {Default Queue} wl_registry#2.global(8, "wp_security_context_manager_v1", 1)
+[4034102.604] {Default Queue} wl_registry#2.global(9, "wp_fractional_scale_manager_v1", 1)
+[4034102.609] {Default Queue} wl_registry#2.global(10, "wl_shm", 2)
+[4034102.614] {Default Queue} wl_registry#2.global(11, "wl_seat", 10)
+[4034102.621] {Default Queue}  -> wl_registry#2.bind(11, "wl_seat", 7, new id [unknown]#4)
+[4034102.627] {Default Queue} wl_registry#2.global(12, "zwp_pointer_gestures_v1", 3)
+[4034102.631] {Default Queue} wl_registry#2.global(13, "zwp_pointer_constraints_v1", 1)
+[4034102.636] {Default Queue} wl_registry#2.global(14, "zwp_relative_pointer_manager_v1", 1)
+[4034102.641] {Default Queue} wl_registry#2.global(15, "wl_data_device_manager", 3)
+[4034102.646] {Default Queue} wl_registry#2.global(16, "ext_data_control_manager_v1", 1)
+[4034102.650] {Default Queue} wl_registry#2.global(17, "wp_cursor_shape_manager_v1", 2)
+[4034102.654] {Default Queue} wl_registry#2.global(18, "zwp_primary_selection_device_manager_v1", 1)
+[4034102.659] {Default Queue} wl_registry#2.global(19, "org_kde_kwin_idle", 1)
+[4034102.664] {Default Queue} wl_registry#2.global(20, "zwp_idle_inhibit_manager_v1", 1)
+[4034102.674] {Default Queue} wl_registry#2.global(21, "ext_idle_notifier_v1", 2)
+[4034102.679] {Default Queue} wl_registry#2.global(22, "org_kde_plasma_shell", 8)
+[4034102.684] {Default Queue} wl_registry#2.global(23, "org_kde_kwin_appmenu_manager", 2)
+[4034102.689] {Default Queue} wl_registry#2.global(24, "org_kde_kwin_server_decoration_palette_manager", 1)
+[4034102.694] {Default Queue} wl_registry#2.global(26, "org_kde_plasma_virtual_desktop_management", 4)
+[4034102.699] {Default Queue} wl_registry#2.global(28, "org_kde_kwin_shadow_manager", 2)
+[4034102.704] {Default Queue} wl_registry#2.global(29, "org_kde_kwin_dpms_manager", 1)
+[4034102.709] {Default Queue} wl_registry#2.global(30, "org_kde_kwin_server_decoration_manager", 1)
+[4034102.714] {Default Queue} wl_registry#2.global(31, "kde_output_management_v2", 21)
+[4034102.719] {Default Queue} wl_registry#2.global(32, "kde_output_device_registry_v2", 23)
+[4034102.724] {Default Queue} wl_registry#2.global(33, "zxdg_output_manager_v1", 3)
+[4034102.729] {Default Queue} wl_registry#2.global(34, "wl_subcompositor", 1)
+[4034102.734] {Default Queue} wl_registry#2.global(35, "zxdg_exporter_v2", 1)
+[4034102.740] {Default Queue} wl_registry#2.global(36, "zxdg_importer_v2", 1)
+[4034102.745] {Default Queue} wl_registry#2.global(37, "zwp_input_method_v1", 1)
+[4034102.750] {Default Queue}  -> wl_registry#2.bind(37, "zwp_input_method_v1", 1, new id [unknown]#5)
+[4034102.756] {Default Queue} wl_registry#2.global(39, "xdg_activation_v1", 1)
+[4034102.761] {Default Queue} wl_registry#2.global(41, "wp_content_type_manager_v1", 1)
+[4034102.766] {Default Queue} wl_registry#2.global(42, "wp_tearing_control_manager_v1", 1)
+[4034102.771] {Default Queue} wl_registry#2.global(43, "xdg_toplevel_drag_manager_v1", 1)
+[4034102.776] {Default Queue} wl_registry#2.global(44, "xdg_toplevel_icon_manager_v1", 1)
+[4034102.781] {Default Queue} wl_registry#2.global(45, "kde_screen_edge_manager_v1", 1)
+[4034102.787] {Default Queue} wl_registry#2.global(46, "frog_color_management_factory_v1", 1)
+[4034102.792] {Default Queue} wl_registry#2.global(47, "wp_presentation", 2)
+[4034102.797] {Default Queue} wl_registry#2.global(48, "wp_color_manager_v1", 2)
+[4034102.816] {Default Queue} wl_registry#2.global(49, "xdg_wm_dialog_v1", 1)
+[4034102.821] {Default Queue} wl_registry#2.global(50, "kde_external_brightness_v1", 3)
+[4034102.826] {Default Queue} wl_registry#2.global(51, "wp_alpha_modifier_v1", 1)
+[4034102.831] {Default Queue} wl_registry#2.global(52, "wl_fixes", 1)
+[4034102.835] {Default Queue} wl_registry#2.global(53, "wp_fifo_manager_v1", 1)
+[4034102.840] {Default Queue} wl_registry#2.global(54, "wp_single_pixel_buffer_manager_v1", 1)
+[4034102.845] {Default Queue} wl_registry#2.global(55, "xdg_toplevel_tag_manager_v1", 1)
+[4034102.850] {Default Queue} wl_registry#2.global(56, "wp_color_representation_manager_v1", 1)
+[4034102.855] {Default Queue} wl_registry#2.global(57, "wp_pointer_warp_v1", 1)
+[4034102.860] {Default Queue} wl_registry#2.global(58, "ext_background_effect_manager_v1", 1)
+[4034102.865] {Default Queue} wl_registry#2.global(60, "zwp_linux_dmabuf_v1", 5)
+[4034102.870] {Default Queue} wl_registry#2.global(61, "wp_linux_drm_syncobj_manager_v1", 1)
+[4034102.875] {Default Queue} wl_registry#2.global(62, "zwp_input_panel_v1", 1)
+[4034102.879] {Default Queue} wl_registry#2.global(63, "xdg_wm_base", 6)
+[4034102.884] {Default Queue} wl_registry#2.global(64, "zwlr_layer_shell_v1", 5)
+[4034102.889] {Default Queue} wl_registry#2.global(65, "org_kde_kwin_keystate", 5)
+[4034102.895] {Default Queue} wl_registry#2.global(66, "wl_output", 4)
+[4034102.900] {Default Queue} wl_registry#2.global(67, "wp_drm_lease_device_v1", 1)
+[4034102.905] {Default Queue} wl_registry#2.global(68, "kde_output_order_v1", 1)
+[4034102.911] {Default Queue} wl_registry#2.global(69, "zwp_text_input_manager_v2", 1)
+[4034102.917] {Default Queue} wl_registry#2.global(70, "zwp_text_input_manager_v3", 2)
+[4034102.922] {Default Queue} wl_registry#2.global(72, "org_kde_kwin_slide_manager", 1)
+[4034102.927] {Default Queue} wl_registry#2.global(73, "xdg_system_bell_v1", 1)
+[4034102.932] {Default Queue} wl_callback#3.done(248589)
+Wayland IM v1 Client started. Waiting for events...
+[4034104.249] {Default Queue} discarded wl_seat#4.name("seat0")
+[4034104.298] {Default Queue} discarded wl_seat#4.capabilities(3)
+[4034104.306] {Default Queue} zwp_input_method_v1#5.activate(new id zwp_input_method_context_v1#4278190080)
+[4034104.315] {Default Queue}  -> zwp_input_method_context_v1#4278190080.grab_keyboard(new id wl_keyboard#3)
+[4034105.000] {Default Queue} wl_keyboard#3.repeat_info(0, 600)
+[4034105.110] {Default Queue} wl_keyboard#3.keymap(1, fd 11, 35356)
+[4034105.180] {Default Queue} wl_keyboard#3.modifiers(248592, 0, 0, 16, 0)
+[4034105.216] {Default Queue}  -> zwp_input_method_context_v1#4278190080.modifiers(248592, 0, 0, 16, 0)
+[4034163.166] {Default Queue} wl_keyboard#3.key(248594, 76340619, 57, 1)
+DEBUG: Key received. code=57, state=1, ascii= 
+DEBUG: Processed result. backs=0, processed=' '
+[4034163.243] {Default Queue}  -> zwp_input_method_context_v1#4278190080.commit_string(0, " ")
+[4034178.594] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi 
+
+", 12, 12)
+[4034178.654] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5320)
+[4034178.667] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi 
+
+", 12, 12)
+[4034178.677] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034178.687] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52593)
+[4034178.695] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi 
+
+", 12, 12)
+[4034178.706] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034178.715] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52594)
+[4034178.737] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5321)
+[4034178.747] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi 
+
+", 12, 12)
+[4034178.760] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034178.771] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52595)
+[4034178.800] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi 
+
+", 12, 12)
+[4034178.812] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034178.827] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52596)
+[4034219.164] {Default Queue} wl_keyboard#3.key(248596, 76340675, 57, 0)
+[4034239.095] {Default Queue} wl_keyboard#3.key(248598, 76340695, 46, 1)
+DEBUG: Key received. code=46, state=1, ascii=c
+DEBUG: Processed result. backs=0, processed='c'
+[4034239.164] {Default Queue}  -> zwp_input_method_context_v1#4278190080.commit_string(52596, "c")
+[4034242.603] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi c
+
+", 13, 13)
+[4034242.651] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5322)
+[4034242.658] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi c
+
+", 13, 13)
+[4034242.664] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034242.669] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52597)
+[4034242.674] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi c
+
+", 13, 13)
+[4034242.678] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034242.683] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52598)
+[4034242.694] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5323)
+[4034242.699] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi c
+
+", 13, 13)
+[4034242.704] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034242.708] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52599)
+[4034242.712] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi c
+
+", 13, 13)
+[4034242.716] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034242.723] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52600)
+[4034305.136] {Default Queue} wl_keyboard#3.key(248600, 76340761, 46, 0)
+[4034343.100] {Default Queue} wl_keyboard#3.key(248602, 76340799, 35, 1)
+DEBUG: Key received. code=35, state=1, ascii=h
+DEBUG: Processed result. backs=0, processed='h'
+[4034343.174] {Default Queue}  -> zwp_input_method_context_v1#4278190080.commit_string(52600, "h")
+[4034347.515] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi ch
+
+", 14, 14)
+[4034347.583] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5324)
+[4034347.605] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi ch
+
+", 14, 14)
+[4034347.610] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034347.618] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52601)
+[4034347.624] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi ch
+
+", 14, 14)
+[4034347.630] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034347.636] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52602)
+[4034347.649] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5325)
+[4034347.655] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi ch
+
+", 14, 14)
+[4034347.662] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034347.668] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52603)
+[4034347.672] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi ch
+
+", 14, 14)
+[4034347.679] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034347.688] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52604)
+[4034395.143] {Default Queue} wl_keyboard#3.key(248604, 76340851, 35, 0)
+[4034501.099] {Default Queue} wl_keyboard#3.key(248606, 76340957, 22, 1)
+DEBUG: Key received. code=22, state=1, ascii=u
+DEBUG: Processed result. backs=0, processed='u'
+[4034501.266] {Default Queue}  -> zwp_input_method_context_v1#4278190080.commit_string(52604, "u")
+[4034507.550] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chu
+
+", 15, 15)
+[4034507.595] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5326)
+[4034507.604] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chu
+
+", 15, 15)
+[4034507.609] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034507.614] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52605)
+[4034507.619] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chu
+
+", 15, 15)
+[4034507.624] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034507.629] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52606)
+[4034507.641] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5327)
+[4034507.648] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chu
+
+", 15, 15)
+[4034507.655] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034507.662] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52607)
+[4034507.668] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chu
+
+", 15, 15)
+[4034507.674] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034507.681] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52608)
+[4034561.058] {Default Queue} wl_keyboard#3.key(248608, 76341017, 22, 0)
+[4034567.274] {Default Queue} wl_keyboard#3.key(248610, 76341023, 17, 1)
+DEBUG: Key received. code=17, state=1, ascii=w
+DEBUG: Processed result. backs=1, processed='ư'
+[4034567.351] {Default Queue}  -> zwp_input_method_context_v1#4278190080.delete_surrounding_text(-1, 1)
+[4034567.359] {Default Queue}  -> zwp_input_method_context_v1#4278190080.commit_string(52608, "ư")
+[4034574.124] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chư
+
+", 16, 16)
+[4034574.168] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5328)
+[4034574.176] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chư
+
+", 16, 16)
+[4034574.182] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034574.187] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52609)
+[4034574.191] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chư
+
+", 16, 16)
+[4034574.196] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034574.200] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52610)
+[4034574.211] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5329)
+[4034574.216] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chư
+
+", 16, 16)
+[4034574.221] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034574.229] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52611)
+[4034574.234] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chư
+
+", 16, 16)
+[4034574.239] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034574.250] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52612)
+[4034615.172] {Default Queue} wl_keyboard#3.key(248612, 76341071, 17, 0)
+[4034785.194] {Default Queue} wl_keyboard#3.key(248614, 76341241, 30, 1)
+DEBUG: Key received. code=30, state=1, ascii=a
+DEBUG: Processed result. backs=0, processed='a'
+[4034785.277] {Default Queue}  -> zwp_input_method_context_v1#4278190080.commit_string(52612, "a")
+[4034792.546] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa
+
+", 17, 17)
+[4034792.588] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5330)
+[4034792.596] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa
+
+", 17, 17)
+[4034792.616] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034792.621] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52613)
+[4034792.625] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa
+
+", 17, 17)
+[4034792.630] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034792.635] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52614)
+[4034792.645] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5331)
+[4034792.652] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa
+
+", 17, 17)
+[4034792.657] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034792.662] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52615)
+[4034792.668] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa
+
+", 17, 17)
+[4034792.674] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4034792.680] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52616)
+[4034843.342] {Default Queue} wl_keyboard#3.key(248616, 76341299, 30, 0)
+[4035153.286] {Default Queue} wl_keyboard#3.key(248618, 76341609, 57, 1)
+DEBUG: Key received. code=57, state=1, ascii= 
+DEBUG: Processed result. backs=0, processed=' '
+[4035153.371] {Default Queue}  -> zwp_input_method_context_v1#4278190080.commit_string(52616, " ")
+[4035158.584] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa 
+
+", 18, 18)
+[4035158.618] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5332)
+[4035158.624] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa 
+
+", 18, 18)
+[4035158.630] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035158.635] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52617)
+[4035158.639] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa 
+
+", 18, 18)
+[4035158.644] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035158.648] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52618)
+[4035158.659] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5333)
+[4035158.663] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa 
+
+", 18, 18)
+[4035158.668] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035158.673] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52619)
+[4035158.679] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa 
+
+", 18, 18)
+[4035158.687] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035158.692] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52620)
+[4035203.112] {Default Queue} wl_keyboard#3.key(248620, 76341659, 57, 0)
+[4035237.161] {Default Queue} wl_keyboard#3.key(248622, 76341693, 20, 1)
+DEBUG: Key received. code=20, state=1, ascii=t
+DEBUG: Processed result. backs=0, processed='t'
+[4035237.233] {Default Queue}  -> zwp_input_method_context_v1#4278190080.commit_string(52620, "t")
+[4035241.009] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa t
+
+", 19, 19)
+[4035241.056] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5334)
+[4035241.065] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa t
+
+", 19, 19)
+[4035241.071] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035241.075] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52621)
+[4035241.079] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa t
+
+", 19, 19)
+[4035241.084] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035241.100] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52622)
+[4035241.114] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5335)
+[4035241.120] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa t
+
+", 19, 19)
+[4035241.127] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035241.133] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52623)
+[4035241.138] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa t
+
+", 19, 19)
+[4035241.145] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035241.152] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52624)
+[4035283.084] {Default Queue} wl_keyboard#3.key(248624, 76341739, 20, 0)
+[4035372.110] {Default Queue} wl_keyboard#3.key(248626, 76341827, 35, 1)
+DEBUG: Key received. code=35, state=1, ascii=h
+DEBUG: Processed result. backs=0, processed='h'
+[4035372.307] {Default Queue}  -> zwp_input_method_context_v1#4278190080.commit_string(52624, "h")
+[4035377.118] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa th
+
+", 20, 20)
+[4035377.167] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5336)
+[4035377.175] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa th
+
+", 20, 20)
+[4035377.180] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035377.185] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52625)
+[4035377.189] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa th
+
+", 20, 20)
+[4035377.194] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035377.198] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52626)
+[4035377.209] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5337)
+[4035377.213] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa th
+
+", 20, 20)
+[4035377.219] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035377.223] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52627)
+[4035377.228] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa th
+
+", 20, 20)
+[4035377.234] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035377.240] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52628)
+[4035427.669] {Default Queue} wl_keyboard#3.key(248628, 76341883, 35, 0)
+[4035489.181] {Default Queue} wl_keyboard#3.key(248630, 76341945, 30, 1)
+DEBUG: Key received. code=30, state=1, ascii=a
+DEBUG: Processed result. backs=0, processed='a'
+[4035489.270] {Default Queue}  -> zwp_input_method_context_v1#4278190080.commit_string(52628, "a")
+[4035496.223] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa tha
+
+", 21, 21)
+[4035496.287] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5338)
+[4035496.297] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa tha
+
+", 21, 21)
+[4035496.306] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035496.311] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52629)
+[4035496.316] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa tha
+
+", 21, 21)
+[4035496.320] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035496.324] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52630)
+[4035497.226] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5339)
+[4035497.288] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa tha
+
+", 21, 21)
+[4035497.296] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035497.302] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52631)
+[4035497.320] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa tha
+
+", 21, 21)
+[4035497.325] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035497.329] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52632)
+[4035541.110] {Default Queue} wl_keyboard#3.key(248632, 76341997, 30, 0)
+[4035633.207] {Default Queue} wl_keyboard#3.key(248634, 76342089, 30, 1)
+DEBUG: Key received. code=30, state=1, ascii=a
+DEBUG: Processed result. backs=1, processed='â'
+[4035633.278] {Default Queue}  -> zwp_input_method_context_v1#4278190080.delete_surrounding_text(-1, 1)
+[4035633.285] {Default Queue}  -> zwp_input_method_context_v1#4278190080.commit_string(52632, "â")
+[4035643.524] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thâ
+
+", 22, 22)
+[4035643.570] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5340)
+[4035643.578] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thâ
+
+", 22, 22)
+[4035643.584] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035643.589] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52633)
+[4035643.594] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thâ
+
+", 22, 22)
+[4035643.599] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035643.603] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52634)
+[4035673.320] {Default Queue} wl_keyboard#3.key(248636, 76342127, 21, 1)
+DEBUG: Key received. code=21, state=1, ascii=y
+DEBUG: Processed result. backs=0, processed='y'
+[4035673.388] {Default Queue}  -> zwp_input_method_context_v1#4278190080.commit_string(52634, "y")
+[4035679.605] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thây
+
+", 23, 23)
+[4035679.647] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5341)
+[4035679.655] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thây
+
+", 23, 23)
+[4035679.660] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035679.665] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52635)
+[4035679.671] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thây
+
+", 23, 23)
+[4035679.675] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035679.680] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52636)
+[4035679.692] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5342)
+[4035679.696] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thây
+
+", 23, 23)
+[4035679.701] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035679.708] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52637)
+[4035679.713] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thây
+
+", 23, 23)
+[4035679.720] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035679.726] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52638)
+[4035681.136] {Default Queue} wl_keyboard#3.key(248638, 76342137, 30, 0)
+[4035739.074] {Default Queue} wl_keyboard#3.key(248640, 76342195, 21, 0)
+[4035805.217] {Default Queue} wl_keyboard#3.key(248642, 76342261, 31, 1)
+DEBUG: Key received. code=31, state=1, ascii=s
+DEBUG: Processed result. backs=2, processed='ấy'
+[4035805.305] {Default Queue}  -> zwp_input_method_context_v1#4278190080.delete_surrounding_text(-3, 3)
+[4035805.313] {Default Queue}  -> zwp_input_method_context_v1#4278190080.commit_string(52638, "ấy")
+[4035818.750] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thấy
+
+", 24, 24)
+[4035818.897] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5343)
+[4035818.910] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thấy
+
+", 24, 24)
+[4035818.932] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035818.938] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52639)
+[4035818.942] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thấy
+
+", 24, 24)
+[4035818.947] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035818.952] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52640)
+[4035867.660] {Default Queue} wl_keyboard#3.key(248644, 76342323, 31, 0)
+[4035929.722] {Default Queue} wl_keyboard#3.key(248646, 76342385, 57, 1)
+DEBUG: Key received. code=57, state=1, ascii= 
+DEBUG: Processed result. backs=0, processed=' '
+[4035929.809] {Default Queue}  -> zwp_input_method_context_v1#4278190080.commit_string(52640, " ")
+[4035936.115] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thấy 
+
+", 25, 25)
+[4035936.178] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5344)
+[4035936.185] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thấy 
+
+", 25, 25)
+[4035936.190] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035936.194] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52641)
+[4035936.198] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thấy 
+
+", 25, 25)
+[4035936.203] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035936.207] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52642)
+[4035936.211] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5345)
+[4035936.215] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thấy 
+
+", 25, 25)
+[4035936.219] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035936.223] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52643)
+[4035936.227] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thấy 
+
+", 25, 25)
+[4035936.231] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4035936.235] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52644)
+[4035987.115] {Default Queue} wl_keyboard#3.key(248648, 76342443, 57, 0)
+[4036027.106] {Default Queue} wl_keyboard#3.key(248650, 76342483, 31, 1)
+DEBUG: Key received. code=31, state=1, ascii=s
+DEBUG: Processed result. backs=0, processed='s'
+[4036027.263] {Default Queue}  -> zwp_input_method_context_v1#4278190080.commit_string(52644, "s")
+[4036036.298] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thấy s
+
+", 26, 26)
+[4036036.356] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5346)
+[4036036.362] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thấy s
+
+", 26, 26)
+[4036036.367] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4036036.372] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52645)
+[4036036.376] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thấy s
+
+", 26, 26)
+[4036036.381] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4036036.385] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52646)
+[4036036.888] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(5347)
+[4036036.926] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thấy s
+
+", 26, 26)
+[4036036.933] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4036036.938] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52647)
+[4036036.942] {Default Queue} zwp_input_method_context_v1#4278190080.surrounding_text("chạy mãi chưa thấy s
+
+", 26, 26)
+[4036036.962] {Default Queue} zwp_input_method_context_v1#4278190080.content_type(4, 0)
+[4036036.966] {Default Queue} zwp_input_method_context_v1#4278190080.commit_state(52648)
+[4036085.350] {Default Queue} wl_keyboard#3.key(248652, 76342541, 31, 0)

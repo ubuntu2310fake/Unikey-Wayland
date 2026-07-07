@@ -1,0 +1,16 @@
+wayland-client/build/
+wayland-client/uk-wayland-im_autogen/
+wayland-client/unikey-wayland_autogen/
+rpmbuild/BUILD/
+rpmbuild/BUILDROOT/
+rpmbuild/RPMS/
+rpmbuild/SRPMS/
+deb_pkg/
+arch_pkg/
+.agents/
+.idea/
+.vscode/
+*.o
+*.a
+*.so
+*~

@@ -1,0 +1,35 @@
+#ifndef TRAYICON_H
+#define TRAYICON_H
+
+#include <QSystemTrayIcon>
+#include <QMenu>
+#include <QAction>
+#include "ukengine_wrapper.h"
+#include "mainwindow.h"
+
+class TrayIcon : public QObject {
+    Q_OBJECT
+public:
+    TrayIcon(UkEngineWrapper* engine, MainWindow* mainWindow, QObject* parent = nullptr);
+    ~TrayIcon();
+
+    void updateIcon();
+
+private slots:
+    void onTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
+    void onShowControlPanel();
+    void onQuit();
+
+private:
+    UkEngineWrapper* m_engine;
+    MainWindow* m_mainWindow;
+    QSystemTrayIcon* m_trayIcon;
+    QMenu* m_trayMenu;
+    QAction* m_actionControlPanel;
+    QAction* m_actionQuit;
+    
+    QIcon m_iconV;
+    QIcon m_iconE;
+};
+
+#endif // TRAYICON_H
