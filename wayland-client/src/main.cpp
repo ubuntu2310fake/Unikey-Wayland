@@ -5,6 +5,15 @@
 #include <vector>
 #include <map>
 #include <set>
+#include <fstream>
+#include <sstream>
+
+static void log_to_file(const std::string& msg) {
+    std::ofstream f("/tmp/uk_debug.log", std::ios::app);
+    if (f.is_open()) {
+        f << msg << std::endl;
+    }
+}
 
 #include <QApplication>
 #include <QSocketNotifier>
@@ -26,6 +35,7 @@ struct WaylandState {
     bool active;
     uint32_t latest_serial;
     std::string composed_word = "";
+    uint32_t content_purpose = 0;
 };
 
 // Evdev keycodes map
@@ -73,6 +83,7 @@ static char get_ascii_from_keycode(uint32_t key, uint32_t mods) {
 
 static uint32_t g_modifiers = 0;
 static std::set<uint32_t> eaten_keys;
+bool g_terminal_mode = false;
 
 static bool g_ctrl_pressed = false;
 static bool g_shift_pressed = false;
@@ -174,59 +185,156 @@ static void keyboard_key(void* data, struct wl_keyboard* keyboard, uint32_t seri
     bool has_modifiers = (g_modifiers & (4 | 8 | 64)) != 0;
     char c = has_modifiers ? 0 : get_ascii_from_keycode(key, g_modifiers);
     
-    std::cout << "DEBUG: Key received. code=" << key << ", state=" << state_key 
-              << ", ascii=" << (c ? c : '?') << std::endl;
+    std::stringstream ss_key;
+    ss_key << "DEBUG: Key received. code=" << key << ", state=" << state_key 
+           << ", ascii=" << (c ? c : '?');
+    log_to_file(ss_key.str());
     
+    if (key == 88 && g_ctrl_pressed && g_shift_pressed && state_key == 1) { // F12 = 88
+        g_terminal_mode = !g_terminal_mode;
+        std::stringstream ss_term;
+        ss_term << "Terminal Mode Toggled: " << g_terminal_mode;
+        log_to_file(ss_term.str());
+        eaten_keys.insert(key);
+        return;
+    }
+
+    std::stringstream ss_viet;
+    ss_viet << "DEBUG: getVietMode=" << state->ukengine.getVietMode();
+    log_to_file(ss_viet.str());
+
+    if (!state->ukengine.getVietMode()) {
+        log_to_file("DEBUG: Forwarding in E mode");
+        state->ukengine.reset();
+        state->composed_word.clear();
+        zwp_input_method_context_v1_key(state->context, serial, time, key, state_key);
+        return;
+    }
+
     if (c != 0) {
         int backs = 0;
         std::string processed = state->ukengine.processKey(c, backs);
 
-        std::cout << "DEBUG: Processed result. backs=" << backs 
-                  << ", processed='" << processed << "'" << std::endl;
+        std::stringstream ss_proc;
+        ss_proc << "DEBUG: Processed result. backs=" << backs 
+                << ", processed='" << processed << "'";
+        log_to_file(ss_proc.str());
 
-        if (backs > 0 || !processed.empty()) {
-            if (backs > 0) {
-                int byte_backs = backs;
-                if (backs <= (int)state->composed_word.length()) {
+        if (state->content_purpose == 12 || g_terminal_mode) {
+            // Terminal mode (Konsole, Kitty, Alacritty)
+            if (backs == 0 && processed.length() == 1 && processed[0] == c) {
+                state->composed_word += processed;
+                zwp_input_method_context_v1_key(state->context, serial, time, key, state_key);
+                return;
+            }
+            
+            if (c == '\b' && backs == 1 && processed.empty()) {
+                int i = state->composed_word.length();
+                if (i > 0) {
+                    i--;
+                    while (i > 0 && (state->composed_word[i] & 0xC0) == 0x80) {
+                        i--;
+                    }
+                    state->composed_word.erase(i);
+                }
+                zwp_input_method_context_v1_key(state->context, serial, time, key, state_key);
+                return;
+            }
+
+            if (backs > 0 || !processed.empty()) {
+                if (backs > 0) {
+                    int byte_backs = backs;
+                    if (backs <= (int)state->composed_word.length()) {
+                        int i = state->composed_word.length();
+                        int chars_to_delete = backs;
+                        while (chars_to_delete > 0 && i > 0) {
+                            i--;
+                            while (i > 0 && (state->composed_word[i] & 0xC0) == 0x80) {
+                                i--;
+                            }
+                            chars_to_delete--;
+                        }
+                        byte_backs = state->composed_word.length() - i;
+                        state->composed_word.erase(i, byte_backs);
+                    } else {
+                        state->composed_word.clear();
+                    }
+                    for (int j = 0; j < backs; ++j) {
+                        zwp_input_method_context_v1_key(state->context, serial, time, 14, 1);
+                        zwp_input_method_context_v1_key(state->context, serial, time, 14, 0);
+                    }
+                }
+                if (!processed.empty()) {
+                    state->composed_word += processed;
+                    zwp_input_method_context_v1_commit_string(state->context, state->latest_serial, processed.c_str());
+                } else if (backs > 0) {
+                    zwp_input_method_context_v1_commit_string(state->context, state->latest_serial, "");
+                }
+                eaten_keys.insert(key);
+                return;
+            } else if (c != '\b' && c != '\n') {
+                std::string str(1, c);
+                state->composed_word += str;
+                zwp_input_method_context_v1_key(state->context, serial, time, key, state_key);
+                return;
+            } else {
+                state->ukengine.reset();
+                if (c == '\b') {
                     int i = state->composed_word.length();
-                    int chars_to_delete = backs;
-                    while (chars_to_delete > 0 && i > 0) {
+                    if (i > 0) {
                         i--;
                         while (i > 0 && (state->composed_word[i] & 0xC0) == 0x80) {
                             i--;
                         }
-                        chars_to_delete--;
+                        state->composed_word.erase(i);
                     }
-                    byte_backs = state->composed_word.length() - i;
-                    state->composed_word.erase(i, byte_backs);
                 } else {
                     state->composed_word.clear();
                 }
-                zwp_input_method_context_v1_delete_surrounding_text(state->context, -byte_backs, byte_backs);
             }
-            if (!processed.empty()) {
-                state->composed_word += processed;
-                zwp_input_method_context_v1_commit_string(state->context, state->latest_serial, processed.c_str());
-            } else if (backs > 0) {
-                zwp_input_method_context_v1_commit_string(state->context, state->latest_serial, "");
-            }
-            eaten_keys.insert(key);
-            return;
-        } else if (c != '\b' && c != '\n') {
-            // Printable character, not handled by UniKey.
-            // We commit it directly to avoid race conditions with physical key forwarding
-            std::string str(1, c);
-            state->composed_word.clear();
-            zwp_input_method_context_v1_commit_string(state->context, state->latest_serial, str.c_str());
-            eaten_keys.insert(key);
-            return;
         } else {
-            // c is \b or \n. We must reset because we are forwarding them to the client.
-            state->ukengine.reset();
-            state->composed_word.clear();
+            // Normal mode (Chrome, Gtk, Qt apps)
+            if (backs > 0 || !processed.empty()) {
+                if (backs > 0) {
+                    int byte_backs = backs;
+                    if (backs <= (int)state->composed_word.length()) {
+                        int i = state->composed_word.length();
+                        int chars_to_delete = backs;
+                        while (chars_to_delete > 0 && i > 0) {
+                            i--;
+                            while (i > 0 && (state->composed_word[i] & 0xC0) == 0x80) {
+                                i--;
+                            }
+                            chars_to_delete--;
+                        }
+                        byte_backs = state->composed_word.length() - i;
+                        state->composed_word.erase(i, byte_backs);
+                    } else {
+                        state->composed_word.clear();
+                    }
+                    zwp_input_method_context_v1_delete_surrounding_text(state->context, -byte_backs, byte_backs);
+                }
+                if (!processed.empty()) {
+                    state->composed_word += processed;
+                    zwp_input_method_context_v1_commit_string(state->context, state->latest_serial, processed.c_str());
+                } else if (backs > 0) {
+                    zwp_input_method_context_v1_commit_string(state->context, state->latest_serial, "");
+                }
+                eaten_keys.insert(key);
+                return;
+            } else if (c != '\b' && c != '\n') {
+                std::string str(1, c);
+                state->composed_word.clear();
+                zwp_input_method_context_v1_commit_string(state->context, state->latest_serial, str.c_str());
+                eaten_keys.insert(key);
+                return;
+            } else {
+                state->ukengine.reset();
+                state->composed_word.clear();
+            }
         }
     } else {
-        std::cout << "DEBUG: Key not handled, ascii=0. Forwarding..." << std::endl;
+        log_to_file("DEBUG: Key not handled, ascii=0. Forwarding...");
         state->ukengine.reset();
         state->composed_word.clear();
     }
@@ -257,8 +365,22 @@ static const struct wl_keyboard_listener keyboard_listener = {
 
 
 static void input_method_context_surrounding_text(void* data, struct zwp_input_method_context_v1* context, const char* text, uint32_t cursor, uint32_t anchor) {}
-static void input_method_context_reset(void* data, struct zwp_input_method_context_v1* context) {}
-static void input_method_context_content_type(void* data, struct zwp_input_method_context_v1* context, uint32_t hint, uint32_t purpose) {}
+static void input_method_context_reset(void* data, struct zwp_input_method_context_v1* context) {
+    WaylandState* state = static_cast<WaylandState*>(data);
+    if (state) {
+        state->ukengine.reset();
+        state->composed_word.clear();
+    }
+}
+static void input_method_context_content_type(void* data, struct zwp_input_method_context_v1* context, uint32_t hint, uint32_t purpose) {
+    WaylandState* state = static_cast<WaylandState*>(data);
+    if (state) {
+        state->content_purpose = purpose;
+        std::stringstream ss_ct;
+        ss_ct << "DEBUG: content_type hint=" << hint << ", purpose=" << purpose;
+        log_to_file(ss_ct.str());
+    }
+}
 static void input_method_context_invoke_action(void* data, struct zwp_input_method_context_v1* context, uint32_t button, uint32_t index) {}
 
 static void input_method_context_commit_state(void* data, struct zwp_input_method_context_v1* context, uint32_t serial) {
@@ -370,7 +492,7 @@ int main(int argc, char **argv) {
     g_mainWindow = &mainWindow;
     TrayIcon trayIcon(&state.ukengine, &mainWindow);
 
-    std::cout << "Wayland IM v1 Client started with Qt GUI. Waiting for events..." << std::endl;
+    log_to_file("Wayland IM v1 Client started with Qt GUI. Waiting for events...");
 
     int fd = wl_display_get_fd(state.display);
     QSocketNotifier notifier(fd, QSocketNotifier::Read);
