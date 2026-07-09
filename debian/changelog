@@ -1,0 +1,7 @@
+unikey-wayland (1.0.2) unstable; urgency=medium
+
+  * Release version 1.0.2.
+  * Auto detect DE to configure IBus and Fcitx.
+  * Improve preedit/native mode switching.
+
+ -- Truong Hieu <11Leak1234@protonmail.com>  Thu, 09 Jul 2026 15:02:00 +0700

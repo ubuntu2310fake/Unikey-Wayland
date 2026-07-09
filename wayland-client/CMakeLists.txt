@@ -116,4 +116,7 @@ if (IBUS_FOUND)
 endif()
 
 install(TARGETS unikey-wayland DESTINATION bin)
+install(FILES ../unikey-wayland.desktop DESTINATION share/applications)
+install(FILES ../unikey-wayland.metainfo.xml DESTINATION share/metainfo)
+
 

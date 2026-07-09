@@ -7,8 +7,8 @@
     <author>Trương Hiếu</author>
     <license>GPL</license>
     <homepage>https://github.com/ubuntu2310fake/Unikey-Wayland</homepage>
-    <icon>/usr/local/share/icons/hicolor/128x128/apps/unikey.png</icon>
-    <setup>/usr/local/bin/unikey-wayland --setup</setup>
+    <icon>/usr/share/icons/hicolor/128x128/apps/unikey.png</icon>
+    <setup>/usr/bin/unikey-wayland --setup</setup>
     <textdomain>ibus-unikey</textdomain>
 
     <engines>

@@ -1,0 +1,23 @@
+Source: unikey-wayland
+Section: utils
+Priority: optional
+Maintainer: Truong Hieu <11Leak1234@protonmail.com>
+Build-Depends: debhelper-compat (= 13),
+               cmake,
+               pkg-config,
+               libwayland-dev,
+               wayland-protocols,
+               qt6-base-dev,
+               libibus-1.0-dev
+Standards-Version: 4.6.2
+Homepage: https://github.com/ubuntu2310fake/Unikey-Wayland
+
+Package: unikey-wayland
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         ibus,
+         qt6-wayland
+Description: Unikey Wayland Input Method for Vietnamese
+ Unikey-Wayland is a lightweight Vietnamese input method for Wayland environments,
+ powered by the UniKey engine and Qt 6 GUI.

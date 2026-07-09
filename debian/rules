@@ -1,0 +1,9 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+
+%:
+	dh $@ --sourcedirectory=wayland-client
+
+override_dh_auto_configure:
+	dh_auto_configure --sourcedirectory=wayland-client -- -DCMAKE_BUILD_TYPE=Release
