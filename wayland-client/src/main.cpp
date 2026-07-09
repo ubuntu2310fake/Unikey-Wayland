@@ -22,6 +22,7 @@ static void log_to_file(const std::string& msg) {
 
 #include "input-method-unstable-v1-client-protocol.h"
 #include "../include/ukengine_wrapper.h"
+#include "windowtracker.h"
 
 struct WaylandState {
     wl_display* display;
@@ -91,6 +92,8 @@ static bool g_alt_pressed = false;
 static bool g_other_pressed = false;
 
 static MainWindow* g_mainWindow = nullptr;
+static WindowTracker* g_windowTracker = nullptr;
+static bool g_app_excluded = false;
 
 void show_main_window() {
     if (g_mainWindow) {
@@ -154,16 +157,7 @@ static void keyboard_key(void* data, struct wl_keyboard* keyboard, uint32_t seri
         }
     }
 
-    // Alt + Z hotkey
-    if (key == 44 && g_alt_pressed && state_key == 1 && state->ukengine.getSwitchKey() == 1) {
-        if (g_mainWindow) {
-            g_mainWindow->setVietMode(!state->ukengine.getVietMode());
-        } else {
-            state->ukengine.setVietMode(!state->ukengine.getVietMode());
-        }
-        eaten_keys.insert(key);
-        return;
-    }
+
 
     // Ctrl + Shift + F5 (CS+F5) hotkey to show settings
     if (key == 63 && g_ctrl_pressed && g_shift_pressed && state_key == 1) {
@@ -220,80 +214,56 @@ static void keyboard_key(void* data, struct wl_keyboard* keyboard, uint32_t seri
                 << ", processed='" << processed << "'";
         log_to_file(ss_proc.str());
 
-        if (state->content_purpose == 12 || g_terminal_mode) {
-            // Terminal mode (Konsole, Kitty, Alacritty)
-            if (backs == 0 && processed.length() == 1 && processed[0] == c) {
-                state->composed_word += processed;
-                zwp_input_method_context_v1_key(state->context, serial, time, key, state_key);
-                return;
-            }
-            
+        if (state->content_purpose == 12 || g_terminal_mode || g_app_excluded) {
+            // Preedit mode (Konsole, Kitty, Alacritty, or user-excluded apps)
+            QString preedit = QString::fromStdString(state->composed_word);
             if (c == '\b' && backs == 1 && processed.empty()) {
-                int i = state->composed_word.length();
-                if (i > 0) {
-                    i--;
-                    while (i > 0 && (state->composed_word[i] & 0xC0) == 0x80) {
-                        i--;
-                    }
-                    state->composed_word.erase(i);
+                if (preedit.length() > 0) {
+                    preedit.chop(1);
+                    state->composed_word = preedit.toStdString();
+                } else {
+                    zwp_input_method_context_v1_key(state->context, serial, time, key, state_key);
+                    return;
                 }
-                zwp_input_method_context_v1_key(state->context, serial, time, key, state_key);
-                return;
-            }
-
-            if (backs > 0 || !processed.empty()) {
+            } else if (c != '\n') {
                 if (backs > 0) {
-                    int byte_backs = backs;
-                    if (backs <= (int)state->composed_word.length()) {
-                        int i = state->composed_word.length();
-                        int chars_to_delete = backs;
-                        while (chars_to_delete > 0 && i > 0) {
-                            i--;
-                            while (i > 0 && (state->composed_word[i] & 0xC0) == 0x80) {
-                                i--;
-                            }
-                            chars_to_delete--;
-                        }
-                        byte_backs = state->composed_word.length() - i;
-                        state->composed_word.erase(i, byte_backs);
+                    if (preedit.length() >= backs) {
+                        preedit.chop(backs);
+                        state->composed_word = preedit.toStdString();
                     } else {
                         state->composed_word.clear();
-                    }
-                    for (int j = 0; j < backs; ++j) {
-                        zwp_input_method_context_v1_key(state->context, serial, time, 14, 1);
-                        zwp_input_method_context_v1_key(state->context, serial, time, 14, 0);
                     }
                 }
                 if (!processed.empty()) {
                     state->composed_word += processed;
-                    zwp_input_method_context_v1_commit_string(state->context, state->latest_serial, processed.c_str());
-                } else if (backs > 0) {
-                    zwp_input_method_context_v1_commit_string(state->context, state->latest_serial, "");
+                }
+            }
+
+            if (!state->ukengine.isComposing() || c == ' ' || c == '\n') {
+                if (!state->composed_word.empty()) {
+                    zwp_input_method_context_v1_preedit_string(state->context, state->latest_serial, "", "");
+                    zwp_input_method_context_v1_commit_string(state->context, state->latest_serial, state->composed_word.c_str());
+                    state->composed_word.clear();
+                } else if (backs == 0 && processed.empty()) {
+                    zwp_input_method_context_v1_key(state->context, serial, time, key, state_key);
+                    return;
+                }
+                if (c == '\n') {
+                    zwp_input_method_context_v1_key(state->context, serial, time, key, state_key);
+                    return;
                 }
                 eaten_keys.insert(key);
                 return;
-            } else if (c != '\b' && c != '\n') {
-                std::string str(1, c);
-                state->composed_word += str;
-                zwp_input_method_context_v1_key(state->context, serial, time, key, state_key);
-                return;
             } else {
-                state->ukengine.reset();
-                if (c == '\b') {
-                    int i = state->composed_word.length();
-                    if (i > 0) {
-                        i--;
-                        while (i > 0 && (state->composed_word[i] & 0xC0) == 0x80) {
-                            i--;
-                        }
-                        state->composed_word.erase(i);
-                    }
-                } else {
-                    state->composed_word.clear();
-                }
+                uint32_t byte_len = state->composed_word.length();
+                zwp_input_method_context_v1_preedit_cursor(state->context, byte_len);
+                zwp_input_method_context_v1_preedit_styling(state->context, 0, byte_len, 5 /* UNDERLINE */);
+                zwp_input_method_context_v1_preedit_string(state->context, state->latest_serial, state->composed_word.c_str(), state->composed_word.c_str());
+                eaten_keys.insert(key);
+                return;
             }
         } else {
-            // Normal mode (Chrome, Gtk, Qt apps)
+            // Normal mode (Chrome, Gtk, Qt apps) - Use Native delete_surrounding_text
             if (backs > 0 || !processed.empty()) {
                 if (backs > 0) {
                     int byte_backs = backs;
@@ -464,6 +434,7 @@ static const struct wl_registry_listener registry_listener = {
 
 
 int main(int argc, char **argv) {
+    setenv("QT_QPA_PLATFORM", "wayland;xcb", 0); // Prefer Wayland, fallback to xcb. 0 means don't overwrite if user explicitly set it.
     QApplication app(argc, argv);
     app.setQuitOnLastWindowClosed(false);
 
@@ -472,45 +443,79 @@ int main(int argc, char **argv) {
 
     state.display = wl_display_connect(NULL);
     if (!state.display) {
-        std::cerr << "Failed to connect to Wayland display." << std::endl;
-        return 1;
+        std::cerr << "Failed to connect to Wayland display. Running in GUI-only mode." << std::endl;
+    } else {
+        state.registry = wl_display_get_registry(state.display);
+        wl_registry_add_listener(state.registry, &registry_listener, &state);
+        wl_display_roundtrip(state.display);
     }
 
-    state.registry = wl_display_get_registry(state.display);
-    wl_registry_add_listener(state.registry, &registry_listener, &state);
-
-    wl_display_roundtrip(state.display);
-
-    if (!state.input_method) {
-        std::cerr << "Compositor does not support zwp_input_method_v1." << std::endl;
-        return 1;
+    bool has_wayland_im = (state.input_method != nullptr);
+    if (state.display && !has_wayland_im) {
+        std::cerr << "Compositor does not support zwp_input_method_v1. Running in GUI-only mode." << std::endl;
+    } else if (state.display && has_wayland_im) {
+        zwp_input_method_v1_add_listener(state.input_method, &input_method_listener, &state);
     }
 
-    zwp_input_method_v1_add_listener(state.input_method, &input_method_listener, &state);
+    bool is_gnome_edition = !has_wayland_im;
+    app.setQuitOnLastWindowClosed(is_gnome_edition);
 
-    MainWindow mainWindow(&state.ukengine);
+    MainWindow mainWindow(&state.ukengine, is_gnome_edition);
     g_mainWindow = &mainWindow;
-    TrayIcon trayIcon(&state.ukengine, &mainWindow);
+
+    WindowTracker windowTracker;
+    g_windowTracker = &windowTracker;
+    QObject::connect(&windowTracker, &WindowTracker::activeWindowChangedSignal, [&](const QString& windowClass) {
+        g_app_excluded = windowTracker.isAppExcluded(windowClass.toStdString());
+        if (g_app_excluded) {
+            std::stringstream ss;
+            ss << "DEBUG: Application excluded: " << windowClass.toStdString();
+            log_to_file(ss.str());
+            state.ukengine.reset();
+            state.composed_word.clear();
+        }
+    });
+
+    TrayIcon* trayIcon = nullptr;
+    if (!is_gnome_edition) {
+        trayIcon = new TrayIcon(&state.ukengine, &mainWindow, is_gnome_edition);
+    }
+
+    bool showExclude = false;
+    if (argc > 1) {
+        if (strcmp(argv[1], "--setup") == 0) {
+            mainWindow.show();
+        } else if (strcmp(argv[1], "--exclude") == 0) {
+            mainWindow.show();
+            showExclude = true;
+        }
+    }
+    if (showExclude) {
+        mainWindow.selectTab("Danh sách loại trừ");
+    }
 
     log_to_file("Wayland IM v1 Client started with Qt GUI. Waiting for events...");
 
-    int fd = wl_display_get_fd(state.display);
-    QSocketNotifier notifier(fd, QSocketNotifier::Read);
-    QObject::connect(&notifier, &QSocketNotifier::activated, [&state, &app]() {
-        if (wl_display_dispatch(state.display) == -1) {
-            std::cerr << "Wayland display disconnected or error." << std::endl;
-            app.quit();
-            return;
-        }
-        while (wl_display_dispatch_pending(state.display) > 0) {
-            // Keep dispatching pending events
-        }
-        wl_display_flush(state.display);
-    });
+    QSocketNotifier* notifier = nullptr;
+    if (state.display) {
+        int fd = wl_display_get_fd(state.display);
+        notifier = new QSocketNotifier(fd, QSocketNotifier::Read, &app);
+        QObject::connect(notifier, &QSocketNotifier::activated, [&state, &app]() {
+            if (wl_display_dispatch(state.display) == -1) {
+                std::cerr << "Wayland display disconnected or error." << std::endl;
+                app.quit();
+                return;
+            }
+            while (wl_display_dispatch_pending(state.display) > 0) {
+                // Keep dispatching pending events
+            }
+            wl_display_flush(state.display);
+        });
 
-    // We must dispatch any pending events before entering the event loop
-    while (wl_display_dispatch_pending(state.display) > 0) {}
-    wl_display_flush(state.display);
+        // We must dispatch any pending events before entering the event loop
+        while (wl_display_dispatch_pending(state.display) > 0) {}
+        wl_display_flush(state.display);
+    }
 
     int ret = app.exec();
 
@@ -520,7 +525,12 @@ int main(int argc, char **argv) {
     if (state.context) {
         zwp_input_method_context_v1_destroy(state.context);
     }
-    wl_display_disconnect(state.display);
+    if (state.display) {
+        wl_display_disconnect(state.display);
+    }
+    if (trayIcon) {
+        delete trayIcon;
+    }
 
     return ret;
 }
