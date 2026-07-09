@@ -41,18 +41,25 @@ Bạn có thể tải các gói cài đặt đóng gói sẵn cho từng Distro 
 
 ## Hướng Dẫn Cài Đặt
 
-### 1. Fedora (RPM)
+### 1. Fedora (Sử dụng Copr)
 
 ```bash
-# Cài đặt file RPM tải về từ Releases
-sudo dnf install -y ./unikey-wayland-1.0.0-1.fc44.x86_64.rpm
+# Kích hoạt kho phần mềm Copr của tác giả
+sudo dnf copr enable -y truonghieu/Unikey-Wayland
+
+# Tiến hành cài đặt
+sudo dnf install -y unikey-wayland
 ```
 
-### 2. Ubuntu / Debian (DEB)
+### 2. Ubuntu (Sử dụng PPA)
 
 ```bash
-# Cài đặt file DEB tải về từ Releases
-sudo apt install -y ./unikey-wayland_1.0.0_amd64.deb
+# Thêm kho PPA của tác giả vào hệ thống
+sudo add-apt-repository -y ppa:trex219961/unikey-wayland-ppa
+
+# Cập nhật cơ sở dữ liệu gói và cài đặt
+sudo apt update
+sudo apt install -y unikey-wayland
 ```
 
 ### 3. Arch Linux (tar.zst)
