@@ -27,37 +27,60 @@ UkEngineWrapper::~UkEngineWrapper() {
     }
 }
 
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
 void UkEngineWrapper::init() {
+    bool is_new = false;
     if (!pShMem) {
-        pShMem = new SharedMem();
-        memset(pShMem, 0, sizeof(SharedMem));
+        int fd = shm_open("/unikey_wayland_shm", O_CREAT | O_RDWR, 0666);
+        if (fd >= 0) {
+            struct stat s;
+            fstat(fd, &s);
+            is_new = (s.st_size == 0);
+            if (is_new) {
+                ftruncate(fd, sizeof(SharedMem));
+            }
+            pShMem = (SharedMem*)mmap(NULL, sizeof(SharedMem), PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+            if (is_new) {
+                memset(pShMem, 0, sizeof(SharedMem));
+            }
+        } else {
+            pShMem = new SharedMem();
+            memset(pShMem, 0, sizeof(SharedMem));
+            is_new = true;
+        }
     }
     
-    pShMem->Initialized = 1;
-    pShMem->vietKey = 1; // Vietnamese mode ON
-    
-    // Set standard options
-    pShMem->options.freeMarking = 1;
-    pShMem->options.toneNextToVowel = 0;
-    pShMem->options.modernStyle = 0;
-    pShMem->options.macroEnabled = 0;
-    pShMem->options.alwaysMacro = 0;
+    if (is_new) {
+        pShMem->Initialized = 1;
+        pShMem->vietKey = 1; // Vietnamese mode ON
+        
+        // Set standard options
+        pShMem->options.freeMarking = 1;
+        pShMem->options.toneNextToVowel = 0;
+        pShMem->options.modernStyle = 0;
+        pShMem->options.macroEnabled = 0;
+        pShMem->options.alwaysMacro = 0;
 
-    // Use Telex and Unicode
-    int method = TELEX_INPUT;
-    WORD charset = UNICODE_CHARSET;
-    
-    pShMem->inMethod = method;
-    pShMem->keyMode = charset;
-    
-    // VERY IMPORTANT: Set encoding to UTF-8 so that UniKey adjusts `backs` correctly
-    // for multi-byte characters and outputs directly to `ansiPush` as UTF-8!
-    pShMem->codeTable.encoding = 1; // UNICODE_UTF8 is 1 (2 is UNICODE_REF)
-    pShMem->codeTable.singleBackspace = 1; // MUST be 1 so backs remains character count
+        // Use Telex and Unicode
+        int method = TELEX_INPUT;
+        WORD charset = UNICODE_CHARSET;
+        
+        pShMem->inMethod = method;
+        pShMem->keyMode = charset;
+        
+        // VERY IMPORTANT: Set encoding to UTF-8 so that UniKey adjusts `backs` correctly
+        // for multi-byte characters and outputs directly to `ansiPush` as UTF-8!
+        pShMem->codeTable.encoding = 1; // UNICODE_UTF8 is 1 (2 is UNICODE_REF)
+        pShMem->codeTable.singleBackspace = 1; // MUST be 1 so backs remains character count
 
-    // Build the character mapping table and input method rules
-    BuildCodeTable(charset, method, &pShMem->codeTable);
-    BuildInputMethod(method, &pShMem->codeTable);
+        // Build the character mapping table and input method rules
+        BuildCodeTable(charset, method, &pShMem->codeTable);
+        BuildInputMethod(method, &pShMem->codeTable);
+    }
     
     // Initialize the VietKey engine
     VietKey* vk = new VietKey();

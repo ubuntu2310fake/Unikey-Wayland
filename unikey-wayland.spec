@@ -1,5 +1,5 @@
 Name:           unikey-wayland
-Version:        1.0.1_hf
+Version:        1.0.2_hf
 Release:        1%{?dist}
 Summary:        Unikey Wayland Input Method for Vietnamese
 Packager:       Trương Hiếu
@@ -62,7 +62,7 @@ chmod 644 %{buildroot}/usr/share/metainfo/unikey-wayland.metainfo.xml
 /usr/share/metainfo/unikey-wayland.metainfo.xml
 
 %changelog
-* Wed Jul 08 2026 Trương Hiếu - 1.0.1-1
+* Wed Jul 08 2026 Trương Hiếu - 1.0.2-1
 - Fix duplicate characters in Wayland Terminal Emulators
 - Add Terminal Mode toggle in Tray Menu
 

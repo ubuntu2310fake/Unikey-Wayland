@@ -1,0 +1,8 @@
+/home/truonghieu/Downloads/Uk362/ImTester/build/CMakeFiles/ImTester.dir
+/home/truonghieu/Downloads/Uk362/ImTester/build/CMakeFiles/im-helper.dir
+/home/truonghieu/Downloads/Uk362/ImTester/build/CMakeFiles/edit_cache.dir
+/home/truonghieu/Downloads/Uk362/ImTester/build/CMakeFiles/rebuild_cache.dir
+/home/truonghieu/Downloads/Uk362/ImTester/build/CMakeFiles/ImTester_autogen_timestamp_deps.dir
+/home/truonghieu/Downloads/Uk362/ImTester/build/CMakeFiles/ImTester_autogen.dir
+/home/truonghieu/Downloads/Uk362/ImTester/build/CMakeFiles/im-helper_autogen_timestamp_deps.dir
+/home/truonghieu/Downloads/Uk362/ImTester/build/CMakeFiles/im-helper_autogen.dir

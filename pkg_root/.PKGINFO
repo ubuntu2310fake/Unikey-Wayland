@@ -1,0 +1,8 @@
+pkgname = unikey-wayland
+pkgver = 1.0.2_hf-1
+pkgdesc = Unikey Wayland Input Method for Vietnamese
+url = https://github.com/ubuntu2310fake/Unikey-Wayland
+builddate = 1
+packager = Trương Hiếu <truonghieu@example.com>
+size = 1
+arch = x86_64

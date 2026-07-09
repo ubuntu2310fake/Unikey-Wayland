@@ -17,7 +17,7 @@
 class MainWindow : public QWidget {
     Q_OBJECT
 public:
-    explicit MainWindow(UkEngineWrapper* engine, QWidget *parent = nullptr);
+    explicit MainWindow(UkEngineWrapper* engine, bool is_gnome = false, QWidget *parent = nullptr);
     void setVietMode(bool viet);
 
 protected:
@@ -61,6 +61,12 @@ private:
     QString getConfigPath() const;
     bool m_loadingConfig = false;
     std::map<std::string, std::string> m_macros;
+
+    // Preedit exclude/include apps list
+    class QPlainTextEdit* m_preeditAppsTextEdit;
+
+public:
+    void selectTab(const QString& name);
 };
 
 #endif // MAINWINDOW_H

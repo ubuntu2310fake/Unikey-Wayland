@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component>
+    <name>org.freedesktop.IBus.UnikeyWayland</name>
+    <description>Unikey Wayland Input Method Engine</description>
+    <exec>/usr/libexec/ibus-engine-unikey-wayland --ibus</exec>
+    <version>1.0</version>
+    <author>Trương Hiếu</author>
+    <license>GPL</license>
+    <homepage>https://github.com/ubuntu2310fake/Unikey-Wayland</homepage>
+    <icon>/usr/local/share/icons/hicolor/128x128/apps/unikey.png</icon>
+    <setup>/usr/local/bin/unikey-wayland --setup</setup>
+    <textdomain>ibus-unikey</textdomain>
+
+    <engines>
+        <engine>
+            <name>unikey-wayland</name>
+            <language>vi</language>
+            <license>GPL</license>
+            <author>Trương Hiếu</author>
+            <icon>ibus-unikey</icon>
+            <layout>us</layout>
+            <longname>Unikey (Wayland Engine)</longname>
+            <description>Unikey Input Method Engine for GNOME</description>
+            <rank>99</rank>
+        </engine>
+    </engines>
+</component>

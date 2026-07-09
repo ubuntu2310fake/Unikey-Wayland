@@ -30,8 +30,10 @@ static QIcon createIconWithText(const QString& text, QColor bgColor, QColor text
 
 #include <QTimer>
 
-TrayIcon::TrayIcon(UkEngineWrapper* engine, MainWindow* mainWindow, QObject* parent)
-    : QObject(parent), m_engine(engine), m_mainWindow(mainWindow) {
+extern bool g_terminal_mode;
+
+TrayIcon::TrayIcon(UkEngineWrapper* engine, MainWindow* mainWindow, bool is_gnome, QObject* parent)
+    : QObject(parent), m_engine(engine), m_mainWindow(mainWindow), m_isGnome(is_gnome) {
     
     // Create icons dynamically
     m_iconV = createIconWithText("V", QColor(220, 53, 69), Qt::white); // Red background for V
@@ -42,12 +44,17 @@ TrayIcon::TrayIcon(UkEngineWrapper* engine, MainWindow* mainWindow, QObject* par
     m_trayMenu = new QMenu();
     m_actionControlPanel = m_trayMenu->addAction("Bảng điều khiển... [CS+F5]");
     m_trayMenu->addSeparator();
+    m_actionTerminalMode = m_trayMenu->addAction("Chế độ Terminal (Konsole, Kitty) [CS+F12]");
+    m_actionTerminalMode->setCheckable(true);
+    m_actionTerminalMode->setChecked(g_terminal_mode);
+    m_trayMenu->addSeparator();
     m_actionQuit = m_trayMenu->addAction("Kết thúc");
 
     m_trayIcon->setContextMenu(m_trayMenu);
 
     connect(m_trayIcon, &QSystemTrayIcon::activated, this, &TrayIcon::onTrayIconActivated);
     connect(m_actionControlPanel, &QAction::triggered, this, &TrayIcon::onShowControlPanel);
+    connect(m_actionTerminalMode, &QAction::triggered, this, &TrayIcon::onToggleTerminalMode);
     connect(m_actionQuit, &QAction::triggered, this, &TrayIcon::onQuit);
 
     updateIcon();
@@ -77,6 +84,10 @@ void TrayIcon::updateIcon() {
         m_trayIcon->setIcon(m_iconE);
         m_trayIcon->setToolTip("UniKey - English");
     }
+
+    if (m_actionTerminalMode->isChecked() != g_terminal_mode) {
+        m_actionTerminalMode->setChecked(g_terminal_mode);
+    }
 }
 
 #include <QElapsedTimer>
@@ -85,6 +96,11 @@ void TrayIcon::onTrayIconActivated(QSystemTrayIcon::ActivationReason reason) {
     static QElapsedTimer clickTimer;
     
     if (reason == QSystemTrayIcon::Trigger) {
+        if (m_isGnome) {
+            onShowControlPanel();
+            return;
+        }
+
         if (clickTimer.isValid() && clickTimer.elapsed() < 400) {
             // Double click detected via timing!
             // Undo the first click's toggle by toggling again
@@ -103,9 +119,15 @@ void TrayIcon::onTrayIconActivated(QSystemTrayIcon::ActivationReason reason) {
 }
 
 void TrayIcon::onShowControlPanel() {
-    m_mainWindow->show();
-    m_mainWindow->raise();
-    m_mainWindow->activateWindow();
+    if (m_mainWindow) {
+        m_mainWindow->show();
+        m_mainWindow->raise();
+        m_mainWindow->activateWindow();
+    }
+}
+
+void TrayIcon::onToggleTerminalMode() {
+    g_terminal_mode = m_actionTerminalMode->isChecked();
 }
 
 void TrayIcon::onQuit() {

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Unikey Wayland Setup
+Type=Application
+Exec=/usr/local/bin/unikey-wayland --setup
+Icon=/usr/local/share/icons/hicolor/128x128/apps/unikey.png
+NoDisplay=true
+StartupNotify=true

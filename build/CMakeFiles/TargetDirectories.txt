@@ -1,3 +1,12 @@
-/home/truonghieu/Downloads/Uk362/build/CMakeFiles/uk-wayland-im.dir
+/home/truonghieu/Downloads/Uk362/build/CMakeFiles/unikey-wayland.dir
+/home/truonghieu/Downloads/Uk362/build/CMakeFiles/ibus-engine-unikey-wayland.dir
 /home/truonghieu/Downloads/Uk362/build/CMakeFiles/edit_cache.dir
 /home/truonghieu/Downloads/Uk362/build/CMakeFiles/rebuild_cache.dir
+/home/truonghieu/Downloads/Uk362/build/CMakeFiles/list_install_components.dir
+/home/truonghieu/Downloads/Uk362/build/CMakeFiles/install.dir
+/home/truonghieu/Downloads/Uk362/build/CMakeFiles/install/local.dir
+/home/truonghieu/Downloads/Uk362/build/CMakeFiles/install/strip.dir
+/home/truonghieu/Downloads/Uk362/build/CMakeFiles/unikey-wayland_autogen_timestamp_deps.dir
+/home/truonghieu/Downloads/Uk362/build/CMakeFiles/unikey-wayland_autogen.dir
+/home/truonghieu/Downloads/Uk362/build/CMakeFiles/ibus-engine-unikey-wayland_autogen_timestamp_deps.dir
+/home/truonghieu/Downloads/Uk362/build/CMakeFiles/ibus-engine-unikey-wayland_autogen.dir

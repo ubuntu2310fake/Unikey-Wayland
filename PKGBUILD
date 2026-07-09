@@ -1,7 +1,7 @@
 # Maintainer: Trương Hiếu <truonghieu@example.com>
 pkgname=unikey-wayland-git
 _pkgname=unikey-wayland
-pkgver=1.0.1.r0.g5835b34
+pkgver=1.0.2.r0.g5835b34
 pkgrel=1
 pkgdesc="Unikey Wayland input method for Vietnamese (Qt6/Wayland)"
 arch=('x86_64')
@@ -21,7 +21,7 @@ sha256sums=('SKIP')
 pkgver() {
   cd "$srcdir/$_pkgname"
   git describe --long --tags 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' || \
-  printf "1.0.1.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+  printf "1.0.2.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 build() {

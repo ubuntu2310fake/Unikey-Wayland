@@ -10,7 +10,7 @@
 class TrayIcon : public QObject {
     Q_OBJECT
 public:
-    TrayIcon(UkEngineWrapper* engine, MainWindow* mainWindow, QObject* parent = nullptr);
+    TrayIcon(UkEngineWrapper* engine, MainWindow* mainWindow, bool is_gnome = false, QObject* parent = nullptr);
     ~TrayIcon();
 
     void updateIcon();
@@ -19,13 +19,16 @@ private slots:
     void onTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onShowControlPanel();
     void onQuit();
+    void onToggleTerminalMode();
 
 private:
     UkEngineWrapper* m_engine;
     MainWindow* m_mainWindow;
+    bool m_isGnome;
     QSystemTrayIcon* m_trayIcon;
     QMenu* m_trayMenu;
     QAction* m_actionControlPanel;
+    QAction* m_actionTerminalMode;
     QAction* m_actionQuit;
     
     QIcon m_iconV;

@@ -1,0 +1,6 @@
+Package: unikey-wayland
+Version: 1.0.2-hf
+Architecture: amd64
+Maintainer: Trương Hiếu <truonghieu@example.com>
+Description: Unikey Wayland Input Method
+ Lightweight Vietnamese input method for Wayland environments, powered by the UniKey engine and Qt 6 GUI.

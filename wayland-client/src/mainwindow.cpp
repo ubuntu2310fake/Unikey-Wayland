@@ -6,8 +6,9 @@
 #include <QFile>
 #include <QDir>
 #include <QFileInfo>
+#include <QPlainTextEdit>
 
-MainWindow::MainWindow(UkEngineWrapper* engine, QWidget *parent)
+MainWindow::MainWindow(UkEngineWrapper* engine, bool is_gnome, QWidget *parent)
     : QWidget(parent), m_engine(engine) {
     setWindowTitle("Unikey-Wayland");
     setFixedSize(450, 360);
@@ -60,22 +61,25 @@ MainWindow::MainWindow(UkEngineWrapper* engine, QWidget *parent)
     m_tabWidget->addTab(tabBasic, "Cơ bản");
 
     // --- Tab Phím tắt ---
-    QWidget* tabHotkey = new QWidget();
-    QVBoxLayout* hotkeyLayout = new QVBoxLayout(tabHotkey);
-    
-    QGridLayout* hkGrid = new QGridLayout();
-    hkGrid->addWidget(new QLabel("Phím chuyển E/V:"), 0, 0);
     m_evHotkeyCombo = new QComboBox();
     m_evHotkeyCombo->addItems({"Ctrl + Shift", "Alt + Z"});
-    hkGrid->addWidget(m_evHotkeyCombo, 0, 1);
-
-    hkGrid->addWidget(new QLabel("Phục hồi từ sai:"), 1, 0);
     m_restoreHotkeyCombo = new QComboBox();
     m_restoreHotkeyCombo->addItems({"Shift + Backspace", "Alt + Backspace"});
-    hkGrid->addWidget(m_restoreHotkeyCombo, 1, 1);
-    hotkeyLayout->addLayout(hkGrid);
-    hotkeyLayout->addStretch();
-    m_tabWidget->addTab(tabHotkey, "Phím tắt");
+
+    if (!is_gnome) {
+        QWidget* tabHotkey = new QWidget();
+        QVBoxLayout* hotkeyLayout = new QVBoxLayout(tabHotkey);
+        
+        QGridLayout* hkGrid = new QGridLayout();
+        hkGrid->addWidget(new QLabel("Phím chuyển E/V:"), 0, 0);
+        hkGrid->addWidget(m_evHotkeyCombo, 0, 1);
+
+        hkGrid->addWidget(new QLabel("Phục hồi từ sai:"), 1, 0);
+        hkGrid->addWidget(m_restoreHotkeyCombo, 1, 1);
+        hotkeyLayout->addLayout(hkGrid);
+        hotkeyLayout->addStretch();
+        m_tabWidget->addTab(tabHotkey, "Phím tắt");
+    }
 
     // --- Tab Hệ thống ---
     QWidget* tabSystem = new QWidget();
@@ -85,7 +89,9 @@ MainWindow::MainWindow(UkEngineWrapper* engine, QWidget *parent)
     sysLayout->addWidget(m_showOnStartupCheck);
     sysLayout->addWidget(new QLabel("<i>Các tuỳ chọn khởi động cùng hệ thống,\nchạy quyền admin đã được gỡ bỏ cho Wayland.</i>"));
     sysLayout->addStretch();
-    m_tabWidget->addTab(tabSystem, "Hệ thống");
+    if (!is_gnome) {
+        m_tabWidget->addTab(tabSystem, "Hệ thống");
+    }
 
     // --- Tab Gõ tắt ---
     QWidget* tabMacro = new QWidget();
@@ -97,12 +103,32 @@ MainWindow::MainWindow(UkEngineWrapper* engine, QWidget *parent)
     macroLayout->addStretch();
     m_tabWidget->addTab(tabMacro, "Gõ tắt");
 
+    // --- Tab Danh sách loại trừ ---
+    QWidget* tabExclude = new QWidget();
+    QVBoxLayout* excludeLayout = new QVBoxLayout(tabExclude);
+    QLabel* excludeLabel = new QLabel("Các ứng dụng tự động dùng gạch chân (Preedit):\n(Một dòng cho mỗi ứng dụng, ví dụ: kitty, studio, java)");
+    m_preeditAppsTextEdit = new QPlainTextEdit(this);
+    excludeLayout->addWidget(excludeLabel);
+    excludeLayout->addWidget(m_preeditAppsTextEdit);
+    m_tabWidget->addTab(tabExclude, "Danh sách loại trừ");
+
     // --- Tab Thông tin ---
     QWidget* tabAbout = new QWidget();
     QVBoxLayout* aboutLayout = new QVBoxLayout(tabAbout);
-    QLabel* titleLabel = new QLabel("<h2>Unikey-Wayland</h2>");
+    const char* session_type = getenv("XDG_SESSION_TYPE");
+    QString title = "<h2>Unikey-Wayland</h2>";
+    if (is_gnome) {
+        if (session_type && QString(session_type).toLower() == "x11") {
+            title = "<h2>Unikey (X11 Edition)</h2>";
+        } else if (session_type && QString(session_type).toLower() == "wayland") {
+            title = "<h2>Unikey (Wayland Edition)</h2>";
+        } else {
+            title = "<h2>Unikey (GNOME Edition)</h2>";
+        }
+    }
+    QLabel* titleLabel = new QLabel(title);
     titleLabel->setAlignment(Qt::AlignCenter);
-    QLabel* infoLabel = new QLabel("Dựa trên mã nguồn UniKey\nViết lại UI bằng Qt 6 cho KDE Plasma Wayland");
+    QLabel* infoLabel = new QLabel(is_gnome ? "Dựa trên mã nguồn UniKey\nChạy dưới chế độ IBus Engine" : "Dựa trên mã nguồn UniKey\nViết lại UI bằng Qt 6 cho KDE Plasma Wayland");
     infoLabel->setAlignment(Qt::AlignCenter);
     aboutLayout->addStretch();
     aboutLayout->addWidget(titleLabel);
@@ -128,6 +154,7 @@ MainWindow::MainWindow(UkEngineWrapper* engine, QWidget *parent)
     connect(m_spellCheckCheck, &QCheckBox::stateChanged, this, &MainWindow::applySettings);
     connect(m_macroCheck, &QCheckBox::stateChanged, this, &MainWindow::applySettings);
     connect(m_evHotkeyCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::applySettings);
+    connect(m_preeditAppsTextEdit, &QPlainTextEdit::textChanged, this, &MainWindow::applySettings);
     
     connect(m_macroTableBtn, &QPushButton::clicked, this, &MainWindow::onMacroButtonClicked);
     connect(m_closeBtn, &QPushButton::clicked, this, &MainWindow::onCloseClicked);
@@ -234,6 +261,24 @@ void MainWindow::loadConfig() {
             }
         }
     }
+
+    // Load preedit apps list
+    QString preeditPath = QDir::homePath() + "/UnikeyWayland/preedit_apps.txt";
+    QFile preeditFile(preeditPath);
+    if (preeditFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        m_preeditAppsTextEdit->setPlainText(QString::fromUtf8(preeditFile.readAll()));
+        preeditFile.close();
+    } else {
+        // Default list
+        QString defaults = "kitty\nalacritty\nkonsole\ngnome-terminal\nxfce4-terminal\nlxterminal\nstudio\njava";
+        m_preeditAppsTextEdit->setPlainText(defaults);
+        QDir().mkpath(QFileInfo(preeditPath).absolutePath());
+        if (preeditFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            preeditFile.write(defaults.toUtf8());
+            preeditFile.close();
+        }
+    }
+
     m_loadingConfig = false;
 }
 
@@ -267,5 +312,22 @@ void MainWindow::saveConfig() {
         QJsonDocument doc(obj);
         file.write(doc.toJson());
         file.close();
+    }
+
+    // Save preedit apps list
+    QString preeditPath = QDir::homePath() + "/UnikeyWayland/preedit_apps.txt";
+    QFile preeditFile(preeditPath);
+    if (preeditFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        preeditFile.write(m_preeditAppsTextEdit->toPlainText().toUtf8());
+        preeditFile.close();
+    }
+}
+
+void MainWindow::selectTab(const QString& name) {
+    for (int i = 0; i < m_tabWidget->count(); ++i) {
+        if (m_tabWidget->tabText(i) == name) {
+            m_tabWidget->setCurrentIndex(i);
+            break;
+        }
     }
 }

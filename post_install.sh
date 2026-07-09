@@ -1,0 +1,16 @@
+#!/bin/bash
+sed -i 's/^export.*fcitx/#&/g' /etc/profile.d/*.sh 2>/dev/null || true
+sed -i 's/^export.*ibus/#&/g' /etc/profile.d/*.sh 2>/dev/null || true
+
+for d in /home/*; do
+    if [ -d "$d" ]; then
+        sed -i 's/^export.*fcitx/#&/g' "$d/.bashrc" "$d/.profile" "$d/.xprofile" 2>/dev/null || true
+        sed -i 's/^export.*ibus/#&/g' "$d/.bashrc" "$d/.profile" "$d/.xprofile" 2>/dev/null || true
+
+        mkdir -p "$d/.config/autostart"
+        echo -e "[Desktop Entry]\nHidden=true" > "$d/.config/autostart/org.fcitx.Fcitx5.desktop"
+        echo -e "[Desktop Entry]\nHidden=true" > "$d/.config/autostart/imsettings-start.desktop"
+
+        chown -R $(stat -c "%U:%G" "$d") "$d/.config/autostart" 2>/dev/null || true
+    fi
+done

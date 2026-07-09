@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/im-helper.dir/link.d "CMakeFiles/im-helper.dir/im-helper_autogen/mocs_compilation.cpp.o" "CMakeFiles/im-helper.dir/im-helper.cpp.o" -o im-helper
