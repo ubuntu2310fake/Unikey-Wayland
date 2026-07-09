@@ -1,16 +1,32 @@
-#!/bin/bash
-sed -i 's/^export.*fcitx/#&/g' /etc/profile.d/*.sh 2>/dev/null || true
-sed -i 's/^export.*ibus/#&/g' /etc/profile.d/*.sh 2>/dev/null || true
+post_install() {
+    HAS_KDE=0
+    HAS_GNOME_OR_OTHER=0
 
-for d in /home/*; do
-    if [ -d "$d" ]; then
-        sed -i 's/^export.*fcitx/#&/g' "$d/.bashrc" "$d/.profile" "$d/.xprofile" 2>/dev/null || true
-        sed -i 's/^export.*ibus/#&/g' "$d/.bashrc" "$d/.profile" "$d/.xprofile" 2>/dev/null || true
+    if command -v kwin_wayland >/dev/null 2>&1 || command -v kwin_x11 >/dev/null 2>&1; then HAS_KDE=1; fi
+    if command -v gnome-shell >/dev/null 2>&1 || command -v xfce4-session >/dev/null 2>&1; then HAS_GNOME_OR_OTHER=1; fi
 
-        mkdir -p "$d/.config/autostart"
-        echo -e "[Desktop Entry]\nHidden=true" > "$d/.config/autostart/org.fcitx.Fcitx5.desktop"
-        echo -e "[Desktop Entry]\nHidden=true" > "$d/.config/autostart/imsettings-start.desktop"
+    for d in /home/*; do
+        if [ -d "$d" ]; then
+            user=$(basename "$d")
+            
+            mkdir -p "$d/.config/autostart"
+            echo -e "[Desktop Entry]\nHidden=true" > "$d/.config/autostart/org.fcitx.Fcitx5.desktop"
+            chown "$user" "$d/.config/autostart/org.fcitx.Fcitx5.desktop" 2>/dev/null || true
 
-        chown -R $(stat -c "%U:%G" "$d") "$d/.config/autostart" 2>/dev/null || true
+            if [ "$HAS_KDE" -eq 1 ]; then
+                sed -i 's/^export.*fcitx/#&/g' "$d/.bashrc" "$d/.profile" "$d/.xprofile" 2>/dev/null || true
+                sed -i 's/^export.*ibus/#&/g' "$d/.bashrc" "$d/.profile" "$d/.xprofile" 2>/dev/null || true
+            fi
+            
+            if [ "$HAS_GNOME_OR_OTHER" -eq 1 ] || [ "$HAS_KDE" -eq 0 ]; then
+                su - "$user" -c 'env DCONF_PROFILE=ibus dconf write /desktop/ibus/general/preload-engines "[\"unikey-wayland\"]"' 2>/dev/null || true
+                su - "$user" -c 'gsettings set org.gnome.desktop.input-sources sources "[(\"xkb\", \"us\"), (\"ibus\", \"unikey-wayland\")]"' 2>/dev/null || true
+            fi
+        fi
+    done
+
+    if [ "$HAS_KDE" -eq 1 ]; then
+        sed -i 's/^export.*fcitx/#&/g' /etc/profile.d/*.sh 2>/dev/null || true
+        sed -i 's/^export.*ibus/#&/g' /etc/profile.d/*.sh 2>/dev/null || true
     fi
-done
+}
