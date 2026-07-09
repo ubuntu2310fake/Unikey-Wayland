@@ -1,9 +1,13 @@
 Name:           unikey-wayland
-Version:        1.0.2_hf
+Version:        1.0.2
 Release:        1%{?dist}
 Summary:        Unikey Wayland Input Method for Vietnamese
 Packager:       Trương Hiếu
 Vendor:         Trương Hiếu
+
+Source0:        unikey-wayland
+Source1:        unikey-wayland.desktop
+Source2:        unikey-wayland.metainfo.xml
 
 License:        GPL-2.0-or-later
 URL:            https://github.com/ubuntu2310fake/Unikey-Wayland
@@ -47,9 +51,9 @@ mkdir -p %{buildroot}/usr/share/applications
 mkdir -p %{buildroot}/usr/share/metainfo
 
 # Copy our pre-compiled files from the SOURCES directory
-cp %{_sourcedir}/unikey-wayland %{buildroot}/usr/bin/unikey-wayland
-cp %{_sourcedir}/unikey-wayland.desktop %{buildroot}/usr/share/applications/unikey-wayland.desktop
-cp %{_sourcedir}/unikey-wayland.metainfo.xml %{buildroot}/usr/share/metainfo/unikey-wayland.metainfo.xml
+cp %{SOURCE0} %{buildroot}/usr/bin/unikey-wayland
+cp %{SOURCE1} %{buildroot}/usr/share/applications/unikey-wayland.desktop
+cp %{SOURCE2} %{buildroot}/usr/share/metainfo/unikey-wayland.metainfo.xml
 
 # Ensure correct permissions
 chmod 755 %{buildroot}/usr/bin/unikey-wayland

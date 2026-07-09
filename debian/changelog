@@ -1,6 +1,6 @@
-unikey-wayland (1.0.2) noble; urgency=medium
+unikey-wayland (1.0.2~ppa1~questing) questing; urgency=medium
 
-  * Release version 1.0.2.
+  * Release version 1.0.2 for questing.
   * Auto detect DE to configure IBus and Fcitx.
   * Improve preedit/native mode switching.
 
