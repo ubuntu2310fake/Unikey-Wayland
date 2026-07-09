@@ -1,4 +1,4 @@
-unikey-wayland (1.0.2) unstable; urgency=medium
+unikey-wayland (1.0.2) noble; urgency=medium
 
   * Release version 1.0.2.
   * Auto detect DE to configure IBus and Fcitx.
