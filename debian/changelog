@@ -1,3 +1,11 @@
+unikey-wayland (1.0.3~ppa1~questing) questing; urgency=medium
+
+  * Add fallback IBus engine for GNOME Wayland desktop environment.
+  * Fix preedit text cursor jumping/duplication issues on Terminal emulators.
+  * Fix normal mode character duplication in Google Chrome and Electron apps on Wayland using sleep-delayed Backspaces.
+
+ -- Truong Hieu <11Leak1234@protonmail.com>  Fri, 10 Jul 2026 22:00:00 +0700
+
 unikey-wayland (1.0.2~ppa1~questing) questing; urgency=medium
 
   * Release version 1.0.2 for questing.
