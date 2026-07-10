@@ -16,7 +16,7 @@ jobs:
       - name: Install Build Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake qt6-base-dev libwayland-dev wayland-protocols pkg-config libarchive-tools golang rpm
+          sudo apt-get install -y cmake qt6-base-dev libwayland-dev wayland-protocols pkg-config libarchive-tools golang
 
       - name: Build Source
         run: |
@@ -36,6 +36,24 @@ jobs:
           name: unikey-wayland-arch-pkg
           path: releases/*.pkg.tar.zst
 
+  upload-copr:
+    runs-on: ubuntu-latest
+    container: fedora:40
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Fedora Dependencies
+        run: |
+          dnf install -y cmake gcc-c++ qt6-qtbase-devel wayland-devel wayland-protocols-devel pkgconfig golang rpm-build copr-cli git
+
+      - name: Build Source
+        run: |
+          mkdir -p wayland-client/build
+          cd wayland-client/build
+          cmake ..
+          make -j$(nproc)
+
       - name: Build Fedora SRPM
         run: |
           mkdir -p ~/rpmbuild/SOURCES
@@ -48,19 +66,10 @@ jobs:
           rpmbuild -bs ~/rpmbuild/SPECS/unikey-wayland.spec --define "_topdir $HOME/rpmbuild"
           cp ~/rpmbuild/SRPMS/*.src.rpm releases/
 
-      - name: Upload Fedora SRPM Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: unikey-wayland-fedora-srpm
-          path: releases/*.src.rpm
-
       - name: Upload to Copr
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
           COPR_CONFIG: ${{ secrets.COPR_CONFIG }}
         run: |
-          sudo apt-get install -y python3-pip
-          pip3 install copr-cli --break-system-packages || pip3 install copr-cli
           mkdir -p ~/.config
           echo "$COPR_CONFIG" > ~/.config/copr
           chmod 600 ~/.config/copr
@@ -78,11 +87,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y devscripts debhelper gnupg curl
 
-      - name: Import GPG Key
+      - name: Configure GPG and Import Key
         env:
           PPA_GPG_PRIVATE_KEY: ${{ secrets.PPA_GPG_PRIVATE_KEY }}
         run: |
-          echo "$PPA_GPG_PRIVATE_KEY" | gpg --batch --import
+          mkdir -p ~/.gnupg
+          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+          echo "no-tty" >> ~/.gnupg/gpg.conf
+          echo "batch" >> ~/.gnupg/gpg.conf
+          echo "$PPA_GPG_PRIVATE_KEY" | gpg --batch --yes --import
 
       - name: Upload to Ubuntu PPA
         env:
@@ -91,4 +104,6 @@ jobs:
           PPA_FTP_PATH: ${{ secrets.PPA_FTP_PATH }}
         run: |
           chmod +x upload_ppa.sh
+          # Chạy với DEBSIGN_GPGOPTS để gpg không yêu cầu tty
+          export DEBSIGN_GPGOPTS="--batch --no-tty --pinentry-mode loopback"
           ./upload_ppa.sh
