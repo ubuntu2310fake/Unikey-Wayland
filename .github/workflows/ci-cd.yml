@@ -36,6 +36,27 @@ jobs:
           name: unikey-wayland-arch-pkg
           path: releases/*.pkg.tar.zst
 
+      - name: Get Version
+        run: |
+          VERSION=$(grep "PKGVER=" package_arch.sh | cut -d'"' -f2)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Create GitHub Release and Upload Asset
+        uses: softprops/action-gh-release@v2
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          tag_name: ${{ env.VERSION }}
+          name: Release ${{ env.VERSION }}
+          body: |
+            Tự động đóng gói và phát hành phiên bản mới.
+            Chi tiết các thay đổi xem tại [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md).
+          draft: false
+          prerelease: false
+          files: |
+            releases/*.pkg.tar.zst
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   upload-copr:
     runs-on: ubuntu-latest
     container: fedora:40
