@@ -17,7 +17,7 @@
 class MainWindow : public QWidget {
     Q_OBJECT
 public:
-    explicit MainWindow(UkEngineWrapper* engine, bool is_gnome = false, QWidget *parent = nullptr);
+    explicit MainWindow(bool* p_viet_mode, bool is_gnome = false, QWidget *parent = nullptr);
     void setVietMode(bool viet);
 
 protected:
@@ -29,7 +29,7 @@ private slots:
     void onMacroButtonClicked();
 
 private:
-    UkEngineWrapper* m_engine;
+    bool* p_viet_mode;
     QTabWidget* m_tabWidget;
 
     // Cơ bản

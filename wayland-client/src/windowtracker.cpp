@@ -21,8 +21,6 @@ WindowTracker::WindowTracker(QObject *parent) : QObject(parent) {
     if (!QDBusConnection::sessionBus().registerObject("/WindowTracker", this)) {
         qWarning() << "Failed to register /WindowTracker object";
     }
-
-    injectKWinScript();
 }
 
 void WindowTracker::loadExcludedApps() {

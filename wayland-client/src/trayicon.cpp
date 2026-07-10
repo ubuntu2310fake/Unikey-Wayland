@@ -32,8 +32,8 @@ static QIcon createIconWithText(const QString& text, QColor bgColor, QColor text
 
 extern bool g_terminal_mode;
 
-TrayIcon::TrayIcon(UkEngineWrapper* engine, MainWindow* mainWindow, bool is_gnome, QObject* parent)
-    : QObject(parent), m_engine(engine), m_mainWindow(mainWindow), m_isGnome(is_gnome) {
+TrayIcon::TrayIcon(bool* p_viet_mode, MainWindow* mainWindow, bool is_gnome, QObject* parent)
+    : QObject(parent), p_viet_mode(p_viet_mode), m_mainWindow(mainWindow), m_isGnome(is_gnome) {
     
     // Create icons dynamically
     m_iconV = createIconWithText("V", QColor(220, 53, 69), Qt::white); // Red background for V
@@ -72,17 +72,26 @@ TrayIcon::~TrayIcon() {
 }
 
 void TrayIcon::updateIcon() {
-    static bool lastMode = !m_engine->getVietMode(); // Force initial update
-    bool currentMode = m_engine->getVietMode();
+    static bool lastMode = !(*p_viet_mode); // Force initial update
+    bool currentMode = *p_viet_mode;
     if (currentMode == lastMode) return; // Avoid setting icon unnecessarily
     lastMode = currentMode;
 
-    if (currentMode) {
-        m_trayIcon->setIcon(m_iconV);
-        m_trayIcon->setToolTip("UniKey - Vietnamese");
+    bool isViet = p_viet_mode ? *p_viet_mode : true;
+    if (m_isGnome) {
+        if (isViet) {
+            m_trayIcon->setIcon(QIcon::fromTheme("unikey-vietnamese", QIcon(":/icons/unikey-vietnamese.png")));
+        } else {
+            m_trayIcon->setIcon(QIcon::fromTheme("unikey-english", QIcon(":/icons/unikey-english.png")));
+        }
     } else {
-        m_trayIcon->setIcon(m_iconE);
-        m_trayIcon->setToolTip("UniKey - English");
+        if (isViet) {
+            m_trayIcon->setIcon(m_iconV);
+            m_trayIcon->setToolTip("UniKey - Vietnamese");
+        } else {
+            m_trayIcon->setIcon(m_iconE);
+            m_trayIcon->setToolTip("UniKey - English");
+        }
     }
 
     if (m_actionTerminalMode->isChecked() != g_terminal_mode) {
@@ -104,12 +113,18 @@ void TrayIcon::onTrayIconActivated(QSystemTrayIcon::ActivationReason reason) {
         if (clickTimer.isValid() && clickTimer.elapsed() < 400) {
             // Double click detected via timing!
             // Undo the first click's toggle by toggling again
-            m_mainWindow->setVietMode(!m_engine->getVietMode());
+            if (p_viet_mode) {
+                *p_viet_mode = !(*p_viet_mode);
+                m_mainWindow->setVietMode(*p_viet_mode);
+            }
             updateIcon();
             onShowControlPanel();
         } else {
             // Single click: toggle E/V
-            m_mainWindow->setVietMode(!m_engine->getVietMode());
+            if (p_viet_mode) {
+                *p_viet_mode = !(*p_viet_mode);
+                m_mainWindow->setVietMode(*p_viet_mode);
+            }
             updateIcon();
         }
         clickTimer.restart();

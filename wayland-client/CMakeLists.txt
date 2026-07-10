@@ -43,6 +43,15 @@ set(UK_SOURCES
     src/main.cpp
 )
 
+set(BAMBOO_LIB ${CMAKE_CURRENT_SOURCE_DIR}/src/libbamboo.a)
+add_custom_command(
+    OUTPUT ${BAMBOO_LIB} ${CMAKE_CURRENT_SOURCE_DIR}/src/libbamboo.h
+    COMMAND go build -buildmode=c-archive -o ${BAMBOO_LIB} bamboo_wrapper.go
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/bamboo_wrapper.go
+)
+add_custom_target(bamboo_target DEPENDS ${BAMBOO_LIB})
+
 add_executable(unikey-wayland ${PROTOCOL_C} ${UK_SOURCES})
 target_include_directories(unikey-wayland PRIVATE 
     ${CMAKE_CURRENT_BINARY_DIR} 
@@ -66,9 +75,11 @@ set_target_properties(unikey-wayland PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 target_link_libraries(unikey-wayland PRIVATE 
     ${WAYLAND_CLIENT_LIBRARIES}
+    ${BAMBOO_LIB}
     Qt6::Core Qt6::Gui Qt6::Widgets Qt6::DBus
     rt
 )
+add_dependencies(unikey-wayland bamboo_target)
 
 # IBus Engine
 pkg_check_modules(IBUS ibus-1.0)
@@ -93,6 +104,7 @@ if (IBUS_FOUND)
         ../keyhook
         ../newkey
         ../byteio
+        src
     )
     
     target_compile_definitions(ibus-engine-unikey-wayland PRIVATE 
@@ -106,8 +118,10 @@ if (IBUS_FOUND)
 
     target_link_libraries(ibus-engine-unikey-wayland PRIVATE 
         ${IBUS_LIBRARIES}
+        ${BAMBOO_LIB}
         rt
     )
+    add_dependencies(ibus-engine-unikey-wayland bamboo_target)
 
     # Install rules
     install(TARGETS ibus-engine-unikey-wayland DESTINATION libexec)

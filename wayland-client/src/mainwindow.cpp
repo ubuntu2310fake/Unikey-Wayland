@@ -8,8 +8,8 @@
 #include <QFileInfo>
 #include <QPlainTextEdit>
 
-MainWindow::MainWindow(UkEngineWrapper* engine, bool is_gnome, QWidget *parent)
-    : QWidget(parent), m_engine(engine) {
+MainWindow::MainWindow(bool* p_viet_mode, bool is_gnome, QWidget *parent)
+    : QWidget(parent), p_viet_mode(p_viet_mode) {
     setWindowTitle("Unikey-Wayland");
     setFixedSize(450, 360);
 
@@ -170,20 +170,8 @@ void MainWindow::applySettings() {
     int method = m_methodCombo->currentData().toInt();
     int charset = m_charsetCombo->currentData().toInt();
     
-    m_engine->setMethod(method);
-    m_engine->setCharset(charset);
-    
-    m_engine->setOptions(
-        m_freeMarkingCheck->isChecked(),
-        m_modernStyleCheck->isChecked(),
-        m_macroCheck->isChecked(),
-        m_macroWithConsonantCheck->isChecked()
-    );
-    
-    m_engine->setAutoRestore(m_autoRestoreCheck->isChecked());
-    m_engine->setSpellingCheck(m_spellCheckCheck->isChecked());
-    m_engine->setSwitchKey(m_evHotkeyCombo->currentIndex());
-    m_engine->setMacroTable(m_macros);
+    // Toàn bộ logic tùy chọn phức tạp đã được thay bằng Bamboo CGO hiện đại.
+    // Các UI này giữ lại để không phá vỡ layout, nhưng không cần làm gì ở đây.
 
     saveConfig();
 }
@@ -193,7 +181,7 @@ void MainWindow::onMacroButtonClicked() {
     dialog.setMacroTable(m_macros);
     if (dialog.exec() == QDialog::Accepted) {
         m_macros = dialog.getMacroTable();
-        m_engine->setMacroTable(m_macros);
+        // Không cần truyền xuống engine nữa
         saveConfig();
     }
 }
@@ -208,7 +196,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 }
 
 void MainWindow::setVietMode(bool viet) {
-    m_engine->setVietMode(viet);
+    if (p_viet_mode) *p_viet_mode = viet;
     saveConfig();
 }
 
@@ -251,7 +239,7 @@ void MainWindow::loadConfig() {
             
             // E/V Mode
             bool vietKey = obj.value("vietKey").toBool(true);
-            m_engine->setVietMode(vietKey);
+            if (p_viet_mode) *p_viet_mode = vietKey;
 
             // Load macros
             m_macros.clear();
@@ -301,7 +289,7 @@ void MainWindow::saveConfig() {
         obj["showOnStartup"] = m_showOnStartupCheck->isChecked();
         obj["macroWithConsonant"] = m_macroWithConsonantCheck->isChecked();
         obj["switchKey"] = m_evHotkeyCombo->currentIndex();
-        obj["vietKey"] = m_engine->getVietMode();
+        obj["vietKey"] = p_viet_mode ? *p_viet_mode : true;
         
         QJsonObject macroObj;
         for (const auto& pair : m_macros) {

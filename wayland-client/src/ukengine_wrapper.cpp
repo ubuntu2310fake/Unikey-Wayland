@@ -22,8 +22,8 @@ UkEngineWrapper::~UkEngineWrapper() {
         delete static_cast<VietKey*>(m_vietkey);
     }
     if (pShMem) {
-        delete pShMem;
-        pShMem = nullptr;
+        // delete pShMem;
+        // pShMem = nullptr;
     }
 }
 

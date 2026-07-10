@@ -10,7 +10,7 @@
 class TrayIcon : public QObject {
     Q_OBJECT
 public:
-    TrayIcon(UkEngineWrapper* engine, MainWindow* mainWindow, bool is_gnome = false, QObject* parent = nullptr);
+    TrayIcon(bool* p_viet_mode, MainWindow* mainWindow, bool is_gnome = false, QObject* parent = nullptr);
     ~TrayIcon();
 
     void updateIcon();
@@ -22,7 +22,7 @@ private slots:
     void onToggleTerminalMode();
 
 private:
-    UkEngineWrapper* m_engine;
+    bool* p_viet_mode;
     MainWindow* m_mainWindow;
     bool m_isGnome;
     QSystemTrayIcon* m_trayIcon;
