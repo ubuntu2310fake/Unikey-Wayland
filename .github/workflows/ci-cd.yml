@@ -28,6 +28,9 @@ jobs:
           cmake ..
           make -j$(nproc)
           
+      - name: Clean up old releases
+        run: rm -rf releases/*
+
       - name: Package Arch Linux
         run: |
           chmod +x package_arch.sh
