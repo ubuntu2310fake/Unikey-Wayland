@@ -47,18 +47,11 @@ EOF
     # 3. Trích xuất danh sách các tệp con cần upload từ file .changes
     FILES_TO_UPLOAD=$(awk '/^Files:/ {flag=1; next} /^ / {if(flag) print $5} /^[^ ]/ {if(flag) flag=0}' "${CHANGES_FILE}")
     
-    echo ">>> Uploading lên Launchpad qua FTP (curl)..."
-    # Upload các tệp nguồn trước (.dsc, .tar.xz, .buildinfo)
-    for FILE in $FILES_TO_UPLOAD; do
-        if [ -f "../${FILE}" ]; then
-            echo " -> Uploading ${FILE}..."
-            curl -s -T "../${FILE}" "ftp://${FTP_SERVER}/${FTP_PATH}/"
-        fi
-    done
-    
-    # Upload file .changes CUỐI CÙNG để trigger tiến trình build trên server Launchpad
-    echo " -> Uploading $(basename "${CHANGES_FILE}")..."
-    curl -s -T "${CHANGES_FILE}" "ftp://${FTP_SERVER}/${FTP_PATH}/"
+    # Thay thế curl bằng dput chính chủ để upload lên Launchpad an toàn, tự động xử lý loại file và kết nối FTP
+    PPA_USER=$(echo "$FTP_PATH" | cut -d'/' -f1 | sed 's/~//')
+    PPA_NAME=$(echo "$FTP_PATH" | cut -d'/' -f3)
+    echo ">>> Uploading lên Launchpad qua dput cho PPA: ${PPA_USER}/${PPA_NAME}..."
+    dput -f "ppa:${PPA_USER}/${PPA_NAME}" "${CHANGES_FILE}"
 done
 
 # Khôi phục changelog gốc

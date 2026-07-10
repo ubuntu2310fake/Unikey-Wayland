@@ -102,14 +102,14 @@ jobs:
 
   build-ppa:
     runs-on: ubuntu-latest
-    if: false  # Vô hiệu hóa theo yêu cầu của user
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
 
       - name: Install PPA Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y devscripts debhelper gnupg curl
+          sudo apt-get install -y devscripts debhelper gnupg curl dput
 
       - name: Configure GPG and Import Key
         env:
