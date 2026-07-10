@@ -19,7 +19,7 @@ jobs:
       - name: Install Build Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake qt6-base-dev libwayland-dev wayland-protocols pkg-config libarchive-tools golang
+          sudo apt-get install -y cmake qt6-base-dev libwayland-dev wayland-protocols pkg-config libarchive-tools golang rpm debhelper devscripts
 
       - name: Build Source
         run: |
@@ -36,30 +36,52 @@ jobs:
           chmod +x package_arch.sh
           ./package_arch.sh
 
-      - name: Upload Arch Artifact
+      - name: Build Debian/Ubuntu Package (.deb)
+        run: |
+          dpkg-buildpackage -b -us -uc
+          mkdir -p releases
+          mv ../*.deb releases/
+
+      - name: Build Fedora RPM Package (.rpm)
+        run: |
+          mkdir -p ~/rpmbuild/SOURCES
+          mkdir -p ~/rpmbuild/SPECS
+          cp wayland-client/build/unikey-wayland ~/rpmbuild/SOURCES/
+          cp unikey-wayland.desktop ~/rpmbuild/SOURCES/
+          cp unikey-wayland.metainfo.xml ~/rpmbuild/SOURCES/
+          cp unikey-wayland.spec ~/rpmbuild/SPECS/
+          rpmbuild -bb ~/rpmbuild/SPECS/unikey-wayland.spec --define "_topdir $HOME/rpmbuild"
+          cp ~/rpmbuild/RPMS/x86_64/*.rpm releases/
+
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: unikey-wayland-arch-pkg
-          path: releases/*.pkg.tar.zst
+          name: unikey-wayland-packages
+          path: |
+            releases/*.pkg.tar.zst
+            releases/*.deb
+            releases/*.rpm
 
       - name: Get Version
         run: |
           VERSION=$(grep "^PKGVER=" package_arch.sh | cut -d'"' -f2)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Create GitHub Release and Upload Asset
+      - name: Create GitHub Release and Upload Assets
         uses: softprops/action-gh-release@v2
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:
           tag_name: ${{ env.VERSION }}
           name: Release ${{ env.VERSION }}
           body: |
-            Tự động đóng gói và phát hành phiên bản mới.
+            Tự động đóng gói và phát hành phiên bản mới cho 3 hệ điều hành (Arch Linux, Ubuntu/Debian, Fedora).
             Chi tiết các thay đổi xem tại [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md).
           draft: false
           prerelease: false
           files: |
             releases/*.pkg.tar.zst
+            releases/*.deb
+            releases/*.rpm
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -128,6 +150,7 @@ jobs:
           PPA_FTP_SERVER: ${{ secrets.PPA_FTP_SERVER }}
           PPA_FTP_PATH: ${{ secrets.PPA_FTP_PATH }}
           PPA_GPG_PASSPHRASE: ${{ secrets.PPA_GPG_PASSPHRASE }}
+          PPA_REVISION: ppa${{ github.run_number }}
         run: |
           # Sử dụng PATH hijacking để tạo gpg wrapper tự động điền passphrase cho debsign
           mkdir -p /tmp/bin
