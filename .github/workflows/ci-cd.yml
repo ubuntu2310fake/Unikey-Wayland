@@ -39,7 +39,7 @@ jobs:
   upload-copr:
     runs-on: ubuntu-latest
     container: fedora:40
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: false  # Tạm thời vô hiệu hóa theo yêu cầu của user để không chạy lại Copr
     steps:
       - uses: actions/checkout@v4
 
@@ -106,9 +106,8 @@ jobs:
           PPA_GPG_KEY_ID: ${{ secrets.PPA_GPG_KEY_ID }}
           PPA_FTP_SERVER: ${{ secrets.PPA_FTP_SERVER }}
           PPA_FTP_PATH: ${{ secrets.PPA_FTP_PATH }}
-          PPA_GPG_PASSPHRASE: ${{ secrets.PPA_GPG_PASSPHRASE }}
         run: |
           chmod +x upload_ppa.sh
-          # Sử dụng --passphrase-env để lấy mật khẩu từ Github Secrets nếu khóa có đặt passphrase
-          export DEBSIGN_GPGOPTS="--batch --no-tty --pinentry-mode loopback --passphrase-env PPA_GPG_PASSPHRASE"
+          # Truyền trực tiếp --passphrase từ Github Secrets vào DEBSIGN_GPGOPTS
+          export DEBSIGN_GPGOPTS="--batch --no-tty --pinentry-mode loopback --passphrase ${{ secrets.PPA_GPG_PASSPHRASE }}"
           ./upload_ppa.sh
