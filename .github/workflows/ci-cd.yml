@@ -92,9 +92,13 @@ jobs:
           PPA_GPG_PRIVATE_KEY: ${{ secrets.PPA_GPG_PRIVATE_KEY }}
         run: |
           mkdir -p ~/.gnupg
+          chmod 700 ~/.gnupg
           echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
           echo "no-tty" >> ~/.gnupg/gpg.conf
           echo "batch" >> ~/.gnupg/gpg.conf
+          echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
+          chmod 600 ~/.gnupg/* 2>/dev/null || true
+          gpg-connect-agent reloadagent /bye || true
           echo "$PPA_GPG_PRIVATE_KEY" | gpg --batch --yes --import
 
       - name: Upload to Ubuntu PPA
@@ -102,8 +106,9 @@ jobs:
           PPA_GPG_KEY_ID: ${{ secrets.PPA_GPG_KEY_ID }}
           PPA_FTP_SERVER: ${{ secrets.PPA_FTP_SERVER }}
           PPA_FTP_PATH: ${{ secrets.PPA_FTP_PATH }}
+          PPA_GPG_PASSPHRASE: ${{ secrets.PPA_GPG_PASSPHRASE }}
         run: |
           chmod +x upload_ppa.sh
-          # Chạy với DEBSIGN_GPGOPTS để gpg không yêu cầu tty
-          export DEBSIGN_GPGOPTS="--batch --no-tty --pinentry-mode loopback"
+          # Sử dụng --passphrase-env để lấy mật khẩu từ Github Secrets nếu khóa có đặt passphrase
+          export DEBSIGN_GPGOPTS="--batch --no-tty --pinentry-mode loopback --passphrase-env PPA_GPG_PASSPHRASE"
           ./upload_ppa.sh
