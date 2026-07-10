@@ -60,7 +60,7 @@ jobs:
   upload-copr:
     runs-on: ubuntu-latest
     container: fedora:40
-    if: false  # Tạm thời vô hiệu hóa theo yêu cầu của user để không chạy lại Copr
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
 
