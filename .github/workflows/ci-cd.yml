@@ -13,6 +13,7 @@ permissions:
 jobs:
   build-and-package:
     runs-on: ubuntu-latest
+    if: false  # Tạm thời vô hiệu hóa vì đã chạy thành công trước đó
     steps:
       - uses: actions/checkout@v4
 

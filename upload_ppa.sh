@@ -11,8 +11,8 @@ GPG_KEY="${PPA_GPG_KEY_ID}"
 FTP_SERVER="${PPA_FTP_SERVER}"
 FTP_PATH="${PPA_FTP_PATH}"
 
-# Danh sách các phiên bản Ubuntu được hỗ trợ
-SUITES=("jammy" "noble" "oracular" "plucky" "questing" "resolute")
+# Danh sách các phiên bản Ubuntu được hỗ trợ (tạm thời skip jammy)
+SUITES=("noble" "oracular" "plucky" "questing" "resolute")
 
 echo ">>> Bắt đầu quá trình CI/CD Upload PPA..."
 
