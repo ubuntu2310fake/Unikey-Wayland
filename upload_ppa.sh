@@ -47,11 +47,18 @@ EOF
     # 3. Trích xuất danh sách các tệp con cần upload từ file .changes
     FILES_TO_UPLOAD=$(awk '/^Files:/ {flag=1; next} /^ / {if(flag) print $5} /^[^ ]/ {if(flag) flag=0}' "${CHANGES_FILE}")
     
-    # Thay thế curl bằng dput chính chủ để upload lên Launchpad an toàn, tự động xử lý loại file và kết nối FTP
-    PPA_USER=$(echo "$FTP_PATH" | cut -d'/' -f1 | sed 's/~//')
-    PPA_NAME=$(echo "$FTP_PATH" | cut -d'/' -f3)
-    echo ">>> Uploading lên Launchpad qua dput cho PPA: ${PPA_USER}/${PPA_NAME}..."
-    dput -f "ppa:${PPA_USER}/${PPA_NAME}" "${CHANGES_FILE}"
+    echo ">>> Uploading lên Launchpad qua FTP (curl)..."
+    # Dùng --disable-epsv để ép curl sử dụng PASV thường, tránh lỗi tường lửa của Github Actions
+    for FILE in $FILES_TO_UPLOAD; do
+        if [ -f "../${FILE}" ]; then
+            echo " -> Uploading ${FILE}..."
+            curl -s --disable-epsv -T "../${FILE}" "ftp://${FTP_SERVER}/${FTP_PATH}/"
+        fi
+    done
+    
+    # Upload file .changes cuối cùng
+    echo " -> Uploading $(basename "${CHANGES_FILE}")..."
+    curl -s --disable-epsv -T "${CHANGES_FILE}" "ftp://${FTP_SERVER}/${FTP_PATH}/"
 done
 
 # Khôi phục changelog gốc
