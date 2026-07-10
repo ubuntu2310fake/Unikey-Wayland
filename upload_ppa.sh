@@ -47,18 +47,24 @@ EOF
     # 3. Trích xuất danh sách các tệp con cần upload từ file .changes
     FILES_TO_UPLOAD=$(awk '/^Files:/ {flag=1; next} /^ / {if(flag) print $5} /^[^ ]/ {if(flag) flag=0}' "${CHANGES_FILE}")
     
-    echo ">>> Uploading lên Launchpad qua FTP (curl)..."
-    # Dùng --disable-epsv để ép curl sử dụng PASV thường, tránh lỗi tường lửa của Github Actions
+    echo ">>> Uploading lên Launchpad qua FTP..."
+    # Dùng --disable-epsv để ép curl sử dụng PASV thường. Nếu lỗi, ta fallback sang dùng Python script dự phòng.
     for FILE in $FILES_TO_UPLOAD; do
         if [ -f "../${FILE}" ]; then
             echo " -> Uploading ${FILE}..."
-            curl -s --disable-epsv -T "../${FILE}" "ftp://${FTP_SERVER}/${FTP_PATH}/"
+            if ! curl -s --disable-epsv -T "../${FILE}" "ftp://${FTP_SERVER}/${FTP_PATH}/"; then
+                echo " -> [CẢNH BÁO] Curl thất bại. Chuyển sang dùng Python FTP script dự phòng..."
+                python3 upload_ftp.py "$FTP_SERVER" "$FTP_PATH" "../${FILE}"
+            fi
         fi
     done
     
     # Upload file .changes cuối cùng
     echo " -> Uploading $(basename "${CHANGES_FILE}")..."
-    curl -s --disable-epsv -T "${CHANGES_FILE}" "ftp://${FTP_SERVER}/${FTP_PATH}/"
+    if ! curl -s --disable-epsv -T "${CHANGES_FILE}" "ftp://${FTP_SERVER}/${FTP_PATH}/"; then
+        echo " -> [CẢNH BÁO] Curl thất bại cho file changes. Chuyển sang dùng Python FTP script dự phòng..."
+        python3 upload_ftp.py "$FTP_SERVER" "$FTP_PATH" "${CHANGES_FILE}"
+    fi
 done
 
 # Khôi phục changelog gốc
