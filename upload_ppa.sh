@@ -7,9 +7,9 @@ set -e
 PKGNAME="unikey-wayland"
 VERSION="1.0.2"
 REVISION="ppa1"
-GPG_KEY="${PPA_GPG_KEY_ID:-8A12A7DF0375164D}"
-FTP_SERVER="${PPA_FTP_SERVER:-ppa.launchpad.net}"
-FTP_PATH="${PPA_FTP_PATH:-~trex219961/ubuntu/unikey-wayland-ppa}"
+GPG_KEY="${PPA_GPG_KEY_ID}"
+FTP_SERVER="${PPA_FTP_SERVER}"
+FTP_PATH="${PPA_FTP_PATH}"
 
 # Danh sách các phiên bản Ubuntu được hỗ trợ
 SUITES=("jammy" "noble" "oracular" "plucky" "questing" "resolute")
