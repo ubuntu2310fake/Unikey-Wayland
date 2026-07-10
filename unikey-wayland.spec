@@ -1,5 +1,5 @@
 Name:           unikey-wayland
-Version:        1.0.2
+Version:        1.0.3
 Release:        1%{?dist}
 Summary:        Unikey Wayland Input Method for Vietnamese
 Packager:       Trương Hiếu
@@ -66,6 +66,11 @@ chmod 644 %{buildroot}/usr/share/metainfo/unikey-wayland.metainfo.xml
 /usr/share/metainfo/unikey-wayland.metainfo.xml
 
 %changelog
+* Fri Jul 10 2026 Trương Hiếu - 1.0.3-1
+- Add fallback IBus engine for GNOME Wayland desktop environment
+- Fix preedit text cursor jumping/duplication issues on Terminal emulators
+- Fix normal mode character duplication in Google Chrome and Electron apps on Wayland using sleep-delayed Backspaces
+
 * Wed Jul 08 2026 Trương Hiếu - 1.0.2-1
 - Fix duplicate characters in Wayland Terminal Emulators
 - Add Terminal Mode toggle in Tray Menu

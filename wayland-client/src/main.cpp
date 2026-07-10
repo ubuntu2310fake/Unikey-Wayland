@@ -159,6 +159,17 @@ static void keyboard_key(void* data, struct wl_keyboard* keyboard, uint32_t seri
 
 
 
+    // Alt + Z hotkey
+    if (key == 44 && g_alt_pressed && state_key == 1 && state->ukengine.getSwitchKey() == 1) {
+        if (g_mainWindow) {
+            g_mainWindow->setVietMode(!state->ukengine.getVietMode());
+        } else {
+            state->ukengine.setVietMode(!state->ukengine.getVietMode());
+        }
+        eaten_keys.insert(key);
+        return;
+    }
+
     // Ctrl + Shift + F5 (CS+F5) hotkey to show settings
     if (key == 63 && g_ctrl_pressed && g_shift_pressed && state_key == 1) {
         show_main_window();
@@ -241,12 +252,14 @@ static void keyboard_key(void* data, struct wl_keyboard* keyboard, uint32_t seri
 
             if (!state->ukengine.isComposing() || c == ' ' || c == '\n') {
                 if (!state->composed_word.empty()) {
-                    zwp_input_method_context_v1_preedit_string(state->context, state->latest_serial, "", "");
                     zwp_input_method_context_v1_commit_string(state->context, state->latest_serial, state->composed_word.c_str());
                     state->composed_word.clear();
-                } else if (backs == 0 && processed.empty()) {
-                    zwp_input_method_context_v1_key(state->context, serial, time, key, state_key);
-                    return;
+                } else {
+                    zwp_input_method_context_v1_preedit_string(state->context, state->latest_serial, "", "");
+                    if (backs == 0 && processed.empty() && c != '\n') {
+                        zwp_input_method_context_v1_key(state->context, serial, time, key, state_key);
+                        return;
+                    }
                 }
                 if (c == '\n') {
                     zwp_input_method_context_v1_key(state->context, serial, time, key, state_key);
