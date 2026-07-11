@@ -8,7 +8,9 @@ Build-Depends: debhelper-compat (= 13),
                libwayland-dev,
                wayland-protocols,
                qt6-base-dev,
-               libibus-1.0-dev
+               libibus-1.0-dev,
+               golang-go,
+               libxkbcommon-dev
 Standards-Version: 4.6.2
 Homepage: https://github.com/ubuntu2310fake/Unikey-Wayland
 
