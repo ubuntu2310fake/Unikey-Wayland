@@ -46,7 +46,7 @@ set(UK_SOURCES
 set(BAMBOO_LIB ${CMAKE_CURRENT_SOURCE_DIR}/src/libbamboo.a)
 add_custom_command(
     OUTPUT ${BAMBOO_LIB} ${CMAKE_CURRENT_SOURCE_DIR}/src/libbamboo.h
-    COMMAND go build -buildmode=c-archive -o ${BAMBOO_LIB} bamboo_wrapper.go
+    COMMAND go build -mod=vendor -buildmode=c-archive -o ${BAMBOO_LIB} bamboo_wrapper.go
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/bamboo_wrapper.go
 )
