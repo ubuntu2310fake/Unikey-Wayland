@@ -11,13 +11,13 @@ GPG_KEY="${PPA_GPG_KEY_ID}"
 FTP_SERVER="${PPA_FTP_SERVER}"
 FTP_PATH="${PPA_FTP_PATH}"
 
-# Danh sách các phiên bản Ubuntu được hỗ trợ (tạm thời skip jammy)
-SUITES=("noble" "oracular" "plucky" "questing" "resolute")
+# Danh sách các phiên bản Ubuntu được hỗ trợ (chỉ chạy resolute)
+SUITES=("resolute")
 
 echo ">>> Bắt đầu quá trình CI/CD Upload PPA..."
 
-# Sao lưu changelog gốc
-cp debian/changelog debian/changelog.bak
+# Sao lưu changelog gốc ra ngoài /tmp để tránh bị debuild clean xóa mất
+cp debian/changelog /tmp/changelog.bak
 
 for SUITE in "${SUITES[@]}"; do
     echo ""
@@ -68,7 +68,7 @@ EOF
 done
 
 # Khôi phục changelog gốc
-mv debian/changelog.bak debian/changelog
+mv /tmp/changelog.bak debian/changelog
 
 echo ""
 echo ">>> Hoàn tất toàn bộ quy trình đẩy PPA CI/CD!"
