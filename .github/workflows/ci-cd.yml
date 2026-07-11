@@ -93,6 +93,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Clean up old releases
+        run: rm -rf releases/*
+
       - name: Install Fedora Dependencies
         run: |
           dnf install -y cmake gcc-c++ qt6-qtbase-devel wayland-devel wayland-protocols-devel pkgconfig golang rpm-build copr-cli git
@@ -128,7 +131,7 @@ jobs:
 
   build-ppa:
     runs-on: ubuntu-latest
-    if: false  # Tạm thời vô hiệu hóa do PPA đã hoàn tất thành công
+    if: false  # Vô hiệu hóa do PPA đã hoàn tất thành công
     steps:
       - uses: actions/checkout@v4
 
