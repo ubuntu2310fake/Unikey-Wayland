@@ -58,6 +58,10 @@ EOF
     
     echo ">>> Uploading lên Launchpad qua Python FTP (Single Session)..."
     python3 upload_ftp.py "$FTP_SERVER" "$FTP_PATH" $UPLOAD_LIST
+    
+    # Chờ 20 giây để máy chủ FTP của Launchpad reset trạng thái kết nối, tránh dính rate-limit
+    echo " -> Chờ 20 giây trước khi đóng gói phiên bản tiếp theo..."
+    sleep 20
 done
 
 # Khôi phục changelog gốc

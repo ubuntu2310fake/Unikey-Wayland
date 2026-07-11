@@ -35,7 +35,8 @@ def upload_files_single_session(ftp_server, ftp_path, file_paths):
         except Exception as e:
             print(f" -> Python FTP Error (lượt thử {attempt + 1}/{max_retries}): {e}")
             if attempt < max_retries - 1:
-                time.sleep(5)
+                print(" -> Chờ 30 giây trước khi mở kết nối mới để thử lại...")
+                time.sleep(30)
             else:
                 raise e
 
