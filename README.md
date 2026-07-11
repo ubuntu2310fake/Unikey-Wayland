@@ -85,3 +85,13 @@ cmake --build build
 
 ## Bản Quyền
 Mã nguồn phát triển dựa trên UniKey Engine (bản quyền GPL). Vui lòng xem tệp [LICENSE](LICENSE) để biết thêm chi tiết.
+
+## 🤣 Fun fact
+
+GitHub hiện xác định ngôn ngữ chính của Unikey-Wayland là **Makefile (61,6%)**.
+
+Nói cách khác, theo GitHub thì đây là một **bộ gõ tiếng Việt Native Wayland được viết bằng... Makefile**.
+
+Không, tôi chưa implement bộ gõ Telex bằng GNU Make đâu 🤣
+
+Phần xử lý thực tế vẫn là C/C++, Wayland protocol và Bamboo Engine viết bằng Go. Chỉ là đống Makefile trong repository đã giành quyền kiểm soát biểu đồ ngôn ngữ.
