@@ -11,8 +11,8 @@ GPG_KEY="${PPA_GPG_KEY_ID}"
 FTP_SERVER="${PPA_FTP_SERVER}"
 FTP_PATH="${PPA_FTP_PATH}"
 
-# Danh sách các phiên bản Ubuntu được hỗ trợ (chỉ chạy resolute)
-SUITES=("resolute")
+# Danh sách các phiên bản Ubuntu được hỗ trợ (chạy các bản bị lỗi chữ ký trước đó, bỏ qua jammy đã chạy ngon)
+SUITES=("noble" "oracular" "plucky" "questing" "resolute")
 
 echo ">>> Bắt đầu quá trình CI/CD Upload PPA..."
 
@@ -47,24 +47,17 @@ EOF
     # 3. Trích xuất danh sách các tệp con cần upload từ file .changes
     FILES_TO_UPLOAD=$(awk '/^Files:/ {flag=1; next} /^ / {if(flag) print $5} /^[^ ]/ {if(flag) flag=0}' "${CHANGES_FILE}")
     
-    echo ">>> Uploading lên Launchpad qua FTP..."
-    # Dùng --disable-epsv để ép curl sử dụng PASV thường. Nếu lỗi, ta fallback sang dùng Python script dự phòng.
+    # Gom tất cả các file nguồn và file .changes thành một danh sách tham số để upload cùng một phiên kết nối
+    UPLOAD_LIST=""
     for FILE in $FILES_TO_UPLOAD; do
         if [ -f "../${FILE}" ]; then
-            echo " -> Uploading ${FILE}..."
-            if ! curl -s --disable-epsv -T "../${FILE}" "ftp://${FTP_SERVER}/${FTP_PATH}/"; then
-                echo " -> [CẢNH BÁO] Curl thất bại. Chuyển sang dùng Python FTP script dự phòng..."
-                python3 upload_ftp.py "$FTP_SERVER" "$FTP_PATH" "../${FILE}"
-            fi
+            UPLOAD_LIST="${UPLOAD_LIST} ../${FILE}"
         fi
     done
+    UPLOAD_LIST="${UPLOAD_LIST} ${CHANGES_FILE}"
     
-    # Upload file .changes cuối cùng
-    echo " -> Uploading $(basename "${CHANGES_FILE}")..."
-    if ! curl -s --disable-epsv -T "${CHANGES_FILE}" "ftp://${FTP_SERVER}/${FTP_PATH}/"; then
-        echo " -> [CẢNH BÁO] Curl thất bại cho file changes. Chuyển sang dùng Python FTP script dự phòng..."
-        python3 upload_ftp.py "$FTP_SERVER" "$FTP_PATH" "${CHANGES_FILE}"
-    fi
+    echo ">>> Uploading lên Launchpad qua Python FTP (Single Session)..."
+    python3 upload_ftp.py "$FTP_SERVER" "$FTP_PATH" $UPLOAD_LIST
 done
 
 # Khôi phục changelog gốc
