@@ -89,7 +89,7 @@ jobs:
   upload-copr:
     runs-on: ubuntu-latest
     container: fedora:40
-    if: false  # Vô hiệu hóa theo yêu cầu của user
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
 
@@ -128,7 +128,7 @@ jobs:
 
   build-ppa:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: false  # Tạm thời vô hiệu hóa do PPA đã hoàn tất thành công
     steps:
       - uses: actions/checkout@v4
 
