@@ -19,10 +19,13 @@ echo ">>> Bắt đầu quá trình CI/CD Upload PPA..."
 # Sao lưu changelog gốc ra ngoài /tmp để tránh bị debuild clean xóa mất
 cp debian/changelog /tmp/changelog.bak
 
+# Gom toàn bộ các file nguồn của tất cả các hệ điều hành để upload trong 1 phiên duy nhất
+ALL_UPLOAD_LIST=""
+
 for SUITE in "${SUITES[@]}"; do
     echo ""
     echo "================================================="
-    echo ">>> Đóng gói và Upload cho Ubuntu: ${SUITE}"
+    echo ">>> Đóng gói cho Ubuntu: ${SUITE}"
     echo "================================================="
     FULL_VER="${VERSION}~${REVISION}~${SUITE}"
     
@@ -47,22 +50,20 @@ EOF
     # 3. Trích xuất danh sách các tệp con cần upload từ file .changes
     FILES_TO_UPLOAD=$(awk '/^Files:/ {flag=1; next} /^ / {if(flag) print $5} /^[^ ]/ {if(flag) flag=0}' "${CHANGES_FILE}")
     
-    # Gom tất cả các file nguồn và file .changes thành một danh sách tham số để upload cùng một phiên kết nối
-    UPLOAD_LIST=""
+    # Gom tất cả các file nguồn của suite hiện tại vào danh sách tổng
     for FILE in $FILES_TO_UPLOAD; do
         if [ -f "../${FILE}" ]; then
-            UPLOAD_LIST="${UPLOAD_LIST} ../${FILE}"
+            ALL_UPLOAD_LIST="${ALL_UPLOAD_LIST} ../${FILE}"
         fi
     done
-    UPLOAD_LIST="${UPLOAD_LIST} ${CHANGES_FILE}"
-    
-    echo ">>> Uploading lên Launchpad qua Python FTP (Single Session)..."
-    python3 upload_ftp.py "$FTP_SERVER" "$FTP_PATH" $UPLOAD_LIST
-    
-    # Chờ 20 giây để máy chủ FTP của Launchpad reset trạng thái kết nối, tránh dính rate-limit
-    echo " -> Chờ 20 giây trước khi đóng gói phiên bản tiếp theo..."
-    sleep 20
+    ALL_UPLOAD_LIST="${ALL_UPLOAD_LIST} ${CHANGES_FILE}"
 done
+
+echo ""
+echo "================================================="
+echo ">>> Đẩy TẤT CẢ các bản đóng gói lên Launchpad qua 1 phiên FTP duy nhất..."
+echo "================================================="
+python3 upload_ftp.py "$FTP_SERVER" "$FTP_PATH" $ALL_UPLOAD_LIST
 
 # Khôi phục changelog gốc
 mv /tmp/changelog.bak debian/changelog
