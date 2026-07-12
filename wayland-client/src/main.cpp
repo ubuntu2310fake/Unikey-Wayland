@@ -187,8 +187,9 @@ static void keyboard_key(void* data, struct wl_keyboard* keyboard, uint32_t seri
             g_other_pressed = true;
         }
     } else if (state_key == 0) { // Released
+        int switchKeyConfig = g_mainWindow ? g_mainWindow->getSwitchKey() : 0;
         if (key == 29 || key == 97) {
-            if (g_ctrl_pressed && g_shift_pressed && !g_other_pressed) {
+            if (switchKeyConfig == 0 && g_ctrl_pressed && g_shift_pressed && !g_other_pressed) {
                 if (g_mainWindow) {
                     g_mainWindow->setVietMode(!state->viet_mode);
                 } else {
@@ -198,7 +199,7 @@ static void keyboard_key(void* data, struct wl_keyboard* keyboard, uint32_t seri
             g_ctrl_pressed = false;
             g_other_pressed = false;
         } else if (key == 42 || key == 54) {
-            if (g_ctrl_pressed && g_shift_pressed && !g_other_pressed) {
+            if (switchKeyConfig == 0 && g_ctrl_pressed && g_shift_pressed && !g_other_pressed) {
                 if (g_mainWindow) {
                     g_mainWindow->setVietMode(!state->viet_mode);
                 } else {
@@ -216,7 +217,9 @@ static void keyboard_key(void* data, struct wl_keyboard* keyboard, uint32_t seri
 
 
     // Alt + Z hotkey
-    if (key == 44 && g_alt_pressed && state_key == 1) {
+    int switchKeyConfig = g_mainWindow ? g_mainWindow->getSwitchKey() : 0;
+    bool real_alt_pressed = (g_modifiers & 8) != 0; // Better check to avoid sticky Alt bug
+    if (switchKeyConfig == 1 && key == 44 && real_alt_pressed && state_key == 1) {
         if (g_mainWindow) {
             g_mainWindow->setVietMode(!state->viet_mode);
         } else {
@@ -305,10 +308,20 @@ static void keyboard_key(void* data, struct wl_keyboard* keyboard, uint32_t seri
             if (!Bamboo_CanProcessKey(c)) {
                 char* commit_str = Bamboo_GetCommitString();
                 zwp_input_method_context_v1_preedit_string(state->context, state->latest_serial, "", "");
-                if (commit_str && strlen(commit_str) > 0) {
-                    zwp_input_method_context_v1_commit_string(state->context, state->latest_serial, commit_str);
-                }
+                std::string final_commit = commit_str ? commit_str : "";
                 if (commit_str) free(commit_str);
+                
+                // Gõ tắt (Macro)
+                if (g_mainWindow && g_mainWindow->isMacroEnabled()) {
+                    auto macros = g_mainWindow->getMacros();
+                    if (macros.find(final_commit) != macros.end()) {
+                        final_commit = macros[final_commit];
+                    }
+                }
+                
+                if (final_commit.length() > 0) {
+                    zwp_input_method_context_v1_commit_string(state->context, state->latest_serial, final_commit.c_str());
+                }
                 Bamboo_Reset();
                 
                 zwp_input_method_context_v1_key(state->context, serial, time, key, state_key);
@@ -338,8 +351,23 @@ static void keyboard_key(void* data, struct wl_keyboard* keyboard, uint32_t seri
                 }
                 Bamboo_RemoveLastChar();
             } else if (!Bamboo_CanProcessKey(c)) {
+                std::string current_word = state->composed_word;
                 Bamboo_Reset();
                 state->composed_word.clear();
+                
+                // Gõ tắt (Macro)
+                if (g_mainWindow && g_mainWindow->isMacroEnabled()) {
+                    auto macros = g_mainWindow->getMacros();
+                    if (macros.find(current_word) != macros.end()) {
+                        std::string macro_val = macros[current_word];
+                        int byte_backs = current_word.length();
+                        if (byte_backs > 0) {
+                            zwp_input_method_context_v1_delete_surrounding_text(state->context, -byte_backs, byte_backs);
+                        }
+                        zwp_input_method_context_v1_commit_string(state->context, state->latest_serial, macro_val.c_str());
+                    }
+                }
+                
                 zwp_input_method_context_v1_key(state->context, serial, time, key, state_key);
                 return;
             } else {

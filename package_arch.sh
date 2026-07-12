@@ -3,7 +3,7 @@
 # Chạy script này từ thư mục gốc của dự án: ./package_arch.sh
 set -e
 
-PKGVER="1.0.3"
+PKGVER="1.0.4"
 PKGREL="1"
 # Tự động phát hiện kiến trúc hệ thống
 DETECTED_ARCH=$(uname -m)

@@ -62,6 +62,11 @@ private:
     bool m_loadingConfig = false;
     std::map<std::string, std::string> m_macros;
 
+public:
+    const std::map<std::string, std::string>& getMacros() const { return m_macros; }
+    bool isMacroEnabled() const { return m_macroCheck->isChecked(); }
+    int getSwitchKey() const { return m_evHotkeyCombo->currentIndex(); }
+
     // Preedit exclude/include apps list
     class QPlainTextEdit* m_preeditAppsTextEdit;
 

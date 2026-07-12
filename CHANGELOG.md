@@ -4,6 +4,13 @@ Tất cả các thay đổi đáng chú ý của dự án bộ gõ Unikey Waylan
 
 Định dạng dựa trên [Keep a Changelog](https://keepachangelog.com/vi/1.0.0/).
 
+## [1.0.4] - 2026-07-11
+
+### Đã sửa (Fixed)
+- **Sửa lỗi phím tắt chuyển E/V**: Khắc phục lỗi phím tắt Alt+Z cứng ngắc, nay đã đọc cấu hình phím tắt chính xác từ giao diện người dùng. Sửa lỗi dính phím Alt khiến phím Z vô tình chuyển chế độ ngôn ngữ.
+- **Tính năng gõ tắt (Macro)**: Tích hợp hoàn chỉnh tính năng thay thế từ gõ tắt trong chế độ Wayland, cho phép người dùng định nghĩa và tự động mở rộng các cụm từ yêu thích.
+
+
 ## [1.0.3] - 2026-07-10
 
 ### Đã thêm (Added)

@@ -1,3 +1,11 @@
+unikey-wayland (1.0.4~ppa1~questing) questing; urgency=medium
+
+  * Fix E/V switch hotkeys (Alt+Z / Ctrl+Shift) ignoring config.
+  * Prevent sticky Alt key from triggering Alt+Z.
+  * Add Macro (gõ tắt) support for Wayland natively using CGO.
+
+ -- Truong Hieu <11Leak1234@protonmail.com>  Sun, 12 Jul 2026 09:00:00 +0700
+
 unikey-wayland (1.0.3~ppa1~questing) questing; urgency=medium
 
   * Add fallback IBus engine for GNOME Wayland desktop environment.
