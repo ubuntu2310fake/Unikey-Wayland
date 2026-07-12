@@ -5,7 +5,24 @@ set -e
 
 PKGVER="1.0.3"
 PKGREL="1"
-ARCH="x86_64"
+# Tự động phát hiện kiến trúc hệ thống
+DETECTED_ARCH=$(uname -m)
+if command -v dpkg &> /dev/null; then
+    DEB_ARCH=$(dpkg --print-architecture)
+    if [ "$DEB_ARCH" = "arm64" ]; then
+        DETECTED_ARCH="aarch64"
+    elif [ "$DEB_ARCH" = "amd64" ]; then
+        DETECTED_ARCH="x86_64"
+    fi
+fi
+
+if [ "$DETECTED_ARCH" = "x86_64" ] || [ "$DETECTED_ARCH" = "amd64" ]; then
+    ARCH="x86_64"
+elif [ "$DETECTED_ARCH" = "aarch64" ] || [ "$DETECTED_ARCH" = "arm64" ]; then
+    ARCH="aarch64"
+else
+    ARCH="$DETECTED_ARCH"
+fi
 PKGNAME="unikey-wayland"
 FULL_PKGVER="${PKGVER}-${PKGREL}"
 PKG_OUTPUT="releases/${PKGNAME}-${FULL_PKGVER}-${ARCH}.pkg.tar.zst"

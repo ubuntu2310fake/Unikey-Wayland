@@ -20,7 +20,7 @@ jobs:
       - name: Install Build Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake qt6-base-dev libwayland-dev wayland-protocols pkg-config libarchive-tools golang rpm debhelper devscripts build-essential libibus-1.0-dev
+          sudo apt-get install -y cmake qt6-base-dev libwayland-dev wayland-protocols pkg-config libarchive-tools golang rpm debhelper devscripts build-essential libibus-1.0-dev libxkbcommon-dev
 
       - name: Build Source
         run: |
