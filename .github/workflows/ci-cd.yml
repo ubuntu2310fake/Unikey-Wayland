@@ -12,8 +12,8 @@ permissions:
 
 jobs:
   build-and-package:
-    runs-on: ubuntu-latest
-    if: false  # Tạm thời vô hiệu hóa vì đã chạy thành công trước đó
+    runs-on: ubuntu-24.04-arm64
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
 
@@ -52,7 +52,7 @@ jobs:
           cp unikey-wayland.metainfo.xml ~/rpmbuild/SOURCES/
           cp unikey-wayland.spec ~/rpmbuild/SPECS/
           rpmbuild -bb ~/rpmbuild/SPECS/unikey-wayland.spec --define "_topdir $HOME/rpmbuild"
-          cp ~/rpmbuild/RPMS/x86_64/*.rpm releases/
+          cp ~/rpmbuild/RPMS/*/*.rpm releases/
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
@@ -131,7 +131,7 @@ jobs:
 
   build-ppa:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: false  # Tạm thời vô hiệu hóa theo yêu cầu của user
     steps:
       - uses: actions/checkout@v4
 

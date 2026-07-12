@@ -7,6 +7,7 @@ Tất cả các thay đổi đáng chú ý của dự án bộ gõ Unikey Waylan
 ## [1.0.3] - 2026-07-10
 
 ### Đã thêm (Added)
+- **Hỗ trợ kiến trúc ARM64 (aarch64)**: Tối ưu hóa toàn bộ quy trình đóng gói và biên dịch ngoại tuyến (offline-ready vendoring) cho phép chạy trên các hệ thống ARM64 (như Raspberry Pi, máy Mac Apple Silicon chạy Linux hoặc máy chủ ARM).
 - **Engine IBus fallback cho GNOME**: Hỗ trợ chạy bộ gõ dưới dạng một IBus engine độc lập (`ibus-engine-unikey-wayland`) để Unikey có thể hoạt động hoàn toàn mượt mà trên môi trường desktop GNOME Wayland.
 - **Sửa lỗi lặp chữ trên Chrome (Normal mode)**: Áp dụng cơ chế mô phỏng Backspace có độ trễ ngắn (sleep-delayed Backspaces) cho IBus engine để khắc phục triệt để lỗi lặp ký tự (như `coó`, `loônồn`) trên các trình duyệt dựa trên Chromium và ứng dụng Electron chạy Wayland.
 - **Sửa lỗi nhảy cursor trong Preedit**: Đếm chính xác số lượng ký tự Unicode thực tế bằng `g_utf8_strlen` thay vì độ dài byte khi cập nhật preedit text, khắc phục triệt để lỗi nhảy con trỏ và nhân đôi chữ ở Terminal.

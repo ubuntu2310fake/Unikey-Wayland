@@ -7,7 +7,7 @@ Giao diện cấu hình chia Tab và quản lý gõ tắt được thiết kế 
 > [!WARNING]
 > ~~**BẮT BUỘC SỬ DỤNG KDE PLASMA** (Wayland session). Giao thức input method grab bàn phím hoạt động tối ưu nhất trên bộ quản lý cửa sổ KWin của KDE.~~
 > 
-> **Hiện tại đã hỗ trợ mọi Desktop Environment** (KDE Plasma, GNOME, X11, Sway, Window Managers...) nhờ việc tích hợp song song cả Native Wayland Protocol và IBus Engine.
+> **Hiện tại đã hỗ trợ mọi Desktop Environment** (KDE Plasma, GNOME, X11, Sway, Window Managers...) và **hỗ trợ song song cả hai kiến trúc x86_64 & ARM64 (aarch64)** nhờ việc tích hợp song song cả Native Wayland Protocol, IBus Engine và tối ưu hóa biên dịch ngoại tuyến.
 
 ## Hướng Dẫn Kích Hoạt Sau Khi Cài Đặt
 
@@ -33,9 +33,9 @@ Do GNOME sử dụng IBus làm nền tảng gõ mặc định, gói cài đặt 
 
 Bạn có thể tải các gói cài đặt đóng gói sẵn cho từng Distro trực tiếp tại trang **[Releases](https://github.com/ubuntu2310fake/Unikey-Wayland/releases)** của dự án này:
 
-- **Fedora (RPM)**: Tải file `.rpm`
-- **Ubuntu / Debian (DEB)**: Tải file `.deb`
-- **Arch Linux (tar.zst)**: Tải file `.pkg.tar.zst`
+- **Fedora (RPM)**: Tải file `.rpm` (hỗ trợ cả x86_64 và aarch64/ARM64)
+- **Ubuntu / Debian (DEB)**: Tải file `.deb` (hỗ trợ cả x86_64 và arm64)
+- **Arch Linux (tar.zst)**: Tải file `.pkg.tar.zst` (hỗ trợ cả x86_64 và aarch64/ARM64)
 
 ---
 
