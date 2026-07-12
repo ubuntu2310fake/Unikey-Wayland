@@ -12,7 +12,10 @@ permissions:
 
 jobs:
   build-and-package:
-    runs-on: ubuntu-26.04-arm
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-26.04-arm]
+    runs-on: ${{ matrix.os }}
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
@@ -89,7 +92,6 @@ jobs:
   upload-copr:
     runs-on: ubuntu-latest
     container: fedora:40
-    if: false  # Vô hiệu hóa do Copr đã hoàn tất
     steps:
       - uses: actions/checkout@v4
 
@@ -131,7 +133,6 @@ jobs:
 
   build-ppa:
     runs-on: ubuntu-latest
-    if: false  # Tạm thời vô hiệu hóa theo yêu cầu của user
     steps:
       - uses: actions/checkout@v4
 
