@@ -13,6 +13,7 @@ permissions:
 jobs:
   build-x64:
     runs-on: windows-2025-vs2026
+    if: false # TAM THOI TAT THEO YEU CAU DE FOCUS BUILD ARM
     steps:
       - uses: actions/checkout@v4
 
@@ -83,7 +84,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Qt for ARM64 Cross-compilation
+      # Phai cai Host Qt (x64) truoc vi aqtinstall va Qt tooling (moc, uic...) can no
+      - name: Install Host Qt (x64)
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.8.0'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_msvc2022_64'
+          dir: 'C:/Qt'
+
+      # Sau do moi cai Target Qt (ARM64) vao cung thu muc
+      - name: Install Target Qt (ARM64)
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.8.0'
