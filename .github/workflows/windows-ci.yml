@@ -94,14 +94,14 @@ jobs:
           arch: 'win64_msvc2022_64'
           dir: 'C:/Qt'
 
-      # Sau do moi cai Target Qt (ARM64) vao cung thu muc
+      # Sau do moi cai Target Qt (ARM64 Cross Compiled) vao cung thu muc
       - name: Install Target Qt (ARM64)
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.8.0'
           host: 'windows'
           target: 'desktop'
-          arch: 'win64_msvc2022_arm64'
+          arch: 'win64_msvc2022_arm64_cross_compiled'
           dir: 'C:/Qt'
 
       - name: Set up MSVC for ARM64 Cross-compilation

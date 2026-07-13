@@ -1,6 +1,6 @@
 # Unikey-Wayland
 
-Bộ gõ tiếng Việt UniKey được viết lại giao diện cấu hình bằng **Qt 6** tối ưu hóa cho môi trường **KDE Plasma Wayland**.
+Bộ gõ tiếng Việt UniKey được viết lại giao diện cấu hình bằng **Qt 6** tối ưu hóa cho môi trường **KDE Plasma Wayland** (phiên bản gốc) và nay đã hỗ trợ chạy native trên hệ điều hành **Windows (Windows Edition)**.
 
 Giao diện cấu hình chia Tab và quản lý gõ tắt được thiết kế dựa trên nguồn cảm hứng từ EVKey/UniKey truyền thống nhưng loại bỏ các thiết lập không tương thích với cơ chế của Wayland (như khởi động cùng Windows, quyền Admin, v.v.).
 
@@ -27,12 +27,19 @@ Do GNOME sử dụng IBus làm nền tảng gõ mặc định, gói cài đặt 
 4. Chuyển đổi bộ gõ bằng phím tắt `Super + Space`.
 5. Bạn có thể mở Bảng điều khiển bằng cách chuột phải vào biểu tượng IBus trên thanh Top Bar (Khay hệ thống) và chọn **Preferences**.
 
+### 3. Trên Windows (Unikey-Wayland Windows Edition)
+1. Tải về file `UnikeyWayland-Windows-x64.zip` hoặc `UnikeyWayland-Windows-ARM64.zip` từ mục **[Releases](https://github.com/ubuntu2310fake/Unikey-Wayland/releases)**.
+2. Giải nén thư mục tải về.
+3. Nhấp đúp chuột vào file `setup.bat` (chương trình sẽ tự động yêu cầu nâng quyền Admin, cài đặt ứng dụng vào `C:\Program Files\UnikeyWayland`, tạo Shortcut ngoài Desktop/Start Menu và tự động kích hoạt bộ gõ).
+4. Bạn có thể mở Bảng điều khiển bằng cách nhấp đúp vào biểu tượng chữ **V/E** dưới khay hệ thống (System Tray).
+
 ---
 
 ## Tải Xuống (Downloads)
 
-Bạn có thể tải các gói cài đặt đóng gói sẵn cho từng Distro trực tiếp tại trang **[Releases](https://github.com/ubuntu2310fake/Unikey-Wayland/releases)** của dự án này:
+Bạn có thể tải các gói cài đặt đóng gói sẵn cho từng hệ điều hành trực tiếp tại trang **[Releases](https://github.com/ubuntu2310fake/Unikey-Wayland/releases)** của dự án này:
 
+- **Windows Edition**: Tải file `.zip` (hỗ trợ cả x64 và ARM64/Copilot+ PCs)
 - **Fedora (RPM)**: Tải file `.rpm` (hỗ trợ cả x86_64 và aarch64/ARM64)
 - **Ubuntu / Debian (DEB)**: Tải file `.deb` (hỗ trợ cả x86_64 và arm64)
 - **Arch Linux (tar.zst)**: Tải file `.pkg.tar.zst` (hỗ trợ cả x86_64 và aarch64/ARM64)
