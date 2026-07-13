@@ -95,3 +95,56 @@ Nói cách khác, theo GitHub thì đây là một **bộ gõ tiếng Việt Nat
 Không, tôi chưa implement bộ gõ Telex bằng GNU Make đâu 🤣
 
 Phần xử lý thực tế vẫn là C/C++, Wayland protocol và Bamboo Engine viết bằng Go. Chỉ là đống Makefile trong repository đã giành quyền kiểm soát biểu đồ ngôn ngữ.
+
+---
+
+## Câu hỏi thường gặp (FAQ)
+
+### 1. Tại sao tên dự án vẫn là Unikey-Wayland trên mọi nền tảng?
+Dự án sinh ra trên Linux Wayland, sau đó kiến trúc được mở rộng dần để hỗ trợ các môi trường khác (IBus, Windows). Một cái tên chung chung có thể làm mất dấu nguồn gốc của dự án, vì vậy, tên Unikey-Wayland được giữ nguyên trên mọi nền tảng.
+
+### 2. Unikey-Wayland (Windows Edition) có phải là phiên bản chính của dự án không?
+Không. Unikey-Wayland là tên dự án. Windows Edition chỉ là một phiên bản của dự án dành riêng cho Windows, tương tự như GNOME/IBus Edition hay bản gốc KDE Plasma Wayland. Việc một Edition có nhiều người dùng hơn không làm thay đổi cội nguồn dự án.
+
+### 3. Unikey-Wayland có phải là UniKey chính thức không?
+Không. Đây là một dự án mã nguồn mở độc lập và không phải phiên bản chính thức của UniKey. Tên dự án không có nghĩa phần mềm được chứng thực bởi tác giả UniKey gốc.
+
+### 4. Tại sao tên là “Unikey” nhưng lại dùng lõi Bamboo?
+Unikey-Wayland sử dụng lõi xử lý tiếng Việt (Engine) được dịch lại bằng C++ từ mã nguồn mở Bamboo. Kiến trúc modular cho phép phần xử lý phím (Frontend) và phần biến đổi chữ (Backend) tách biệt hoàn toàn nhau. Vui lòng xem phần Giấy phép để biết chi tiết.
+
+### 5. Tại sao bản KDE chỉ có tên Unikey-Wayland mà các bản khác lại có chữ “Edition”?
+KDE Plasma Wayland là môi trường ban đầu mà dự án hướng tới. Các môi trường sau sử dụng chữ Edition để xác định backend chuyên biệt: GNOME (IBus) Edition, Windows Edition, v.v.
+
+### 6. Unikey-Wayland có thực sự đa nền tảng không?
+Có, nhưng theo triết lý "Native Backend". Unikey-Wayland sử dụng các module bắt phím **riêng biệt cho từng môi trường** thay vì dùng một framework giả lập. KDE dùng Wayland Protocol, GNOME dùng IBus, còn Windows dùng Global Hook.
+
+### 7. Tại sao không dùng một backend duy nhất cho tất cả nền tảng?
+Hệ thống nhập liệu hoàn toàn khác biệt giữa Wayland, IBus và Windows. Cố ép tất cả sử dụng chung một cơ chế (ví dụ: Qt Input Method) thường dẫn đến độ trễ, nháy chữ hoặc lặp ký tự.
+
+### 8. Tại sao Unikey-Wayland không thích Preedit Mode (Gạch chân chữ)?
+Đối với tiếng Việt (Telex/VNI), chúng tôi ưu tiên trải nghiệm "thay thế trực tiếp" để mang lại cảm giác gõ tự nhiên.
+- **Trên Linux:** Preedit Mode vẫn được sử dụng như một cơ chế dự phòng an toàn cho các Terminal (thông qua D-Bus).
+- **Trên Windows:** Preedit Mode đã bị **loại bỏ hoàn toàn** nhờ thuật toán lách lỗi Omnibox đặc trị (tiêm lại phím vật lý để xóa vùng chọn).
+
+### 9. Unikey-Wayland có dùng TSF (Text Services Framework) trên Windows không?
+**Tuyệt đối Không.** Windows Edition hoàn toàn không sử dụng TSF. TSF từng được chúng tôi thử nghiệm nhưng gây ra lỗi lặp chữ trên Chromium. Để đạt tốc độ tuyệt đối, chúng tôi sử dụng kiến trúc bắt phím mức thấp (Global Keyboard Hook) kết hợp API SendInput.
+
+### 10. Tại sao đôi khi bộ gõ bị lặp chữ?
+Lặp chữ xảy ra khi trạng thái bộ gõ và tốc độ render của ứng dụng bị mất đồng bộ. Đây là một lỗi nghiêm trọng. Nếu gặp lỗi này, hãy báo cáo Issue và ghi rõ nền tảng, tên ứng dụng và cách tái hiện.
+
+### 11. Tại sao không thêm sleep(20ms) để sửa lỗi lặp chữ?
+Dùng độ trễ (Delay) chỉ là cách che đậy lỗi (Race condition) trên máy tính này và sẽ sinh ra lỗi trên máy tính khác. Unikey-Wayland kiên quyết tìm ra cơ chế xử lý sự kiện chuẩn xác nhất thay vì dựa vào thời gian chờ.
+
+### 12. Tại sao Terminal luôn là chỗ bộ gõ dễ gặp vấn đề?
+Terminal có mô hình nhập liệu khác hẳn trình soạn thảo văn bản. Không thể kỳ vọng Terminal cung cấp các khả năng thay thế chữ giống như MS Word. Do đó, trên Linux, Terminal luôn bị ép vào Preedit Mode để bảo đảm an toàn.
+
+### 13. Có thể cài Unikey-Wayland và UniKey gốc cùng lúc không?
+Bạn có thể cài đặt, nhưng **tuyệt đối không bật đồng thời hai bộ gõ**. Hai phần mềm cùng tranh nhau bắt một phím sẽ gây ra lỗi văn bản không lường trước.
+
+### 14. Windows Defender báo bộ gõ đang theo dõi bàn phím. Có phải keylogger không?
+Bộ gõ nào cũng cần theo dõi phím (Global Hook) để biến T, E, L, E, X thành chữ Việt. Unikey-Wayland là mã nguồn mở 100%, xử lý ký tự hoàn toàn cục bộ (offline) và không bao giờ gửi bất kỳ dữ liệu nào lên Internet.
+
+### 15. Unikey-Wayland có chạy trên Windows không?
+Có. Hãy tải file `UnikeyWayland.exe` trong mục Release. Nó chạy hoàn toàn độc lập như mọi phần mềm Windows, không cần WSL, không cần cài Linux hay Wayland.
+
+👉 **Đọc thêm toàn bộ các câu hỏi thú vị khác tại [FAQ.md](FAQ.md)**
