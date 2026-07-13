@@ -28,14 +28,6 @@ add_custom_command(
 
 # UniKey sources
 set(UK_SOURCES
-    ../keyhook/vietkey.cpp
-    ../newkey/encode.cpp
-    ../vnconv/convert.cpp
-    ../vnconv/charset.cpp
-    ../vnconv/data.cpp
-    ../vnconv/pattern.cpp
-    ../byteio/byteio.cpp
-    src/ukengine_wrapper.cpp
     src/mainwindow.cpp
     src/trayicon.cpp
     src/macrodialog.cpp
@@ -56,10 +48,6 @@ add_executable(unikey-wayland ${PROTOCOL_C} ${UK_SOURCES})
 target_include_directories(unikey-wayland PRIVATE 
     ${CMAKE_CURRENT_BINARY_DIR} 
     include
-    ../vnconv
-    ../keyhook
-    ../newkey
-    ../byteio
 )
 
 # Add preprocessor definition so it avoids MFC/Windows headers if possible, 
@@ -86,24 +74,12 @@ pkg_check_modules(IBUS ibus-1.0)
 if (IBUS_FOUND)
     set(IBUS_SOURCES
         ../ibus-engine/main.cpp
-        ../keyhook/vietkey.cpp
-        ../newkey/encode.cpp
-        ../vnconv/convert.cpp
-        ../vnconv/charset.cpp
-        ../vnconv/data.cpp
-        ../vnconv/pattern.cpp
-        ../byteio/byteio.cpp
-        src/ukengine_wrapper.cpp
     )
 
     add_executable(ibus-engine-unikey-wayland ${IBUS_SOURCES})
     target_include_directories(ibus-engine-unikey-wayland PRIVATE 
         ${IBUS_INCLUDE_DIRS}
         include
-        ../vnconv
-        ../keyhook
-        ../newkey
-        ../byteio
         src
     )
     

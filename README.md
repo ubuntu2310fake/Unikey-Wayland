@@ -1,6 +1,8 @@
 # Unikey-Wayland
 
-Bộ gõ tiếng Việt UniKey được viết lại giao diện cấu hình bằng **Qt 6** tối ưu hóa cho môi trường **KDE Plasma Wayland** (phiên bản gốc) và nay đã hỗ trợ chạy native trên hệ điều hành **Windows (Windows Edition)**.
+Bộ gõ tiếng Việt đa nền tảng tối ưu hóa cho môi trường **KDE Plasma Wayland** (phiên bản gốc) và nay đã hỗ trợ chạy native trên hệ điều hành **Windows (Windows Edition)**.
+
+Mặc dù dự án khởi nguồn từ việc nghiên cứu mã nguồn của UniKey, nhưng hiện tại **toàn bộ logic gõ tiếng Việt cốt lõi đã được thay thế và sử dụng hoàn toàn bằng Bamboo Engine**. Giao diện cấu hình được viết mới bằng **Qt 6**.
 
 Giao diện cấu hình chia Tab và quản lý gõ tắt được thiết kế dựa trên nguồn cảm hứng từ EVKey/UniKey truyền thống nhưng loại bỏ các thiết lập không tương thích với cơ chế của Wayland (như khởi động cùng Windows, quyền Admin, v.v.).
 

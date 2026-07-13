@@ -4,7 +4,10 @@ Tất cả các thay đổi đáng chú ý của dự án bộ gõ Unikey Waylan
 
 Định dạng dựa trên [Keep a Changelog](https://keepachangelog.com/vi/1.0.0/).
 
-## [Unreleased]
+## [2.0.1] - 2026-07-13
+
+### Đã thay đổi (Changed)
+- Dọn sạch mã nguồn Unikey cũ (đã chuyển sang sử dụng hoàn toàn Bamboo Engine) và nâng cấp LICENSE lên GPLv3.
 
 ## [2.0.0] - 2026-07-13
 

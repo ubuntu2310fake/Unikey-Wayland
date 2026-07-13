@@ -1,5 +1,14 @@
 #include "mainwindow.h"
-#include "../../keyhook/keycons.h"
+// Constants previously defined in keycons.h
+#define TELEX_INPUT 1
+#define VNI_INPUT 2
+#define VIQR_INPUT 3
+#define TELEX_SIMPLIFIED_INPUT 4
+
+#define UNICODE_CHARSET 1
+#define TCVN3_CHARSET 2
+#define VNI_CHARSET 3
+#define VIQR_CHARSET 4
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>

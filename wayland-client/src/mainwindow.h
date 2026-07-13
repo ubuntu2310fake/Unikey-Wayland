@@ -11,7 +11,6 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QCloseEvent>
-#include "ukengine_wrapper.h"
 #include "macrodialog.h"
 
 class MainWindow : public QWidget {
