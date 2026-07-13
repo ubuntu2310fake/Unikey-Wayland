@@ -140,7 +140,6 @@ static char get_ascii_from_keycode(uint32_t key, uint32_t mods) {
 
 static uint32_t g_modifiers = 0;
 static std::set<uint32_t> eaten_keys;
-bool g_terminal_mode = false;
 
 static bool g_ctrl_pressed = false;
 static bool g_shift_pressed = false;
@@ -254,15 +253,6 @@ static void keyboard_key(void* data, struct wl_keyboard* keyboard, uint32_t seri
            << ", ascii=" << (c ? c : '?');
     log_to_file(ss_key.str());
     
-    if (key == 88 && g_ctrl_pressed && g_shift_pressed && state_key == 1) { // F12 = 88
-        g_terminal_mode = !g_terminal_mode;
-        std::stringstream ss_term;
-        ss_term << "Terminal Mode Toggled: " << g_terminal_mode;
-        log_to_file(ss_term.str());
-        eaten_keys.insert(key);
-        return;
-    }
-
     std::stringstream ss_viet;
     ss_viet << "DEBUG: viet_mode=" << state->viet_mode;
     log_to_file(ss_viet.str());
@@ -276,7 +266,7 @@ static void keyboard_key(void* data, struct wl_keyboard* keyboard, uint32_t seri
     }
 
     if (c != 0) {
-        if (state->content_purpose == 12 || g_terminal_mode || g_app_excluded) {
+        if (state->content_purpose == 12 || g_app_excluded) {
             // Preedit mode (Konsole, Kitty, Alacritty, or user-excluded apps)
             // Sử dụng Bamboo CGO
             if (c == '\b') {
@@ -433,7 +423,7 @@ static void keyboard_key(void* data, struct wl_keyboard* keyboard, uint32_t seri
         }
     } else {
         // c == 0 (Phím chức năng, phím tắt Ctrl, Alt, Arrow, Esc...)
-        if (state->content_purpose == 12 || g_terminal_mode || g_app_excluded) {
+        if (state->content_purpose == 12 || g_app_excluded) {
             char* preedit = Bamboo_GetPreeditString();
             if (preedit && strlen(preedit) > 0) {
                 zwp_input_method_context_v1_commit_string(state->context, state->latest_serial, preedit);

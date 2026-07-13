@@ -4,6 +4,21 @@ Tất cả các thay đổi đáng chú ý của dự án bộ gõ Unikey Waylan
 
 Định dạng dựa trên [Keep a Changelog](https://keepachangelog.com/vi/1.0.0/).
 
+## [Unreleased]
+
+## [2.0.0] - 2026-07-13
+
+### Đã thêm (Added)
+- **Hỗ trợ hệ điều hành Windows (Windows Edition)**: Hỗ trợ chạy native trên Windows sử dụng kiến trúc bắt phím toàn hệ thống mức thấp (Global Keyboard Hook) và mô phỏng phím (SendInput). Loại bỏ hoàn toàn TSF (Text Services Framework) để triệt tiêu lỗi lặp chữ/nhấp nháy trên Chrome.
+- **Phím tắt đổi E/V trên Windows**: Hỗ trợ phím tắt `Ctrl+Shift` (bắt sự kiện nhả phím thông minh, tránh xung đột phím tắt hệ thống khác) và `Alt+Z`.
+- **Cơ chế đóng gói cài đặt tự động (CI/CD)**: Tích hợp kịch bản đóng gói Windows tự động qua GitHub Actions (`windows-2025-vs2026` runner), cung cấp bộ cài đặt gồm `7z.exe` + `setup.bat` + `UnikeyWayland.7z` nâng quyền cài đặt cực nhanh.
+- **Cơ chế Hybrid lách lỗi Chrome Omnibox cho IBus Engine**: Cải tiến đột phá cơ chế xóa chữ trên IBus. Tự động kiểm tra vùng bôi đen (selection) để giả lập Backspace phá vỡ autocomplete trên Chrome Omnibox, còn khi gõ bình thường dùng `delete_surrounding_text` trực tiếp. Loại bỏ hoàn toàn lệnh ngủ `g_usleep(20ms)` trước đây, giúp gõ trên IBus nhanh và mượt mà hơn rất nhiều.
+- **Tính năng Gõ tắt (Macro) cho IBus**: Cho phép IBus Engine đọc trực tiếp bảng cấu hình gõ tắt từ file JSON và tự động thay thế từ khi gõ.
+
+### Đã thay đổi (Changed)
+- **Tắt tính năng Gõ tắt (Macro) trên Terminal (Preedit mode) ở một số phiên bản**: Do cơ chế auto-commit của một số Terminal emulator xung đột với hành vi xử lý macro của IBus, tính năng Gõ tắt đã bị loại bỏ trong chế độ Preedit của IBus để đảm bảo độ ổn định. Tính năng Gõ tắt vẫn hoạt động hoàn hảo trên chế độ Native (KDE Plasma Wayland) và bản Windows.
+- **Xóa bỏ hoàn toàn Chế độ Terminal (F12)**: Gỡ bỏ Menu và phím tắt F12 chuyển đổi chế độ Terminal thủ công trên cả 2 bản Wayland và Windows (do Windows không cần Preedit, còn Linux đã tự động nhận dạng ứng dụng qua D-Bus).
+
 ## [1.0.4] - 2026-07-11
 
 ### Đã sửa (Fixed)

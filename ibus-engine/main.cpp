@@ -4,8 +4,55 @@
 #include <fstream>
 #include <vector>
 #include <gio/gio.h>
+#include <map>
 
 #include "libbamboo.h"
+
+static bool g_macroEnabled = false;
+static std::map<std::string, std::string> g_macros;
+
+static void reload_macros() {
+    g_macros.clear();
+    g_macroEnabled = false;
+    const char* home = getenv("HOME");
+    if (!home) return;
+    std::string path = std::string(home) + "/UnikeyWayland/global.json";
+    std::ifstream f(path);
+    if (!f.is_open()) return;
+    std::string json((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
+    
+    if (json.find("\"macroEnabled\": true") != std::string::npos || json.find("\"macroEnabled\":true") != std::string::npos) {
+        g_macroEnabled = true;
+    }
+    
+    size_t macro_start = json.find("\"macros\":");
+    if (macro_start != std::string::npos) {
+        size_t obj_start = json.find("{", macro_start);
+        size_t obj_end = json.find("}", macro_start);
+        if (obj_start != std::string::npos && obj_end != std::string::npos) {
+            std::string macros_str = json.substr(obj_start + 1, obj_end - obj_start - 1);
+            size_t pos = 0;
+            while ((pos = macros_str.find("\"", pos)) != std::string::npos) {
+                size_t key_end = macros_str.find("\"", pos + 1);
+                if (key_end == std::string::npos) break;
+                std::string key = macros_str.substr(pos + 1, key_end - pos - 1);
+                
+                size_t colon = macros_str.find(":", key_end + 1);
+                if (colon == std::string::npos) break;
+                
+                size_t val_start = macros_str.find("\"", colon + 1);
+                if (val_start == std::string::npos) break;
+                
+                size_t val_end = macros_str.find("\"", val_start + 1);
+                if (val_end == std::string::npos) break;
+                
+                std::string val = macros_str.substr(val_start + 1, val_end - val_start - 1);
+                g_macros[key] = val;
+                pos = val_end + 1;
+            }
+        }
+    }
+}
 
 #define IBUS_TYPE_UNIKEY_ENGINE (ibus_unikey_engine_get_type ())
 #define IBUS_UNIKEY_ENGINE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), IBUS_TYPE_UNIKEY_ENGINE, IBusUnikeyEngine))
@@ -267,19 +314,7 @@ static gboolean ibus_unikey_engine_process_key_event (IBusEngine *engine_base, g
     if (keyval == IBUS_KEY_BackSpace) {
         c = '\b';
     } else if (keyval == IBUS_KEY_Return || keyval == IBUS_KEY_KP_Enter) {
-        // Enter: commit preedit nếu có, rồi trả phím lại
-        if (engine->use_preedit && engine->preedit_string->len > 0) {
-            IBusText *text = ibus_text_new_from_string(engine->preedit_string->str);
-            ibus_engine_hide_preedit_text(engine_base);
-            g_string_truncate(engine->preedit_string, 0);
-            ibus_engine_commit_text(engine_base, text);
-            *(engine->composed_word) = "";
-            Bamboo_Reset();
-            return TRUE;
-        }
-        *(engine->composed_word) = "";
-        Bamboo_Reset();
-        return FALSE;
+        c = '\n';
     } else if (keyval >= IBUS_KEY_space && keyval <= IBUS_KEY_asciitilde) {
         c = (char)keyval;
     } else {
@@ -292,6 +327,18 @@ static gboolean ibus_unikey_engine_process_key_event (IBusEngine *engine_base, g
             *(engine->composed_word) = "";
             Bamboo_Reset();
         } else {
+            std::string current_word = *(engine->composed_word);
+            if (!current_word.empty()) {
+                if (g_macroEnabled && g_macros.find(current_word) != g_macros.end()) {
+                    std::string macro_val = g_macros[current_word];
+                    int char_backs = g_utf8_strlen(current_word.c_str(), -1);
+                    if (char_backs > 0) {
+                        ibus_engine_delete_surrounding_text(engine_base, -char_backs, char_backs);
+                    }
+                    IBusText *text = ibus_text_new_from_string(macro_val.c_str());
+                    ibus_engine_commit_text(engine_base, text);
+                }
+            }
             *(engine->composed_word) = "";
             Bamboo_Reset();
         }
@@ -366,8 +413,19 @@ static gboolean ibus_unikey_engine_process_key_event (IBusEngine *engine_base, g
             }
             Bamboo_RemoveLastChar();
         } else if (!Bamboo_CanProcessKey(c)) {
+            std::string current_word = *(engine->composed_word);
             *(engine->composed_word) = "";
             Bamboo_Reset();
+
+            if (g_macroEnabled && g_macros.find(current_word) != g_macros.end()) {
+                std::string macro_val = g_macros[current_word];
+                int char_backs = g_utf8_strlen(current_word.c_str(), -1);
+                if (char_backs > 0) {
+                    ibus_engine_delete_surrounding_text(engine_base, -char_backs, char_backs);
+                }
+                IBusText *text = ibus_text_new_from_string(macro_val.c_str());
+                ibus_engine_commit_text(engine_base, text);
+            }
             return FALSE;
         } else {
             Bamboo_ProcessKey(c);
@@ -395,14 +453,20 @@ static gboolean ibus_unikey_engine_process_key_event (IBusEngine *engine_base, g
         }
         
         if (char_backs > 0) {
-            // Chrome trên Wayland bị lỗi bỏ qua lệnh delete_surrounding_text.
-            // Để tương thích, ta phải mô phỏng gửi phím Backspace giống hệt cách IBus Bamboo làm
-            // và PHẢI CÓ SLEEP để Chrome kịp nhận Backspace trước khi nhận chữ mới.
-            for (int k = 0; k < char_backs; k++) {
-                ibus_engine_forward_key_event(engine_base, IBUS_KEY_BackSpace, 14, 0);
-                ibus_engine_forward_key_event(engine_base, IBUS_KEY_BackSpace, 14, IBUS_RELEASE_MASK);
+            // Giải pháp Hybrid lấy từ zwp_v1:
+            // Nếu phát hiện có vùng bôi đen (ví dụ Chrome Omnibox), ta dùng phím Backspace mô phỏng chỉ riêng cho lúc này.
+            // Các trường hợp gõ bình thường khác, ta vẫn dùng delete_surrounding_text để đảm bảo mượt mà 100%.
+            if (engine->has_surrounding_text && engine->surrounding_cursor != engine->surrounding_anchor) {
+                int chars_to_delete = char_backs + 1; // +1 Backspace để phá vỡ vùng bôi đen
+                for (int k = 0; k < chars_to_delete; k++) {
+                    ibus_engine_forward_key_event(engine_base, IBUS_KEY_BackSpace, 14, 0);
+                    ibus_engine_forward_key_event(engine_base, IBUS_KEY_BackSpace, 14, IBUS_RELEASE_MASK);
+                }
+                // Xóa bôi đen nội bộ để không bị lặp lại
+                engine->surrounding_cursor = engine->surrounding_anchor;
+            } else {
+                ibus_engine_delete_surrounding_text(engine_base, -char_backs, char_backs);
             }
-            g_usleep(char_backs * 20000); // Ngủ 20ms cho mỗi phím Backspace để tránh race condition
         }
 
         // Commit phần suffix mới
@@ -419,6 +483,7 @@ static gboolean ibus_unikey_engine_process_key_event (IBusEngine *engine_base, g
 
 static void ibus_unikey_engine_focus_in (IBusEngine *engine) {
     ibus_unikey_engine_reset(engine);
+    reload_macros();
     
     IBusPropList *prop_list = ibus_prop_list_new ();
     IBusText *label_setup = ibus_text_new_from_string ("Cấu hình Unikey...");

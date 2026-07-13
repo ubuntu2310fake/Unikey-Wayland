@@ -19,7 +19,6 @@ private slots:
     void onTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onShowControlPanel();
     void onQuit();
-    void onToggleTerminalMode();
 
 private:
     bool* p_viet_mode;
@@ -28,7 +27,6 @@ private:
     QSystemTrayIcon* m_trayIcon;
     QMenu* m_trayMenu;
     QAction* m_actionControlPanel;
-    QAction* m_actionTerminalMode;
     QAction* m_actionQuit;
     
     QIcon m_iconV;

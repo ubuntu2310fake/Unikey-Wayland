@@ -1,23 +1,5 @@
-unikey-wayland (1.0.4~ppa1~questing) questing; urgency=medium
+unikey-wayland (2.0.0~ppa1~noble) noble; urgency=medium
 
-  * Fix E/V switch hotkeys (Alt+Z / Ctrl+Shift) ignoring config.
-  * Prevent sticky Alt key from triggering Alt+Z.
-  * Add Macro (gõ tắt) support for Wayland natively using CGO.
+  * CI/CD Automated Source Build for noble.
 
- -- Truong Hieu <11Leak1234@protonmail.com>  Sun, 12 Jul 2026 09:00:00 +0700
-
-unikey-wayland (1.0.3~ppa1~questing) questing; urgency=medium
-
-  * Add fallback IBus engine for GNOME Wayland desktop environment.
-  * Fix preedit text cursor jumping/duplication issues on Terminal emulators.
-  * Fix normal mode character duplication in Google Chrome and Electron apps on Wayland using sleep-delayed Backspaces.
-
- -- Truong Hieu <11Leak1234@protonmail.com>  Fri, 10 Jul 2026 22:00:00 +0700
-
-unikey-wayland (1.0.2~ppa1~questing) questing; urgency=medium
-
-  * Release version 1.0.2 for questing.
-  * Auto detect DE to configure IBus and Fcitx.
-  * Improve preedit/native mode switching.
-
- -- Truong Hieu <11Leak1234@protonmail.com>  Thu, 09 Jul 2026 15:02:00 +0700
+ -- Truong Hieu <11Leak1234@protonmail.com>  Sun, 12 Jul 2026 10:00:10 +0700

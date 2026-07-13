@@ -30,8 +30,6 @@ static QIcon createIconWithText(const QString& text, QColor bgColor, QColor text
 
 #include <QTimer>
 
-extern bool g_terminal_mode;
-
 TrayIcon::TrayIcon(bool* p_viet_mode, MainWindow* mainWindow, bool is_gnome, QObject* parent)
     : QObject(parent), p_viet_mode(p_viet_mode), m_mainWindow(mainWindow), m_isGnome(is_gnome) {
     
@@ -44,17 +42,12 @@ TrayIcon::TrayIcon(bool* p_viet_mode, MainWindow* mainWindow, bool is_gnome, QOb
     m_trayMenu = new QMenu();
     m_actionControlPanel = m_trayMenu->addAction("Bảng điều khiển... [CS+F5]");
     m_trayMenu->addSeparator();
-    m_actionTerminalMode = m_trayMenu->addAction("Chế độ Terminal (Konsole, Kitty) [CS+F12]");
-    m_actionTerminalMode->setCheckable(true);
-    m_actionTerminalMode->setChecked(g_terminal_mode);
-    m_trayMenu->addSeparator();
     m_actionQuit = m_trayMenu->addAction("Kết thúc");
 
     m_trayIcon->setContextMenu(m_trayMenu);
 
     connect(m_trayIcon, &QSystemTrayIcon::activated, this, &TrayIcon::onTrayIconActivated);
     connect(m_actionControlPanel, &QAction::triggered, this, &TrayIcon::onShowControlPanel);
-    connect(m_actionTerminalMode, &QAction::triggered, this, &TrayIcon::onToggleTerminalMode);
     connect(m_actionQuit, &QAction::triggered, this, &TrayIcon::onQuit);
 
     updateIcon();
@@ -92,10 +85,6 @@ void TrayIcon::updateIcon() {
             m_trayIcon->setIcon(m_iconE);
             m_trayIcon->setToolTip("UniKey - English");
         }
-    }
-
-    if (m_actionTerminalMode->isChecked() != g_terminal_mode) {
-        m_actionTerminalMode->setChecked(g_terminal_mode);
     }
 }
 
@@ -141,9 +130,6 @@ void TrayIcon::onShowControlPanel() {
     }
 }
 
-void TrayIcon::onToggleTerminalMode() {
-    g_terminal_mode = m_actionTerminalMode->isChecked();
-}
 
 void TrayIcon::onQuit() {
     QApplication::quit();
