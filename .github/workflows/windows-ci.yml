@@ -109,12 +109,18 @@ jobs:
         with:
           arch: x64_arm64
 
+      # In ra cau truc thu muc de kiem tra cho chac chan
+      - name: Inspect Qt Directories
+        shell: cmd
+        run: |
+          dir C:\Qt\Qt\6.8.0
+
       - name: Build UnikeyWayland (ARM64)
         shell: cmd
         run: |
           mkdir windows-client\build
           cd windows-client\build
-          cmake -A ARM64 -DCMAKE_PREFIX_PATH="%QT_ROOT_DIR%" ..
+          cmake -A ARM64 -DCMAKE_PREFIX_PATH="C:/Qt/Qt/6.8.0/msvc2022_arm64" ..
           cmake --build . --config Release
 
       - name: Prepare Package Bundle
