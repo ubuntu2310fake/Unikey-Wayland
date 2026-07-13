@@ -22,7 +22,7 @@ jobs:
           version: '6.8.0'
           host: 'windows'
           target: 'desktop'
-          arch: 'win64_msvc2022'
+          arch: 'win64_msvc2022_64'
           dir: 'C:/Qt'
 
       - name: Set up MSVC
@@ -79,11 +79,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build-arm64:
-    runs-on: windows-11-vs2026-arm
+    runs-on: windows-2025-vs2026
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Qt
+      - name: Install Qt for ARM64 Cross-compilation
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.8.0'
@@ -92,10 +92,10 @@ jobs:
           arch: 'win64_msvc2022_arm64'
           dir: 'C:/Qt'
 
-      - name: Set up MSVC for ARM64
+      - name: Set up MSVC for ARM64 Cross-compilation
         uses: ilammy/msvc-dev-cmd@v1
         with:
-          arch: arm64
+          arch: x64_arm64
 
       - name: Build UnikeyWayland (ARM64)
         shell: cmd
