@@ -120,7 +120,7 @@ jobs:
         run: |
           mkdir windows-client\build
           cd windows-client\build
-          cmake -A ARM64 -DCMAKE_PREFIX_PATH="C:/Qt/Qt/6.8.0/msvc2022_arm64" ..
+          cmake -A ARM64 -DCMAKE_PREFIX_PATH="C:/Qt/Qt/6.8.0/msvc2022_arm64" -DQT_HOST_PATH="C:/Qt/Qt/6.8.0/msvc2022_64" ..
           cmake --build . --config Release
 
       - name: Prepare Package Bundle
