@@ -13,7 +13,7 @@ permissions:
 jobs:
   build-x64:
     runs-on: windows-2025-vs2026
-    if: false # TAM THOI TAT THEO YEU CAU DE FOCUS BUILD ARM
+
     steps:
       - uses: actions/checkout@v4
 
