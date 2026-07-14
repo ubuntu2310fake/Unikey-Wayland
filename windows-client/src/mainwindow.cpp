@@ -13,11 +13,20 @@
 #include <QPlainTextEdit>
 #include <QSettings>
 #include <QCoreApplication>
+#include <QNetworkRequest>
+#include <QMessageBox>
+#include <QProcess>
+#include <QProgressDialog>
+#include <QTimer>
 
 MainWindow::MainWindow(bool* p_viet_mode, bool is_gnome, QWidget *parent)
     : QWidget(parent), p_viet_mode(p_viet_mode) {
     setWindowTitle("Unikey-Wayland");
     setFixedSize(450, 360);
+
+    m_networkManager = new QNetworkAccessManager(this);
+    m_reply = nullptr;
+    m_progressDialog = nullptr;
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     m_tabWidget = new QTabWidget(this);
@@ -92,8 +101,11 @@ MainWindow::MainWindow(bool* p_viet_mode, bool is_gnome, QWidget *parent)
     QVBoxLayout* sysLayout = new QVBoxLayout(tabSystem);
     m_showOnStartupCheck = new QCheckBox("Bật hội thoại này khi khởi động");
     m_runAtStartupCheck = new QCheckBox("Khởi động cùng Windows");
+    m_updateBtn = new QPushButton("Kiểm tra cập nhật (OTA)");
+    
     sysLayout->addWidget(m_showOnStartupCheck);
     sysLayout->addWidget(m_runAtStartupCheck);
+    sysLayout->addWidget(m_updateBtn);
     sysLayout->addStretch();
     m_tabWidget->addTab(tabSystem, "Hệ thống");
 
@@ -142,12 +154,16 @@ MainWindow::MainWindow(bool* p_viet_mode, bool is_gnome, QWidget *parent)
     
     connect(m_macroTableBtn, &QPushButton::clicked, this, &MainWindow::onMacroButtonClicked);
     connect(m_closeBtn, &QPushButton::clicked, this, &MainWindow::onCloseClicked);
+    connect(m_updateBtn, &QPushButton::clicked, this, [this](){ checkForUpdates(false); });
     
     // Load persisted configuration
     loadConfig();
 
     // Default config application to engine
     applySettings();
+
+    // Check update on startup silently after 3 seconds
+    QTimer::singleShot(3000, this, [this]() { checkForUpdates(true); });
 }
 
 void MainWindow::applySettings() {
@@ -289,5 +305,174 @@ void MainWindow::selectTab(const QString& name) {
             m_tabWidget->setCurrentIndex(i);
             break;
         }
+    }
+}
+
+QString MainWindow::getCurrentVersion() {
+    QFile file(QCoreApplication::applicationFilePath());
+    if (file.open(QIODevice::ReadOnly)) {
+        qint64 size = file.size();
+        qint64 readSize = qMin(size, (qint64)1024);
+        file.seek(size - readSize);
+        QByteArray data = file.read(readSize);
+        int startIdx = data.lastIndexOf("[UKW_VERSION]");
+        int endIdx = data.lastIndexOf("[/UKW_VERSION]");
+        if (startIdx != -1 && endIdx != -1 && startIdx < endIdx) {
+            startIdx += 13; // length of [UKW_VERSION]
+            return QString(data.mid(startIdx, endIdx - startIdx));
+        }
+    }
+    return "2.0.0"; // default fallback
+}
+
+void MainWindow::checkForUpdates(bool silent) {
+    m_silentUpdateCheck = silent;
+    if (!silent) {
+        m_updateBtn->setEnabled(false);
+        m_updateBtn->setText("Đang kiểm tra...");
+    }
+
+    QUrl url("https://api.github.com/repos/ubuntu2310fake/Unikey-Wayland/releases/latest");
+    QNetworkRequest request(url);
+    request.setRawHeader("User-Agent", "UnikeyWayland-Updater");
+
+    QNetworkReply* reply = m_networkManager->get(request);
+    connect(reply, &QNetworkReply::finished, this, &MainWindow::onUpdateCheckFinished);
+}
+
+void MainWindow::onUpdateCheckFinished() {
+    QNetworkReply* reply = qobject_cast<QNetworkReply*>(sender());
+    if (!reply) return;
+    reply->deleteLater();
+
+    if (!m_silentUpdateCheck) {
+        m_updateBtn->setEnabled(true);
+        m_updateBtn->setText("Kiểm tra cập nhật (OTA)");
+    }
+
+    if (reply->error() != QNetworkReply::NoError) {
+        if (!m_silentUpdateCheck) {
+            QMessageBox::warning(this, "Lỗi", "Không thể kiểm tra bản cập nhật:\\n" + reply->errorString());
+        }
+        return;
+    }
+
+    QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+    QJsonObject obj = doc.object();
+    QString latestVersion = obj.value("tag_name").toString();
+    QString currentVersion = getCurrentVersion();
+
+    if (latestVersion.isEmpty() || latestVersion == currentVersion) {
+        if (!m_silentUpdateCheck) {
+            QMessageBox::information(this, "Cập nhật", "Bạn đang sử dụng phiên bản mới nhất (" + currentVersion + ").");
+        }
+        return;
+    }
+
+    m_latestVersion = latestVersion;
+    QJsonArray assets = obj.value("assets").toArray();
+    
+#if defined(__aarch64__) || defined(_M_ARM64)
+    QString targetAsset = "UnikeyWayland-Windows-ARM64.zip";
+#else
+    QString targetAsset = "UnikeyWayland-Windows-x64.zip";
+#endif
+
+    m_downloadUrl.clear();
+    for (int i = 0; i < assets.size(); ++i) {
+        QJsonObject asset = assets[i].toObject();
+        if (asset.value("name").toString() == targetAsset) {
+            m_downloadUrl = asset.value("browser_download_url").toString();
+            break;
+        }
+    }
+
+    if (m_downloadUrl.isEmpty()) {
+        if (!m_silentUpdateCheck) {
+            QMessageBox::warning(this, "Lỗi", "Không tìm thấy file cài đặt cho nền tảng này.");
+        }
+        return;
+    }
+
+    QMessageBox::StandardButton btn = QMessageBox::question(this, "Có bản cập nhật mới",
+        "Phiên bản mới " + latestVersion + " đã sẵn sàng (Hiện tại: " + currentVersion + ").\\n\\nBạn có muốn tải xuống và cài đặt ngay không?");
+
+    if (btn == QMessageBox::Yes) {
+        QNetworkRequest request(QUrl(m_downloadUrl));
+        request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
+        request.setRawHeader("User-Agent", "UnikeyWayland-Updater");
+        
+        m_reply = m_networkManager->get(request);
+        connect(m_reply, &QNetworkReply::finished, this, &MainWindow::onUpdateDownloadFinished);
+        connect(m_reply, &QNetworkReply::downloadProgress, this, &MainWindow::onUpdateDownloadProgress);
+        
+        m_progressDialog = new QProgressDialog("Đang tải xuống bản cập nhật...", "Hủy", 0, 100, this);
+        m_progressDialog->setWindowTitle("Cập nhật OTA");
+        m_progressDialog->setWindowModality(Qt::WindowModal);
+        connect(m_progressDialog, &QProgressDialog::canceled, m_reply, &QNetworkReply::abort);
+        
+        this->setEnabled(false);
+    }
+}
+
+void MainWindow::onUpdateDownloadProgress(qint64 bytesReceived, qint64 bytesTotal) {
+    if (m_progressDialog && bytesTotal > 0) {
+        m_progressDialog->setMaximum(bytesTotal);
+        m_progressDialog->setValue(bytesReceived);
+    }
+}
+
+void MainWindow::onUpdateDownloadFinished() {
+    this->setEnabled(true);
+    if (m_progressDialog) {
+        m_progressDialog->deleteLater();
+        m_progressDialog = nullptr;
+    }
+
+    QNetworkReply* reply = m_reply;
+    m_reply = nullptr;
+    if (!reply) return;
+    reply->deleteLater();
+
+    if (reply->error() != QNetworkReply::NoError) {
+        if (reply->error() != QNetworkReply::OperationCanceledError) {
+            QMessageBox::warning(this, "Lỗi tải xuống", reply->errorString());
+        }
+        return;
+    }
+
+    QString tempPath = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/UnikeyWayland-Update.zip";
+    QFile file(tempPath);
+    if (file.open(QIODevice::WriteOnly)) {
+        file.write(reply->readAll());
+        file.close();
+    } else {
+        QMessageBox::warning(this, "Lỗi", "Không thể ghi file cập nhật vào thư mục Temp.");
+        return;
+    }
+
+    QString extractDir = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/UnikeyWayland-Update";
+    QDir dir(extractDir);
+    if (dir.exists()) dir.removeRecursively();
+    QDir().mkpath(extractDir);
+
+    QString psCmd = QString("Expand-Archive -Path '%1' -DestinationPath '%2' -Force").arg(tempPath).arg(extractDir);
+    
+    QProcess ps;
+    ps.start("powershell", QStringList() << "-Command" << psCmd);
+    ps.waitForFinished(-1);
+
+    if (ps.exitCode() != 0) {
+        QMessageBox::warning(this, "Lỗi giải nén", "Không thể giải nén file cập nhật.");
+        return;
+    }
+
+    QString setupBat = extractDir + "/setup.bat";
+    if (QFile::exists(setupBat)) {
+        // Run setup.bat asynchronously and exit
+        QProcess::startDetached("cmd.exe", QStringList() << "/c" << "start" << "\"\"" << QDir::toNativeSeparators(setupBat));
+        QApplication::quit();
+    } else {
+        QMessageBox::warning(this, "Lỗi cài đặt", "Không tìm thấy file setup.bat trong bản cập nhật.");
     }
 }

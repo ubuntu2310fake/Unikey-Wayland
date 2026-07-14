@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 
-find_package(Qt6 COMPONENTS Core Gui Widgets REQUIRED)
+find_package(Qt6 COMPONENTS Core Gui Widgets Network REQUIRED)
 
 set(UK_SOURCES
     src/main.cpp
@@ -18,7 +18,7 @@ add_executable(UnikeyWayland WIN32 ${UK_SOURCES})
 target_compile_definitions(UnikeyWayland PRIVATE -D_WIN32)
 
 target_link_libraries(UnikeyWayland PRIVATE 
-    Qt6::Core Qt6::Gui Qt6::Widgets advapi32 user32
+    Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Network advapi32 user32
 )
 
 # Cài đặt file .exe vào thư mục bin

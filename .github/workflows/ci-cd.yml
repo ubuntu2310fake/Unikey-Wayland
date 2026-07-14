@@ -169,3 +169,154 @@ jobs:
           chmod +x upload_ppa.sh
           ./upload_ppa.sh
 
+  build-windows-x64:
+    runs-on: windows-2025-vs2026
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.8.0'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_msvc2022_64'
+          dir: 'C:/Qt'
+
+      - name: Set up MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Build UnikeyWayland
+        shell: cmd
+        run: |
+          mkdir windows-client\build
+          cd windows-client\build
+          cmake -DCMAKE_PREFIX_PATH="%QT_ROOT_DIR%" ..
+          cmake --build . --config Release
+
+      - name: Get Version
+        shell: bash
+        run: |
+          VERSION=$(grep "^PKGVER=" package_arch.sh | cut -d'"' -f2)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Prepare Package Bundle
+        shell: cmd
+        run: |
+          mkdir dist
+          copy windows-client\build\Release\UnikeyWayland.exe dist\
+          copy windows-client\bamboo.dll dist\
+          
+          :: Inject magic bytes
+          echo | set /p="[UKW_VERSION]%VERSION%[/UKW_VERSION]" >> dist\UnikeyWayland.exe
+          
+          :: Chay windeployqt
+          windeployqt --dir dist dist\UnikeyWayland.exe --no-translations --no-system-d3d-compiler
+          
+          :: Tao thu muc dong goi
+          mkdir installer_dir
+          "C:\Program Files\7-Zip\7z.exe" a -t7z installer_dir\UnikeyWayland.7z .\dist\*
+          copy "C:\Program Files\7-Zip\7z.exe" installer_dir\
+          copy "C:\Program Files\7-Zip\7z.dll" installer_dir\
+          copy windows-client\setup.bat installer_dir\
+          
+          :: Nen thanh file Zip phan phoi
+          mkdir releases
+          "C:\Program Files\7-Zip\7z.exe" a -tzip releases\UnikeyWayland-Windows-x64.zip .\installer_dir\*
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: UnikeyWayland-Windows-x64
+          path: releases/UnikeyWayland-Windows-x64.zip
+
+      - name: Upload Asset to GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          tag_name: ${{ env.VERSION }}
+          files: releases/UnikeyWayland-Windows-x64.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-windows-arm64:
+    runs-on: windows-2025-vs2026
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Host Qt (x64)
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.8.0'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_msvc2022_64'
+          dir: 'C:/Qt'
+
+      - name: Install Target Qt (ARM64)
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.8.0'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_msvc2022_arm64_cross_compiled'
+          dir: 'C:/Qt'
+
+      - name: Set up MSVC for ARM64 Cross-compilation
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64_arm64
+
+      - name: Build UnikeyWayland (ARM64)
+        shell: cmd
+        run: |
+          mkdir windows-client\build
+          cd windows-client\build
+          cmake -A ARM64 -DCMAKE_PREFIX_PATH="C:/Qt/Qt/6.8.0/msvc2022_arm64" -DQT_HOST_PATH="C:/Qt/Qt/6.8.0/msvc2022_64" ..
+          cmake --build . --config Release
+
+      - name: Get Version
+        shell: bash
+        run: |
+          VERSION=$(grep "^PKGVER=" package_arch.sh | cut -d'"' -f2)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Prepare Package Bundle
+        shell: cmd
+        run: |
+          mkdir dist
+          copy windows-client\build\Release\UnikeyWayland.exe dist\
+          copy windows-client\bamboo.dll dist\
+          
+          :: Inject magic bytes
+          echo | set /p="[UKW_VERSION]%VERSION%[/UKW_VERSION]" >> dist\UnikeyWayland.exe
+          
+          :: Chay windeployqt
+          windeployqt --dir dist dist\UnikeyWayland.exe --no-translations --no-system-d3d-compiler
+          
+          :: Tao thu muc dong goi
+          mkdir installer_dir
+          "C:\Program Files\7-Zip\7z.exe" a -t7z installer_dir\UnikeyWayland.7z .\dist\*
+          copy "C:\Program Files\7-Zip\7z.exe" installer_dir\
+          copy "C:\Program Files\7-Zip\7z.dll" installer_dir\
+          copy windows-client\setup.bat installer_dir\
+          
+          :: Nen thanh file Zip phan phoi
+          mkdir releases
+          "C:\Program Files\7-Zip\7z.exe" a -tzip releases\UnikeyWayland-Windows-ARM64.zip .\installer_dir\*
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: UnikeyWayland-Windows-ARM64
+          path: releases/UnikeyWayland-Windows-ARM64.zip
+
+      - name: Upload Asset to GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          tag_name: ${{ env.VERSION }}
+          files: releases/UnikeyWayland-Windows-ARM64.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

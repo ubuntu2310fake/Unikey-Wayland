@@ -11,6 +11,8 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QCloseEvent>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 
 #include "macrodialog.h"
 
@@ -27,8 +29,21 @@ private slots:
     void applySettings();
     void onCloseClicked();
     void onMacroButtonClicked();
+    void checkForUpdates(bool silent = false);
+    void onUpdateCheckFinished();
+    void onUpdateDownloadFinished();
+    void onUpdateDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
 
 private:
+    QNetworkAccessManager* m_networkManager;
+    QNetworkReply* m_reply;
+    QString m_latestVersion;
+    QString m_downloadUrl;
+    bool m_silentUpdateCheck;
+    QPushButton* m_updateBtn;
+    class QProgressDialog* m_progressDialog;
+
+    QString getCurrentVersion();
     bool* p_viet_mode;
     QTabWidget* m_tabWidget;
 

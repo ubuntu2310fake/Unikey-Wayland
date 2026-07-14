@@ -23,14 +23,14 @@ echo.
 
 :: 2. Kiem tra cac file can thiet
 if not exist "%ZIP_FILE%" (
-    echo [Loi] Khong tim thay file %ZIP_FILE%
+    echo [Loi] Khong tim thay file "%ZIP_FILE%"
     echo Vui long dam bao UnikeyWayland.7z nam cung thu muc voi file setup.bat nay.
     pause
     exit /b 1
 )
 
 if not exist "%ZIP_EXE%" (
-    echo [Loi] Khong tim thay file %ZIP_EXE%
+    echo [Loi] Khong tim thay file "%ZIP_EXE%"
     echo Vui long dam bao 7z.exe nam cung thu muc voi file setup.bat nay.
     pause
     exit /b 1
