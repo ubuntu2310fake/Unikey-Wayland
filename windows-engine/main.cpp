@@ -57,10 +57,12 @@ std::wstring utf8_to_wstring(const std::string& str) {
 std::string _composedWord = "";
 const ULONG_PTR BAMBOO_MAGIC_INJECT = 0xBAAB00;
 
-void SendBackspaces(int count) {
-    if (count <= 0) return;
+void SendInputString(int backspaces, const std::wstring& str) {
+    if (backspaces <= 0 && str.empty()) return;
     std::vector<INPUT> inputs;
-    for (int i = 0; i < count; i++) {
+    
+    // Add backspaces
+    for (int i = 0; i < backspaces; i++) {
         INPUT in = {};
         in.type = INPUT_KEYBOARD;
         in.ki.wVk = VK_BACK;
@@ -69,12 +71,8 @@ void SendBackspaces(int count) {
         in.ki.dwFlags = KEYEVENTF_KEYUP;
         inputs.push_back(in);
     }
-    SendInput((UINT)inputs.size(), inputs.data(), sizeof(INPUT));
-}
-
-void SendUnicodeString(const std::wstring& str) {
-    if (str.empty()) return;
-    std::vector<INPUT> inputs;
+    
+    // Add unicode string
     for (size_t i = 0; i < str.length(); i++) {
         INPUT in = {};
         in.type = INPUT_KEYBOARD;
@@ -85,6 +83,7 @@ void SendUnicodeString(const std::wstring& str) {
         in.ki.dwFlags = KEYEVENTF_UNICODE | KEYEVENTF_KEYUP;
         inputs.push_back(in);
     }
+    
     SendInput((UINT)inputs.size(), inputs.data(), sizeof(INPUT));
 }
 
@@ -167,11 +166,16 @@ LRESULT CALLBACK KeyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
                 }
                 std::wstring to_insert = utf8_to_wstring(new_composed.substr(common_bytes));
 
-                if (char_backs > 0) {
-                    SendBackspaces(char_backs);
+                // LOGGING
+                FILE* f = fopen("C:\\UnikeyWayland_Debug.log", "a");
+                if (f) {
+                    fprintf(f, "Key: %c, old: '%s', new: '%s', common: %zu, char_backs: %d\n", 
+                            c == '\b' ? 'B' : c, old_composed.c_str(), new_composed.c_str(), common_bytes, char_backs);
+                    fclose(f);
                 }
-                if (!to_insert.empty()) {
-                    SendUnicodeString(to_insert);
+
+                if (char_backs > 0 || !to_insert.empty()) {
+                    SendInputString(char_backs, to_insert);
                 }
 
                 _composedWord = new_composed;
