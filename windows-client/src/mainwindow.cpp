@@ -125,7 +125,7 @@ MainWindow::MainWindow(bool* p_viet_mode, bool is_gnome, QWidget *parent)
     QVBoxLayout* aboutLayout = new QVBoxLayout(tabAbout);
     QLabel* titleLabel = new QLabel("<h2>Unikey-Wayland (Windows Edition)</h2>");
     titleLabel->setAlignment(Qt::AlignCenter);
-    QLabel* infoLabel = new QLabel("Dựa trên mã nguồn UniKey\nKiến trúc: Win32 Global Hook + Tiêm phím");
+    QLabel* infoLabel = new QLabel("Khởi nguồn từ mã nguồn Unikey nhưng logic sử dụng Bamboo Engine\nKiến trúc: Win32 Global Hook + Tiêm phím\nPhiên bản: " + getCurrentVersion());
     infoLabel->setAlignment(Qt::AlignCenter);
     aboutLayout->addStretch();
     aboutLayout->addWidget(titleLabel);
@@ -323,7 +323,7 @@ QString MainWindow::getCurrentVersion() {
             return QString(data.mid(startIdx, endIdx - startIdx));
         }
     }
-    return "2.0.0"; // default fallback
+    return "2.0.2"; // default fallback
 }
 
 void MainWindow::checkForUpdates(bool silent) {
