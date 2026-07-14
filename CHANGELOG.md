@@ -6,8 +6,16 @@ Tất cả các thay đổi đáng chú ý của dự án bộ gõ Unikey Waylan
 
 ## [2.0.1] - 2026-07-13
 
+### Đã thêm (Added)
+- **Tính năng tự động cập nhật OTA cho Windows**: Tự động kiểm tra bản phát hành mới từ GitHub qua API, tải tệp nén Zip, tự động giải nén qua PowerShell và chạy `setup.bat` để cập nhật đè ứng dụng.
+- **Tích hợp Magic Bytes**: Tự động chèn thông tin phiên bản `[UKW_VERSION]...[/UKW_VERSION]` ở cuối file thực thi `UnikeyWayland.exe` khi build trong CI/CD để phục vụ đối chiếu phiên bản.
+
+### Đã sửa (Fixed)
+- **Lỗi văng cài đặt setup.bat**: Sửa lỗi thoát CMD đột ngột khi đường dẫn cài đặt chứa dấu ngoặc đơn (ví dụ khi tải về thư mục có hậu tố `(1)`).
+
 ### Đã thay đổi (Changed)
 - Dọn sạch mã nguồn Unikey cũ (đã chuyển sang sử dụng hoàn toàn Bamboo Engine) và nâng cấp LICENSE lên GPLv3.
+- Hợp nhất toàn bộ luồng build CI/CD của cả 4 hệ điều hành (Ubuntu, Debian, Fedora, Arch Linux, Windows) vào chung file `ci-cd.yml`.
 
 ## [2.0.0] - 2026-07-13
 

@@ -18,6 +18,7 @@
 #include <QProcess>
 #include <QProgressDialog>
 #include <QTimer>
+#include <QApplication>
 
 MainWindow::MainWindow(bool* p_viet_mode, bool is_gnome, QWidget *parent)
     : QWidget(parent), p_viet_mode(p_viet_mode) {
@@ -398,7 +399,8 @@ void MainWindow::onUpdateCheckFinished() {
         "Phiên bản mới " + latestVersion + " đã sẵn sàng (Hiện tại: " + currentVersion + ").\\n\\nBạn có muốn tải xuống và cài đặt ngay không?");
 
     if (btn == QMessageBox::Yes) {
-        QNetworkRequest request(QUrl(m_downloadUrl));
+        QNetworkRequest request;
+        request.setUrl(QUrl(m_downloadUrl));
         request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
         request.setRawHeader("User-Agent", "UnikeyWayland-Updater");
         
