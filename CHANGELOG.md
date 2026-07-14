@@ -4,6 +4,13 @@ Tất cả các thay đổi đáng chú ý của dự án bộ gõ Unikey Waylan
 
 Định dạng dựa trên [Keep a Changelog](https://keepachangelog.com/vi/1.0.0/).
 
+## [2.0.3] - 2026-07-14
+
+### Đã sửa (Fixed)
+- **Lỗi lặp chữ trên Chrome Omnibox (Windows)**: Khôi phục cơ chế lách lỗi vùng bôi đen (selection) cho thuật toán gửi phím của phiên bản Windows. Gửi trước ký tự vật lý để xóa vùng bôi đen trước khi thực hiện logic Backspace.
+- **Lỗi crash bộ gõ trên Windows**: Khắc phục lỗi crash do giải phóng vùng nhớ chéo Heap (Cross-DLL Heap Corruption) giữa UnikeyWayland và bamboo.dll.
+- **Lỗi hiển thị thông tin phiên bản**: Khắc phục lỗi không xuống dòng (`\n` không hoạt động) trên giao diện Thông tin. Bổ sung việc hiển thị linh động mã phiên bản vào giao diện cho tất cả các hệ.
+
 ## [2.0.2] - 2026-07-14
 
 ### Đã sửa (Fixed)

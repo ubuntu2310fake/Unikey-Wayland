@@ -1,3 +1,10 @@
+unikey-wayland (2.0.3~ppa1~noble) noble; urgency=medium
+
+  * Fix Chrome Omnibox issue on Windows hook.
+  * Add version info to info label.
+
+ -- Truong Hieu <11Leak1234@protonmail.com>  Tue, 14 Jul 2026 11:47:00 +0700
+
 unikey-wayland (2.0.2~ppa1~noble) noble; urgency=medium
 
   * CI/CD Automated Source Build for noble.

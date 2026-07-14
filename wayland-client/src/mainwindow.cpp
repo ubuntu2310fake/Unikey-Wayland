@@ -137,7 +137,11 @@ MainWindow::MainWindow(bool* p_viet_mode, bool is_gnome, QWidget *parent)
     }
     QLabel* titleLabel = new QLabel(title);
     titleLabel->setAlignment(Qt::AlignCenter);
-    QLabel* infoLabel = new QLabel(is_gnome ? "Khởi nguồn từ mã nguồn Unikey nhưng logic sử dụng Bamboo Engine\nChạy dưới chế độ IBus Engine\nPhiên bản: 2.0.2" : "Khởi nguồn từ mã nguồn Unikey nhưng logic sử dụng Bamboo Engine\nViết lại UI bằng Qt 6 cho KDE Plasma Wayland\nPhiên bản: 2.0.2");
+    QString versionStr = QString("2.0.2");
+#ifdef UKW_VERSION
+    versionStr = QString(UKW_VERSION);
+#endif
+    QLabel* infoLabel = new QLabel(is_gnome ? "Khởi nguồn từ mã nguồn Unikey nhưng logic sử dụng Bamboo Engine<br>Chạy dưới chế độ IBus Engine<br>Phiên bản: " + versionStr : "Khởi nguồn từ mã nguồn Unikey nhưng logic sử dụng Bamboo Engine<br>Viết lại UI bằng Qt 6 cho KDE Plasma Wayland<br>Phiên bản: " + versionStr);
     infoLabel->setAlignment(Qt::AlignCenter);
     aboutLayout->addStretch();
     aboutLayout->addWidget(titleLabel);

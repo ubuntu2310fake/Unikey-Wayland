@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <unordered_set>
 
 // ---------------------------------------------------------
 // Bamboo Wrapper definitions
@@ -62,12 +63,15 @@ std::wstring utf8_to_wstring(const std::string& str) {
 // Engine State & SendInput
 // ---------------------------------------------------------
 std::string _composedWord = "";
+std::unordered_set<DWORD> eaten_keys;
 const ULONG_PTR BAMBOO_MAGIC_INJECT = 0xBAAB00;
 
-void SendBackspaces(int count) {
-    if (count <= 0) return;
+void SendInputString(int backspaces, const std::wstring& str) {
+    if (backspaces <= 0 && str.empty()) return;
     std::vector<INPUT> inputs;
-    for (int i = 0; i < count; i++) {
+    
+    // Add backspaces
+    for (int i = 0; i < backspaces; i++) {
         INPUT in = {};
         in.type = INPUT_KEYBOARD;
         in.ki.wVk = VK_BACK;
@@ -76,12 +80,8 @@ void SendBackspaces(int count) {
         in.ki.dwFlags = KEYEVENTF_KEYUP;
         inputs.push_back(in);
     }
-    SendInput((UINT)inputs.size(), inputs.data(), sizeof(INPUT));
-}
-
-void SendUnicodeString(const std::wstring& str) {
-    if (str.empty()) return;
-    std::vector<INPUT> inputs;
+    
+    // Add unicode string
     for (size_t i = 0; i < str.length(); i++) {
         INPUT in = {};
         in.type = INPUT_KEYBOARD;
@@ -92,6 +92,7 @@ void SendUnicodeString(const std::wstring& str) {
         in.ki.dwFlags = KEYEVENTF_UNICODE | KEYEVENTF_KEYUP;
         inputs.push_back(in);
     }
+    
     SendInput((UINT)inputs.size(), inputs.data(), sizeof(INPUT));
 }
 
@@ -144,6 +145,10 @@ LRESULT CALLBACK KeyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
         }
         
         if (wParam == WM_KEYUP || wParam == WM_SYSKEYUP) {
+            if (eaten_keys.count(pkb->vkCode)) {
+                eaten_keys.erase(pkb->vkCode);
+                return 1;
+            }
             if (pkb->vkCode == VK_CONTROL || pkb->vkCode == VK_SHIFT || pkb->vkCode == VK_LCONTROL || pkb->vkCode == VK_RCONTROL || pkb->vkCode == VK_LSHIFT || pkb->vkCode == VK_RSHIFT) {
                 if (switchKeyConfig == 0 && g_ctrl_shift_down && !g_other_key_pressed) {
                     // Check if both are now released or one is released? Usually toggle on release of either.
@@ -202,22 +207,26 @@ LRESULT CALLBACK KeyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
                             std::string macro_val = macros[_composedWord];
                             int char_backs = utf8_strlen(_composedWord);
                             
-                            if (char_backs > 0) {
-                                // Lách lỗi Chrome Omnibox cho tính năng Gõ tắt
-                                SendUnicodeString(std::wstring(1, (wchar_t)c));
-                                SendBackspaces(char_backs + 1);
-                            }
-                            SendUnicodeString(utf8_to_wstring(macro_val));
+                            std::wstring macro_wstr = utf8_to_wstring(macro_val);
                             if (c != '\b' && c != 0) {
-                                SendUnicodeString(std::wstring(1, (wchar_t)c));
+                                macro_wstr += (wchar_t)c;
                             }
-                            
+                            // CƠ CHẾ LÁCH LỖI CHROME OMNIBOX
+                            if (char_backs > 0 && c != '\b' && c != 0) {
+                                SendInputString(0, std::wstring(1, (wchar_t)c));
+                                SendInputString(char_backs + 1, macro_wstr);
+                            } else {
+                                SendInputString(char_backs, macro_wstr);
+                            }
                             macro_applied = true;
                         }
                     }
                     _composedWord = "";
                     Bamboo_Reset();
-                    if (macro_applied) return 1; // Eat the terminating key if macro is triggered
+                    if (macro_applied) {
+                        eaten_keys.insert(pkb->vkCode);
+                        return 1; // Eat the terminating key if macro is triggered
+                    }
                     return CallNextHookEx(NULL, nCode, wParam, lParam);
                 } else {
                     Bamboo_ProcessKey(c);
@@ -225,36 +234,46 @@ LRESULT CALLBACK KeyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
 
                 char* preedit_ptr = Bamboo_GetPreeditString ? Bamboo_GetPreeditString() : nullptr;
                 std::string new_composed = preedit_ptr ? preedit_ptr : "";
+                // Do not free(preedit_ptr) on Windows due to cross-DLL heap corruption.
 
-                size_t common_bytes = 0;
-                while (common_bytes < old_composed.length() && common_bytes < new_composed.length() &&
-                       old_composed[common_bytes] == new_composed[common_bytes]) {
-                    common_bytes++;
-                }
-                while (common_bytes > 0 && (old_composed[common_bytes] & 0xC0) == 0x80) {
-                    common_bytes--;
+                // Native Wayland Surrounding Diff Logic
+                int common_bytes = 0;
+                size_t i = 0, j = 0;
+                while (i < old_composed.length() && j < new_composed.length()) {
+                    int len1 = 1, len2 = 1;
+                    while (i + len1 < old_composed.length() && (old_composed[i + len1] & 0xC0) == 0x80) len1++;
+                    while (j + len2 < new_composed.length() && (new_composed[j + len2] & 0xC0) == 0x80) len2++;
+                    
+                    if (len1 == len2 && old_composed.substr(i, len1) == new_composed.substr(j, len2)) {
+                        common_bytes += len1;
+                        i += len1;
+                        j += len2;
+                    } else break;
                 }
 
                 int char_backs = 0;
-                if (old_composed.length() > common_bytes) {
-                    char_backs = utf8_strlen(old_composed.substr(common_bytes));
+                size_t p = common_bytes;
+                while (p < old_composed.length()) {
+                    int len = 1;
+                    while (p + len < old_composed.length() && (old_composed[p + len] & 0xC0) == 0x80) len++;
+                    char_backs++;
+                    p += len;
                 }
+
                 std::wstring to_insert = utf8_to_wstring(new_composed.substr(common_bytes));
 
-                if (char_backs > 0) {
-                    // CƠ CHẾ LÁCH LỖI CHROME OMNIBOX:
-                    // Gởi lại chính ký tự vật lý mà user vừa gõ để đè bẹp bất kỳ vùng bôi đen (selection) nào
-                    SendUnicodeString(std::wstring(1, (wchar_t)c));
-                    
-                    // Vì đã gởi 1 ký tự rác vào, ta phải xóa thêm 1 ký tự nữa
-                    SendBackspaces(char_backs + 1);
-                }
-                
-                if (!to_insert.empty()) {
-                    SendUnicodeString(to_insert);
+                if (char_backs > 0 || !to_insert.empty()) {
+                    // CƠ CHẾ LÁCH LỖI CHROME OMNIBOX
+                    if (char_backs > 0 && c != '\b' && c != 0) {
+                        SendInputString(0, std::wstring(1, (wchar_t)c));
+                        SendInputString(char_backs + 1, to_insert);
+                    } else {
+                        SendInputString(char_backs, to_insert);
+                    }
                 }
 
                 _composedWord = new_composed;
+                eaten_keys.insert(pkb->vkCode);
                 return 1; // EAT the key!
             }
         }

@@ -126,7 +126,7 @@ MainWindow::MainWindow(bool* p_viet_mode, bool is_gnome, QWidget *parent)
     QVBoxLayout* aboutLayout = new QVBoxLayout(tabAbout);
     QLabel* titleLabel = new QLabel("<h2>Unikey-Wayland (Windows Edition)</h2>");
     titleLabel->setAlignment(Qt::AlignCenter);
-    QLabel* infoLabel = new QLabel("Khởi nguồn từ mã nguồn Unikey nhưng logic sử dụng Bamboo Engine\nKiến trúc: Win32 Global Hook + Tiêm phím\nPhiên bản: " + getCurrentVersion());
+    QLabel* infoLabel = new QLabel("Khởi nguồn từ mã nguồn Unikey nhưng logic sử dụng Bamboo Engine<br>Kiến trúc: Win32 Global Hook + Tiêm phím<br>Phiên bản: " + getCurrentVersion());
     infoLabel->setAlignment(Qt::AlignCenter);
     aboutLayout->addStretch();
     aboutLayout->addWidget(titleLabel);
