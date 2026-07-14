@@ -353,7 +353,7 @@ void MainWindow::onUpdateCheckFinished() {
 
     if (reply->error() != QNetworkReply::NoError) {
         if (!m_silentUpdateCheck) {
-            QMessageBox::warning(this, "Lỗi", "Không thể kiểm tra bản cập nhật:\\n" + reply->errorString());
+            QMessageBox::warning(this, "Lỗi", "Không thể kiểm tra bản cập nhật:\n" + reply->errorString());
         }
         return;
     }
@@ -396,7 +396,7 @@ void MainWindow::onUpdateCheckFinished() {
     }
 
     QMessageBox::StandardButton btn = QMessageBox::question(this, "Có bản cập nhật mới",
-        "Phiên bản mới " + latestVersion + " đã sẵn sàng (Hiện tại: " + currentVersion + ").\\n\\nBạn có muốn tải xuống và cài đặt ngay không?");
+        "Phiên bản mới " + latestVersion + " đã sẵn sàng (Hiện tại: " + currentVersion + ").\n\nBạn có muốn tải xuống và cài đặt ngay không?");
 
     if (btn == QMessageBox::Yes) {
         QNetworkRequest request;
