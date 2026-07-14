@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <unordered_set>
 
 // ---------------------------------------------------------
 // Bamboo Wrapper definitions
@@ -55,6 +56,7 @@ std::wstring utf8_to_wstring(const std::string& str) {
 // Engine State & SendInput
 // ---------------------------------------------------------
 std::string _composedWord = "";
+std::unordered_set<DWORD> eaten_keys;
 const ULONG_PTR BAMBOO_MAGIC_INJECT = 0xBAAB00;
 
 void SendInputString(int backspaces, const std::wstring& str) {
@@ -104,6 +106,13 @@ LRESULT CALLBACK KeyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
             return CallNextHookEx(NULL, nCode, wParam, lParam);
         }
 
+        if (wParam == WM_KEYUP || wParam == WM_SYSKEYUP) {
+            if (eaten_keys.count(pkb->vkCode)) {
+                eaten_keys.erase(pkb->vkCode);
+                return 1;
+            }
+        }
+
         if (wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN) {
             bool isCtrl = (GetAsyncKeyState(VK_CONTROL) & 0x8000) != 0;
             bool isAlt = (GetAsyncKeyState(VK_MENU) & 0x8000) != 0;
@@ -150,46 +159,41 @@ LRESULT CALLBACK KeyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
 
                 char* preedit_ptr = Bamboo_GetPreeditString ? Bamboo_GetPreeditString() : nullptr;
                 std::string new_composed = preedit_ptr ? preedit_ptr : "";
+                if (preedit_ptr) free(preedit_ptr); // Free pointer like Native Wayland!
 
-                size_t common_bytes = 0;
-                while (common_bytes < old_composed.length() && common_bytes < new_composed.length() &&
-                       old_composed[common_bytes] == new_composed[common_bytes]) {
-                    common_bytes++;
-                }
-                while (common_bytes > 0 && (old_composed[common_bytes] & 0xC0) == 0x80) {
-                    common_bytes--;
+                // Native Wayland Surrounding Diff Logic
+                int common_bytes = 0;
+                size_t i = 0, j = 0;
+                while (i < old_composed.length() && j < new_composed.length()) {
+                    int len1 = 1, len2 = 1;
+                    while (i + len1 < old_composed.length() && (old_composed[i + len1] & 0xC0) == 0x80) len1++;
+                    while (j + len2 < new_composed.length() && (new_composed[j + len2] & 0xC0) == 0x80) len2++;
+                    
+                    if (len1 == len2 && old_composed.substr(i, len1) == new_composed.substr(j, len2)) {
+                        common_bytes += len1;
+                        i += len1;
+                        j += len2;
+                    } else break;
                 }
 
                 int char_backs = 0;
-                if (old_composed.length() > common_bytes) {
-                    char_backs = utf8_strlen(old_composed.substr(common_bytes));
+                size_t p = common_bytes;
+                while (p < old_composed.length()) {
+                    int len = 1;
+                    while (p + len < old_composed.length() && (old_composed[p + len] & 0xC0) == 0x80) len++;
+                    char_backs++;
+                    p += len;
                 }
+
                 std::wstring to_insert = utf8_to_wstring(new_composed.substr(common_bytes));
-
-                // LOGGING
-                FILE* f = fopen("C:\\UnikeyWayland_Debug.log", "a");
-                if (f) {
-                    fprintf(f, "Key: %c, old: '%s', new: '%s', common: %zu, char_backs: %d\n", 
-                            c == '\b' ? 'B' : c, old_composed.c_str(), new_composed.c_str(), common_bytes, char_backs);
-                    fclose(f);
-                }
-
-                bool pass_through = false;
-                if (c == '\b') {
-                    if (char_backs > 0) {
-                        char_backs--;
-                        pass_through = true;
-                    } else {
-                        pass_through = true;
-                    }
-                }
 
                 if (char_backs > 0 || !to_insert.empty()) {
                     SendInputString(char_backs, to_insert);
                 }
 
                 _composedWord = new_composed;
-                return pass_through ? CallNextHookEx(NULL, nCode, wParam, lParam) : 1; // EAT the key if not pass_through
+                eaten_keys.insert(pkb->vkCode);
+                return 1; // Always EAT the key if it was processed by Bamboo
             }
         }
     }
