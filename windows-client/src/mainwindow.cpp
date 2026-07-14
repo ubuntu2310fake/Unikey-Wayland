@@ -255,7 +255,7 @@ void MainWindow::loadConfig() {
         }
     }
 
-    QSettings bootUpSettings("HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run", QSettings::NativeFormat);
+    QSettings bootUpSettings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
     m_runAtStartupCheck->setChecked(bootUpSettings.contains("UnikeyWayland"));
 
     m_loadingConfig = false;
@@ -293,7 +293,7 @@ void MainWindow::saveConfig() {
         file.close();
     }
 
-    QSettings bootUpSettings("HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run", QSettings::NativeFormat);
+    QSettings bootUpSettings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
     if (m_runAtStartupCheck->isChecked()) {
         bootUpSettings.setValue("UnikeyWayland", QDir::toNativeSeparators(QCoreApplication::applicationFilePath()));
     } else {

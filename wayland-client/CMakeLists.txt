@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(unikey-wayland C CXX)
 
 set(CMAKE_CXX_STANDARD 11)
-add_definitions(-DUKW_VERSION="2.0.3")
+add_definitions(-DUKW_VERSION="2.0.4")
 
 # Dependencies
 find_package(PkgConfig REQUIRED)

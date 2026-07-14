@@ -4,6 +4,11 @@ Tất cả các thay đổi đáng chú ý của dự án bộ gõ Unikey Waylan
 
 Định dạng dựa trên [Keep a Changelog](https://keepachangelog.com/vi/1.0.0/).
 
+## [2.0.4] - 2026-07-14
+
+### Đã sửa (Fixed)
+- **Lỗi tính năng Khởi động cùng Windows**: Khắc phục lỗi đường dẫn Registry bị sai cú pháp, khiến ứng dụng không thể ghi khóa khởi động vào Windows Registry.
+
 ## [2.0.3] - 2026-07-14
 
 ### Đã sửa (Fixed)

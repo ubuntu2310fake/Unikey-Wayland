@@ -1,3 +1,9 @@
+unikey-wayland (2.0.4~ppa1~noble) noble; urgency=medium
+
+  * Fix QSettings registry path for Start with Windows feature.
+
+ -- Truong Hieu <11Leak1234@protonmail.com>  Tue, 14 Jul 2026 21:35:00 +0700
+
 unikey-wayland (2.0.3~ppa1~noble) noble; urgency=medium
 
   * Fix Chrome Omnibox issue on Windows hook.
