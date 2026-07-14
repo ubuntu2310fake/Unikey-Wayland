@@ -174,12 +174,22 @@ LRESULT CALLBACK KeyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
                     fclose(f);
                 }
 
+                bool pass_through = false;
+                if (c == '\b') {
+                    if (char_backs > 0) {
+                        char_backs--;
+                        pass_through = true;
+                    } else {
+                        pass_through = true;
+                    }
+                }
+
                 if (char_backs > 0 || !to_insert.empty()) {
                     SendInputString(char_backs, to_insert);
                 }
 
                 _composedWord = new_composed;
-                return 1; // EAT the key! Không cho ứng dụng nhận phím gốc nữa!
+                return pass_through ? CallNextHookEx(NULL, nCode, wParam, lParam) : 1; // EAT the key if not pass_through
             }
         }
     }
