@@ -15,10 +15,11 @@
 #include <QCoreApplication>
 #include <QNetworkRequest>
 #include <QMessageBox>
-#include <QProcess>
 #include <QProgressDialog>
 #include <QTimer>
 #include <QApplication>
+#include <QDesktopServices>
+#include <QProcess>
 
 MainWindow::MainWindow(bool* p_viet_mode, bool is_gnome, QWidget *parent)
     : QWidget(parent), p_viet_mode(p_viet_mode) {
@@ -471,8 +472,8 @@ void MainWindow::onUpdateDownloadFinished() {
 
     QString setupBat = extractDir + "/setup.bat";
     if (QFile::exists(setupBat)) {
-        // Run setup.bat asynchronously and exit
-        QProcess::startDetached("cmd.exe", QStringList() << "/c" << "start" << "\"\"" << QDir::toNativeSeparators(setupBat));
+        // Run setup.bat using default system handler (opens console automatically)
+        QDesktopServices::openUrl(QUrl::fromLocalFile(setupBat));
         QApplication::quit();
     } else {
         QMessageBox::warning(this, "Lỗi cài đặt", "Không tìm thấy file setup.bat trong bản cập nhật.");
