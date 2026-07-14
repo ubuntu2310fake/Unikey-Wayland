@@ -4,6 +4,11 @@ Tất cả các thay đổi đáng chú ý của dự án bộ gõ Unikey Waylan
 
 Định dạng dựa trên [Keep a Changelog](https://keepachangelog.com/vi/1.0.0/).
 
+## [2.0.2] - 2026-07-14
+
+### Đã sửa (Fixed)
+- **Lỗi xóa phím Backspace trên Chrome Omnibox**: Sửa lỗi "nuốt" phím Backspace vật lý khiến Chrome xóa sai vị trí chữ, gây ra hiện tượng lệch chữ khi gõ và xóa chữ (ví dụ: `địt mẹ` xóa 1 phát thành `địt e`). Trả phím Backspace gốc lại cho trình duyệt xử lý tự nhiên.
+
 ## [2.0.1] - 2026-07-13
 
 ### Đã thêm (Added)
