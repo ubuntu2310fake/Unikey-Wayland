@@ -282,6 +282,7 @@ static void ibus_unikey_engine_destroy (IBusObject *object) {
 
 static gboolean ibus_unikey_engine_process_key_event (IBusEngine *engine_base, guint keyval, guint keycode, guint modifiers) {
     IBusUnikeyEngine *engine = IBUS_UNIKEY_ENGINE (engine_base);
+    g_printerr("KEYVAL: %d, char: %c, use_preedit: %d, has_sur: %d, char_backs: %d\n", keyval, keyval < 128 ? keyval : '?', engine->use_preedit, engine->has_surrounding_text, 0);
     
     // Bỏ qua khi nhả phím (key release)
     if (modifiers & IBUS_RELEASE_MASK) {
@@ -453,20 +454,9 @@ static gboolean ibus_unikey_engine_process_key_event (IBusEngine *engine_base, g
         }
         
         if (char_backs > 0) {
-            // Giải pháp Hybrid lấy từ zwp_v1:
-            // Nếu phát hiện có vùng bôi đen (ví dụ Chrome Omnibox), ta dùng phím Backspace mô phỏng chỉ riêng cho lúc này.
-            // Các trường hợp gõ bình thường khác, ta vẫn dùng delete_surrounding_text để đảm bảo mượt mà 100%.
-            if (engine->has_surrounding_text && engine->surrounding_cursor != engine->surrounding_anchor) {
-                int chars_to_delete = char_backs + 1; // +1 Backspace để phá vỡ vùng bôi đen
-                for (int k = 0; k < chars_to_delete; k++) {
-                    ibus_engine_forward_key_event(engine_base, IBUS_KEY_BackSpace, 14, 0);
-                    ibus_engine_forward_key_event(engine_base, IBUS_KEY_BackSpace, 14, IBUS_RELEASE_MASK);
-                }
-                // Xóa bôi đen nội bộ để không bị lặp lại
-                engine->surrounding_cursor = engine->surrounding_anchor;
-            } else {
-                ibus_engine_delete_surrounding_text(engine_base, -char_backs, char_backs);
-            }
+            // Trên X11, delete_surrounding_text hoạt động tốt trên Chrome.
+            // Bug Omnibox bôi đen chỉ xảy ra trên Native Wayland, X11 dùng Backspace sẽ gây race condition!
+            ibus_engine_delete_surrounding_text(engine_base, -char_backs, char_backs);
         }
 
         // Commit phần suffix mới
