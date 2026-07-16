@@ -110,33 +110,3 @@ install(TARGETS unikey-wayland DESTINATION bin)
 install(FILES ../unikey-wayland.desktop DESTINATION share/applications)
 install(FILES ../unikey-wayland.metainfo.xml DESTINATION share/metainfo)
 
-
-
-# X11 Native Client
-set(X11_CLIENT_SOURCES
-    ../x11-client/src/main.cpp
-)
-
-add_executable(unikey-x11 ${X11_CLIENT_SOURCES})
-target_include_directories(unikey-x11 PRIVATE 
-    ${CMAKE_CURRENT_BINARY_DIR} 
-    include
-    src
-)
-
-target_compile_definitions(unikey-x11 PRIVATE 
-    -D_LINUX_
-)
-target_compile_options(unikey-x11 PRIVATE
-    -Wno-narrowing
-    -include "${CMAKE_CURRENT_SOURCE_DIR}/include/windows_macros.h"
-)
-set_target_properties(unikey-x11 PROPERTIES POSITION_INDEPENDENT_CODE ON)
-
-target_link_libraries(unikey-x11 PRIVATE 
-    ${BAMBOO_LIB}
-    X11 Xtst
-)
-add_dependencies(unikey-x11 bamboo_target)
-
-install(TARGETS unikey-x11 DESTINATION bin)
