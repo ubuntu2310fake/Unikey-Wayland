@@ -326,7 +326,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish-aur:
-    needs: [build-and-package, build-windows-x64, build-windows-arm64]
+    needs: [build-and-package]
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
