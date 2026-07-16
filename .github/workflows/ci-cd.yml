@@ -378,7 +378,7 @@ jobs:
           EOF
           
           # Generate .SRCINFO
-          docker run --rm -v $PWD:/pkg -w /pkg archlinux /bin/bash -c "pacman -Sy --noconfirm base-devel sudo && useradd -m builduser && chown -R builduser:builduser /pkg && sudo -u builduser makepkg --printsrcinfo > .SRCINFO"
+          docker run --rm -v $PWD:/pkg -w /pkg archlinux /bin/bash -c "pacman -Sy --noconfirm base-devel sudo && useradd -m builduser && chown -R builduser:builduser /pkg && sudo -u builduser makepkg --printsrcinfo > .SRCINFO && chown -R $(id -u):$(id -g) /pkg"
           
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
@@ -418,7 +418,7 @@ jobs:
           EOF
           
           # Generate .SRCINFO
-          docker run --rm -v $PWD:/pkg -w /pkg archlinux /bin/bash -c "pacman -Sy --noconfirm base-devel sudo && useradd -m builduser && chown -R builduser:builduser /pkg && sudo -u builduser makepkg --printsrcinfo > .SRCINFO"
+          docker run --rm -v $PWD:/pkg -w /pkg archlinux /bin/bash -c "pacman -Sy --noconfirm base-devel sudo && useradd -m builduser && chown -R builduser:builduser /pkg && sudo -u builduser makepkg --printsrcinfo > .SRCINFO && chown -R $(id -u):$(id -g) /pkg"
           
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
