@@ -1,3 +1,10 @@
+unikey-wayland (2.0.5~ppa1~noble) noble; urgency=medium
+
+  * Fix X11 app detection for Ibus preedit mode.
+  * Restore normal mode surrounding text handling on X11.
+
+ -- Truong Hieu <11Leak1234@protonmail.com>  Thu, 16 Jul 2026 07:13:00 +0700
+
 unikey-wayland (2.0.4~ppa1~noble) noble; urgency=medium
 
   * Fix QSettings registry path for Start with Windows feature.

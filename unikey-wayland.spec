@@ -1,5 +1,5 @@
 Name:           unikey-wayland
-Version:        2.0.4
+Version:        2.0.5
 Release:        1%{?dist}
 Summary:        Unikey Wayland Input Method for Vietnamese
 Packager:       Trương Hiếu

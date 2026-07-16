@@ -4,6 +4,12 @@ Tất cả các thay đổi đáng chú ý của dự án bộ gõ Unikey Waylan
 
 Định dạng dựa trên [Keep a Changelog](https://keepachangelog.com/vi/1.0.0/).
 
+## [2.0.5] - 2026-07-16
+
+### Đã sửa (Fixed)
+- **Linux (X11)**: Khắc phục lỗi lặp chữ trên các ứng dụng X11 không hỗ trợ Preedit (ví dụ Google Chrome) và phục hồi cơ chế Surrounding Text mặc định của Ibus.
+- **Linux (CI/CD)**: Thêm quy trình tự động publish lên Arch Linux User Repository (AUR).
+
 ## [2.0.4] - 2026-07-14
 
 ### Đã sửa (Fixed)
