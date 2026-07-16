@@ -5,11 +5,31 @@
 #include <vector>
 #include <gio/gio.h>
 #include <map>
+#include <cstdio>
+#include <memory>
+#include <array>
 
 #include "libbamboo.h"
 
 static bool g_macroEnabled = false;
 static std::map<std::string, std::string> g_macros;
+
+struct DelayedCommitData {
+    IBusEngine *engine;
+    std::string text;
+};
+
+static guint g_focus_out_timer_id = 0;
+
+static gboolean commit_delayed_cb(gpointer user_data) {
+    DelayedCommitData *data = static_cast<DelayedCommitData *>(user_data);
+    if (data && data->engine && !data->text.empty()) {
+        IBusText *text = ibus_text_new_from_string(data->text.c_str());
+        ibus_engine_commit_text(data->engine, text);
+    }
+    delete data;
+    return G_SOURCE_REMOVE;
+}
 
 static void reload_macros() {
     g_macros.clear();
@@ -73,6 +93,7 @@ struct _IBusUnikeyEngine {
     bool has_surrounding_text;
     guint surrounding_cursor;
     guint surrounding_anchor;
+    bool is_x11;
 };
 
 struct _IBusUnikeyEngineClass {
@@ -133,6 +154,7 @@ static std::string get_process_exe(guint pid) {
 
 static std::vector<std::string> load_preedit_apps() {
     std::vector<std::string> apps;
+    // Default terminals and java/studio that need preedit
     apps.push_back("kitty");
     apps.push_back("alacritty");
     apps.push_back("konsole");
@@ -141,19 +163,15 @@ static std::vector<std::string> load_preedit_apps() {
     apps.push_back("lxterminal");
     apps.push_back("studio");
     apps.push_back("java");
-    apps.push_back("google-chrome");
-    apps.push_back("chrome");
-    apps.push_back("chromium");
-    apps.push_back("firefox");
-    apps.push_back("code");
-    apps.push_back("electron");
-    apps.push_back("obsidian");
+    apps.push_back("discord");
 
     const char* home = getenv("HOME");
     if (home) {
         std::string config_path = std::string(home) + "/UnikeyWayland/preedit_apps.txt";
         std::ifstream f(config_path);
         if (f.is_open()) {
+            // Xoá danh sách mặc định nếu file tồn tại để ưu tiên hoàn toàn config của người dùng
+            apps.clear();
             std::string line;
             while (std::getline(f, line)) {
                 if (!line.empty() && line[0] != '#') {
@@ -163,6 +181,27 @@ static std::vector<std::string> load_preedit_apps() {
         }
     }
     return apps;
+}
+
+static std::string get_active_window_class_x11() {
+    std::array<char, 128> buffer;
+    std::string result;
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen("xprop -id $(xprop -root _NET_ACTIVE_WINDOW 2>/dev/null | awk '{print $5}') WM_CLASS 2>/dev/null", "r"), pclose);
+    if (!pipe) {
+        return "";
+    }
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+        result += buffer.data();
+    }
+    
+    size_t pos = result.find('"');
+    if (pos != std::string::npos) {
+        size_t end_pos = result.find('"', pos + 1);
+        if (end_pos != std::string::npos) {
+            return result.substr(pos + 1, end_pos - pos - 1);
+        }
+    }
+    return "";
 }
 
 static guint get_pid_of_dbus_name(const gchar *name) {
@@ -204,8 +243,17 @@ static guint get_pid_of_dbus_name(const gchar *name) {
 
 static void ibus_unikey_engine_focus_in_id (IBusEngine *engine_base, const gchar *client_id, const gchar *detail) {
     IBusUnikeyEngine *engine = IBUS_UNIKEY_ENGINE (engine_base);
-    ibus_unikey_engine_reset(engine_base);
     
+    if (g_focus_out_timer_id != 0) {
+        g_source_remove(g_focus_out_timer_id);
+        g_focus_out_timer_id = 0;
+    }
+    
+    // We intentionally DO NOT call ibus_unikey_engine_reset here to protect against 
+    // Chrome X11 FocusOut/FocusIn storms. The state is only reset by the focus_out timeout.
+    
+    g_printerr("FOCUS IN ID: client_id='%s', detail='%s'\n", client_id ? client_id : "NULL", detail ? detail : "NULL");
+
     if (!client_id || client_id[0] == '\0') {
         engine->app_wants_preedit = false;
         engine->use_preedit = false;
@@ -218,13 +266,63 @@ static void ibus_unikey_engine_focus_in_id (IBusEngine *engine_base, const gchar
 
     engine->app_wants_preedit = false;
 
-    if (preedit_apps.empty()) {
-        preedit_apps = load_preedit_apps();
+    // Luôn tải lại config mỗi lần focus_in để nhận ngay tuỳ chỉnh từ GUI
+    preedit_apps = load_preedit_apps();
+
+    std::string client_id_str = client_id ? client_id : "";
+    
+    engine->is_x11 = false;
+    const char *wayland_display = getenv("WAYLAND_DISPLAY");
+    const char *session_type = getenv("XDG_SESSION_TYPE");
+    bool is_x11 = (wayland_display == nullptr || strlen(wayland_display) == 0) || 
+                  (session_type && std::string(session_type) == "x11");
+                  
+    if (is_x11) {
+        engine->is_x11 = true;
+    }
+
+    std::string active_x11_class = "";
+    if (engine->is_x11 && comm.empty()) {
+        active_x11_class = get_active_window_class_x11();
+    }
+
+    g_printerr("APP DETECT: comm='%s', exe='%s', client_id='%s', x11_class='%s', is_x11=%d\n",
+               comm.c_str(), exe.c_str(), client_id_str.c_str(), active_x11_class.c_str(), engine->is_x11);
+
+    // Ghi debug ra file vì ibus-daemon nuốt stderr
+    FILE *dbg = fopen("/tmp/ibus-unikey-debug.log", "a");
+    if (dbg) {
+        fprintf(dbg, "APP DETECT: comm='%s', exe='%s', client_id='%s', x11_class='%s', is_x11=%d\n",
+                comm.c_str(), exe.c_str(), client_id_str.c_str(), active_x11_class.c_str(), engine->is_x11);
+        fflush(dbg);
+        fclose(dbg);
     }
 
     for (const auto& app : preedit_apps) {
-        if ((!comm.empty() && comm.find(app) != std::string::npos) ||
-            (!exe.empty() && exe.find(app) != std::string::npos)) {
+        if (app.empty()) continue;
+
+        bool x11_only = false;
+        std::string real_app = app;
+
+        if (app[0] == '*') {
+            x11_only = true;
+            real_app = app.substr(1);
+        }
+
+        // So sánh hai chiều: real_app chứa trong comm/exe/client_id, HOẶC comm/exe/client_id chứa trong real_app
+        bool matched = false;
+        if (!comm.empty() && (comm.find(real_app) != std::string::npos || real_app.find(comm) != std::string::npos)) matched = true;
+        if (!exe.empty() && (exe.find(real_app) != std::string::npos || real_app.find(exe) != std::string::npos)) matched = true;
+        if (!client_id_str.empty() && (client_id_str.find(real_app) != std::string::npos || real_app.find(client_id_str) != std::string::npos)) matched = true;
+        if (!active_x11_class.empty() && (active_x11_class.find(real_app) != std::string::npos || real_app.find(active_x11_class) != std::string::npos)) matched = true;
+
+        if (matched) {
+            
+            if (x11_only && !engine->is_x11) {
+                // Tiền tố * nghĩa là ứng dụng này chỉ dùng Preedit trên X11
+                continue;
+            }
+
             engine->app_wants_preedit = true;
             break;
         }
@@ -265,6 +363,7 @@ static void ibus_unikey_engine_init (IBusUnikeyEngine *engine) {
     engine->has_surrounding_text = false;
     engine->surrounding_cursor = 0;
     engine->surrounding_anchor = 0;
+    engine->is_x11 = false;
 }
 
 static void ibus_unikey_engine_destroy (IBusObject *object) {
@@ -454,8 +553,7 @@ static gboolean ibus_unikey_engine_process_key_event (IBusEngine *engine_base, g
         }
         
         if (char_backs > 0) {
-            // Trên X11, delete_surrounding_text hoạt động tốt trên Chrome.
-            // Bug Omnibox bôi đen chỉ xảy ra trên Native Wayland, X11 dùng Backspace sẽ gây race condition!
+            // Trả về đúng nguyên bản github: Luôn xoá bằng delete_surrounding_text
             ibus_engine_delete_surrounding_text(engine_base, -char_backs, char_backs);
         }
 
@@ -471,8 +569,64 @@ static gboolean ibus_unikey_engine_process_key_event (IBusEngine *engine_base, g
     }
 }
 
-static void ibus_unikey_engine_focus_in (IBusEngine *engine) {
-    ibus_unikey_engine_reset(engine);
+static void ibus_unikey_engine_focus_in (IBusEngine *engine_base) {
+    IBusUnikeyEngine *engine = IBUS_UNIKEY_ENGINE(engine_base);
+
+    if (g_focus_out_timer_id != 0) {
+        g_source_remove(g_focus_out_timer_id);
+        g_focus_out_timer_id = 0;
+        // Đây là Focus Storm (FocusOut/FocusIn liên tục) — KHÔNG reset composed_word
+    } else {
+        // Focus thật sự từ app khác — reset bình thường
+        ibus_unikey_engine_reset(engine_base);
+    }
+
+    // Detect X11
+    engine->is_x11 = false;
+    const char *wayland_display = getenv("WAYLAND_DISPLAY");
+    const char *session_type = getenv("XDG_SESSION_TYPE");
+    bool is_x11 = (wayland_display == nullptr || strlen(wayland_display) == 0) ||
+                  (session_type && std::string(session_type) == "x11");
+    if (is_x11) {
+        engine->is_x11 = true;
+    }
+
+    // Trên X11, focus_in_id không được gọi, nên phải nhận diện app ở đây
+    if (engine->is_x11) {
+        preedit_apps = load_preedit_apps();
+        std::string active_class = get_active_window_class_x11();
+        engine->app_wants_preedit = false;
+
+        FILE *dbg = fopen("/tmp/ibus-unikey-debug.log", "a");
+        if (dbg) {
+            fprintf(dbg, "FOCUS_IN X11: active_class='%s'\n", active_class.c_str());
+            fflush(dbg);
+            fclose(dbg);
+        }
+
+        for (const auto& app : preedit_apps) {
+            if (app.empty()) continue;
+
+            bool x11_only = false;
+            std::string real_app = app;
+            if (app[0] == '*') {
+                x11_only = true;
+                real_app = app.substr(1);
+            }
+
+            if (!active_class.empty() &&
+                (active_class.find(real_app) != std::string::npos ||
+                 real_app.find(active_class) != std::string::npos)) {
+
+                if (x11_only && !engine->is_x11) {
+                    continue;
+                }
+                engine->app_wants_preedit = true;
+                break;
+            }
+        }
+        engine->use_preedit = engine->app_wants_preedit;
+    }
     reload_macros();
     
     IBusPropList *prop_list = ibus_prop_list_new ();
@@ -487,7 +641,7 @@ static void ibus_unikey_engine_focus_in (IBusEngine *engine) {
                                                   PROP_STATE_UNCHECKED,
                                                   NULL);
     ibus_prop_list_append (prop_list, prop_setup);
-    ibus_engine_register_properties (engine, prop_list);
+    ibus_engine_register_properties (engine_base, prop_list);
 }
 
 static void ibus_unikey_engine_property_activate (IBusEngine *engine, const gchar *prop_name, guint prop_state) {
@@ -496,8 +650,22 @@ static void ibus_unikey_engine_property_activate (IBusEngine *engine, const gcha
     }
 }
 
-static void ibus_unikey_engine_focus_out (IBusEngine *engine) {
-    ibus_unikey_engine_reset(engine);
+static gboolean focus_out_timeout_cb(gpointer user_data) {
+    IBusUnikeyEngine *engine = IBUS_UNIKEY_ENGINE(user_data);
+    engine->composed_word->clear();
+    Bamboo_Reset();
+    g_focus_out_timer_id = 0;
+    return G_SOURCE_REMOVE;
+}
+
+static void ibus_unikey_engine_focus_out(IBusEngine *engine_base) {
+    IBusUnikeyEngine *engine = IBUS_UNIKEY_ENGINE(engine_base);
+    
+    if (g_focus_out_timer_id != 0) {
+        g_source_remove(g_focus_out_timer_id);
+    }
+    // Trì hoãn việc xoá state 50ms để chống lại lỗi Focus Storm của Chrome
+    g_focus_out_timer_id = g_timeout_add(50, focus_out_timeout_cb, engine);
 }
 
 static void ibus_unikey_engine_reset (IBusEngine *engine_base) {

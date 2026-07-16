@@ -78,8 +78,12 @@ jobs:
           tag_name: ${{ env.VERSION }}
           name: Release ${{ env.VERSION }}
           body: |
-            Tự động đóng gói và phát hành phiên bản mới cho 3 hệ điều hành (Arch Linux, Ubuntu/Debian, Fedora).
+            Tự động đóng gói và phát hành phiên bản mới cho 4 hệ điều hành (Windows, Ubuntu, Fedora, Arch Linux).
             Chi tiết các thay đổi xem tại [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md).
+            
+            ### Code Signing
+            
+            Windows release binaries of Unikey-Wayland are intended to be digitally signed through the SignPath Foundation open-source code signing program.
           draft: false
           prerelease: false
           files: |
@@ -320,3 +324,104 @@ jobs:
           files: releases/UnikeyWayland-Windows-ARM64.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-aur:
+    needs: [build-and-package, build-windows-x64, build-windows-arm64]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get Version
+        run: |
+          VERSION=$(grep "^PKGVER=" package_arch.sh | cut -d'"' -f2)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Setup SSH for AUR
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      - name: Publish unikey-wayland (Source) to AUR
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan aur.archlinux.org >> ~/.ssh/known_hosts
+          git clone ssh://aur@aur.archlinux.org/unikey-wayland.git aur-src
+          cd aur-src
+          
+          # Create PKGBUILD
+          cat << 'EOF' > PKGBUILD
+          pkgname=unikey-wayland
+          pkgver=${{ env.VERSION }}
+          pkgrel=1
+          pkgdesc="Unikey Wayland Input Method for Vietnamese"
+          arch=('x86_64' 'aarch64')
+          url="https://github.com/${{ github.repository }}"
+          license=('GPL3')
+          depends=('qt6-base' 'wayland' 'ibus' 'libxkbcommon' 'libx11' 'libxtst')
+          makedepends=('cmake' 'wayland-protocols' 'git' 'go')
+          source=("${pkgname}-${pkgver}.tar.gz::https://github.com/${{ github.repository }}/archive/refs/tags/${pkgver}.tar.gz")
+          sha256sums=('SKIP')
+          
+          build() {
+            cd "Unikey-Wayland-${pkgver}"
+            mkdir -p wayland-client/build
+            cd wayland-client/build
+            cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBEXECDIR=/usr/lib ..
+            make
+          }
+          
+          package() {
+            cd "Unikey-Wayland-${pkgver}/wayland-client/build"
+            make DESTDIR="$pkgdir" install
+          }
+          EOF
+          
+          # Generate .SRCINFO
+          docker run --rm -v $PWD:/pkg -w /pkg archlinux /bin/bash -c "pacman -Sy --noconfirm base-devel sudo && useradd -m builduser && chown -R builduser:builduser /pkg && sudo -u builduser makepkg --printsrcinfo > .SRCINFO"
+          
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add PKGBUILD .SRCINFO
+          git commit -m "Update to ${{ env.VERSION }}" || echo "No changes to commit"
+          git push origin master || echo "Push failed, maybe already up to date"
+
+      - name: Publish unikey-wayland-bin (Binary) to AUR
+        run: |
+          git clone ssh://aur@aur.archlinux.org/unikey-wayland-bin.git aur-bin
+          cd aur-bin
+          
+          cat << 'EOF' > PKGBUILD
+          pkgname=unikey-wayland-bin
+          pkgver=${{ env.VERSION }}
+          pkgrel=1
+          pkgdesc="Unikey Wayland Input Method for Vietnamese (Prebuilt)"
+          arch=('x86_64' 'aarch64')
+          url="https://github.com/${{ github.repository }}"
+          license=('GPL3')
+          depends=('qt6-base' 'wayland' 'ibus' 'libxkbcommon' 'libx11' 'libxtst')
+          provides=('unikey-wayland')
+          conflicts=('unikey-wayland')
+          source_x86_64=("unikey-wayland-x86_64.pkg.tar.zst::https://github.com/${{ github.repository }}/releases/download/${pkgver}/unikey-wayland-${pkgver}-1-x86_64.pkg.tar.zst")
+          source_aarch64=("unikey-wayland-aarch64.pkg.tar.zst::https://github.com/${{ github.repository }}/releases/download/${pkgver}/unikey-wayland-${pkgver}-1-aarch64.pkg.tar.zst")
+          noextract=('unikey-wayland-x86_64.pkg.tar.zst' 'unikey-wayland-aarch64.pkg.tar.zst')
+          sha256sums_x86_64=('SKIP')
+          sha256sums_aarch64=('SKIP')
+          
+          package() {
+            if [ "$CARCH" = "x86_64" ]; then
+                bsdtar -xf "${srcdir}/unikey-wayland-x86_64.pkg.tar.zst" -C "${pkgdir}" usr
+            elif [ "$CARCH" = "aarch64" ]; then
+                bsdtar -xf "${srcdir}/unikey-wayland-aarch64.pkg.tar.zst" -C "${pkgdir}" usr
+            fi
+          }
+          EOF
+          
+          # Generate .SRCINFO
+          docker run --rm -v $PWD:/pkg -w /pkg archlinux /bin/bash -c "pacman -Sy --noconfirm base-devel sudo && useradd -m builduser && chown -R builduser:builduser /pkg && sudo -u builduser makepkg --printsrcinfo > .SRCINFO"
+          
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add PKGBUILD .SRCINFO
+          git commit -m "Update to ${{ env.VERSION }}" || echo "No changes to commit"
+          git push origin master || echo "Push failed, maybe already up to date"

@@ -1,5 +1,7 @@
+/home/truonghieu/Downloads/Uk362/build/CMakeFiles/bamboo_target.dir
 /home/truonghieu/Downloads/Uk362/build/CMakeFiles/unikey-wayland.dir
 /home/truonghieu/Downloads/Uk362/build/CMakeFiles/ibus-engine-unikey-wayland.dir
+/home/truonghieu/Downloads/Uk362/build/CMakeFiles/unikey-x11.dir
 /home/truonghieu/Downloads/Uk362/build/CMakeFiles/edit_cache.dir
 /home/truonghieu/Downloads/Uk362/build/CMakeFiles/rebuild_cache.dir
 /home/truonghieu/Downloads/Uk362/build/CMakeFiles/list_install_components.dir
@@ -10,3 +12,5 @@
 /home/truonghieu/Downloads/Uk362/build/CMakeFiles/unikey-wayland_autogen.dir
 /home/truonghieu/Downloads/Uk362/build/CMakeFiles/ibus-engine-unikey-wayland_autogen_timestamp_deps.dir
 /home/truonghieu/Downloads/Uk362/build/CMakeFiles/ibus-engine-unikey-wayland_autogen.dir
+/home/truonghieu/Downloads/Uk362/build/CMakeFiles/unikey-x11_autogen_timestamp_deps.dir
+/home/truonghieu/Downloads/Uk362/build/CMakeFiles/unikey-x11_autogen.dir

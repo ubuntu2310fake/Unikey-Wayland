@@ -1,8 +1,12 @@
 # Hashes of file build rules.
+2d09585241b21dc6ca787c27fdb5e235 /home/truonghieu/Downloads/Uk362/wayland-client/src/libbamboo.a
+827f3c194525c4a2e436acf959d6800c CMakeFiles/bamboo_target
 827f3c194525c4a2e436acf959d6800c CMakeFiles/ibus-engine-unikey-wayland_autogen
 827f3c194525c4a2e436acf959d6800c CMakeFiles/unikey-wayland_autogen
 827f3c194525c4a2e436acf959d6800c CMakeFiles/unikey-wayland_autogen_timestamp_deps
+827f3c194525c4a2e436acf959d6800c CMakeFiles/unikey-x11_autogen
 1088069e18a4f0f95be0bccb4be30b74 ibus-engine-unikey-wayland_autogen/timestamp
 e2bcd481653e42229b15b58e6da00adf input-method-unstable-v1-protocol.c
 98a2f9f81a3bbe39e0c5702fd995a0c9 input-method-unstable-v2-protocol.c
 0b03cf07420d45dc8325a5a348203af3 unikey-wayland_autogen/timestamp
+81b7ba1fc4b2fc48b54ad2604efe8c92 unikey-x11_autogen/timestamp

@@ -1629,5 +1629,5 @@ pkgcfg_lib_IBUS_ibus-1.0-ADVANCED:INTERNAL=1
 pkgcfg_lib_WAYLAND_CLIENT_m-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib_WAYLAND_CLIENT_wayland-client
 pkgcfg_lib_WAYLAND_CLIENT_wayland-client-ADVANCED:INTERNAL=1
-prefix_result:INTERNAL=/usr/lib64
+prefix_result:INTERNAL=/usr/bin/wayland-scanner
 

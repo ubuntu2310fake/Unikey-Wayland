@@ -285,6 +285,16 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/lib64/cmake/Qt6Gui/Qt6QWaylandIntegrationPluginTargets-relwithdebinfo.cmake"
   "/usr/lib64/cmake/Qt6Gui/Qt6QWaylandIntegrationPluginTargets.cmake"
   "/usr/lib64/cmake/Qt6Gui/Qt6QWaylandIntegrationPluginTargetsPrecheck.cmake"
+  "/usr/lib64/cmake/Qt6Gui/Qt6QWaylandIviShellIntegrationPluginAdditionalTargetInfo.cmake"
+  "/usr/lib64/cmake/Qt6Gui/Qt6QWaylandIviShellIntegrationPluginConfig.cmake"
+  "/usr/lib64/cmake/Qt6Gui/Qt6QWaylandIviShellIntegrationPluginTargets-relwithdebinfo.cmake"
+  "/usr/lib64/cmake/Qt6Gui/Qt6QWaylandIviShellIntegrationPluginTargets.cmake"
+  "/usr/lib64/cmake/Qt6Gui/Qt6QWaylandIviShellIntegrationPluginTargetsPrecheck.cmake"
+  "/usr/lib64/cmake/Qt6Gui/Qt6QWaylandQtShellIntegrationPluginAdditionalTargetInfo.cmake"
+  "/usr/lib64/cmake/Qt6Gui/Qt6QWaylandQtShellIntegrationPluginConfig.cmake"
+  "/usr/lib64/cmake/Qt6Gui/Qt6QWaylandQtShellIntegrationPluginTargets-relwithdebinfo.cmake"
+  "/usr/lib64/cmake/Qt6Gui/Qt6QWaylandQtShellIntegrationPluginTargets.cmake"
+  "/usr/lib64/cmake/Qt6Gui/Qt6QWaylandQtShellIntegrationPluginTargetsPrecheck.cmake"
   "/usr/lib64/cmake/Qt6Gui/Qt6QWaylandWlShellIntegrationPluginAdditionalTargetInfo.cmake"
   "/usr/lib64/cmake/Qt6Gui/Qt6QWaylandWlShellIntegrationPluginConfig.cmake"
   "/usr/lib64/cmake/Qt6Gui/Qt6QWaylandWlShellIntegrationPluginTargets-relwithdebinfo.cmake"
@@ -422,6 +432,7 @@ set(CMAKE_MAKEFILE_OUTPUTS
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/unikey-wayland_autogen.dir/AutogenInfo.json"
   "CMakeFiles/ibus-engine-unikey-wayland_autogen.dir/AutogenInfo.json"
+  "CMakeFiles/unikey-x11_autogen.dir/AutogenInfo.json"
   ".qt/QtDeploySupport.cmake"
   ".qt/QtDeployTargets.cmake"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
@@ -429,10 +440,14 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
+  "CMakeFiles/bamboo_target.dir/DependInfo.cmake"
   "CMakeFiles/unikey-wayland.dir/DependInfo.cmake"
   "CMakeFiles/ibus-engine-unikey-wayland.dir/DependInfo.cmake"
+  "CMakeFiles/unikey-x11.dir/DependInfo.cmake"
   "CMakeFiles/unikey-wayland_autogen_timestamp_deps.dir/DependInfo.cmake"
   "CMakeFiles/unikey-wayland_autogen.dir/DependInfo.cmake"
   "CMakeFiles/ibus-engine-unikey-wayland_autogen_timestamp_deps.dir/DependInfo.cmake"
   "CMakeFiles/ibus-engine-unikey-wayland_autogen.dir/DependInfo.cmake"
+  "CMakeFiles/unikey-x11_autogen_timestamp_deps.dir/DependInfo.cmake"
+  "CMakeFiles/unikey-x11_autogen.dir/DependInfo.cmake"
   )

@@ -415,6 +415,18 @@
 		"/usr/lib64/cmake/Qt6Gui/Qt6QWaylandIntegrationPluginTargets.cmake",
 		"/usr/lib64/cmake/Qt6Gui/Qt6QWaylandIntegrationPluginTargets-relwithdebinfo.cmake",
 		"/usr/lib64/cmake/Qt6Gui/Qt6QWaylandIntegrationPluginAdditionalTargetInfo.cmake",
+		"/usr/lib64/cmake/Qt6Gui/Qt6QWaylandIviShellIntegrationPluginConfig.cmake",
+		"/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake",
+		"/usr/lib64/cmake/Qt6Gui/Qt6QWaylandIviShellIntegrationPluginTargetsPrecheck.cmake",
+		"/usr/lib64/cmake/Qt6Gui/Qt6QWaylandIviShellIntegrationPluginTargets.cmake",
+		"/usr/lib64/cmake/Qt6Gui/Qt6QWaylandIviShellIntegrationPluginTargets-relwithdebinfo.cmake",
+		"/usr/lib64/cmake/Qt6Gui/Qt6QWaylandIviShellIntegrationPluginAdditionalTargetInfo.cmake",
+		"/usr/lib64/cmake/Qt6Gui/Qt6QWaylandQtShellIntegrationPluginConfig.cmake",
+		"/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake",
+		"/usr/lib64/cmake/Qt6Gui/Qt6QWaylandQtShellIntegrationPluginTargetsPrecheck.cmake",
+		"/usr/lib64/cmake/Qt6Gui/Qt6QWaylandQtShellIntegrationPluginTargets.cmake",
+		"/usr/lib64/cmake/Qt6Gui/Qt6QWaylandQtShellIntegrationPluginTargets-relwithdebinfo.cmake",
+		"/usr/lib64/cmake/Qt6Gui/Qt6QWaylandQtShellIntegrationPluginAdditionalTargetInfo.cmake",
 		"/usr/lib64/cmake/Qt6Gui/Qt6QWaylandWlShellIntegrationPluginConfig.cmake",
 		"/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake",
 		"/usr/lib64/cmake/Qt6Gui/Qt6QWaylandWlShellIntegrationPluginTargetsPrecheck.cmake",
@@ -521,49 +533,11 @@
 	"CROSS_CONFIG" : false,
 	"DEP_FILE" : "/home/truonghieu/Downloads/Uk362/build/ibus-engine-unikey-wayland_autogen/deps",
 	"DEP_FILE_RULE_NAME" : "ibus-engine-unikey-wayland_autogen/timestamp",
-	"HEADERS" : 
-	[
-		[
-			"/home/truonghieu/Downloads/Uk362/byteio/byteio.h",
-			"MU",
-			"PEL44GHAHX/moc_byteio.cpp",
-			null
-		],
-		[
-			"/home/truonghieu/Downloads/Uk362/keyhook/vietkey.h",
-			"MU",
-			"KJZE2ZCVKC/moc_vietkey.cpp",
-			null
-		],
-		[
-			"/home/truonghieu/Downloads/Uk362/newkey/encode.h",
-			"MU",
-			"MJYYOAAOT2/moc_encode.cpp",
-			null
-		],
-		[
-			"/home/truonghieu/Downloads/Uk362/vnconv/charset.h",
-			"MU",
-			"YCENQ2KA2F/moc_charset.cpp",
-			null
-		],
-		[
-			"/home/truonghieu/Downloads/Uk362/vnconv/data.h",
-			"MU",
-			"YCENQ2KA2F/moc_data.cpp",
-			null
-		],
-		[
-			"/home/truonghieu/Downloads/Uk362/vnconv/pattern.h",
-			"MU",
-			"YCENQ2KA2F/moc_pattern.cpp",
-			null
-		]
-	],
+	"HEADERS" : [],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "/home/truonghieu/Downloads/Uk362/build/ibus-engine-unikey-wayland_autogen/include",
 	"MOC_COMPILATION_FILE" : "/home/truonghieu/Downloads/Uk362/build/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp",
-	"MOC_DEFINITIONS" : [ "_LINUX_" ],
+	"MOC_DEFINITIONS" : [ "UKW_VERSION=\"2.0.4\"", "_LINUX_" ],
 	"MOC_DEPEND_FILTERS" : 
 	[
 		[
@@ -580,10 +554,7 @@
 		"/usr/include/blkid",
 		"/usr/include/sysprof-6",
 		"/home/truonghieu/Downloads/Uk362/wayland-client/include",
-		"/home/truonghieu/Downloads/Uk362/vnconv",
-		"/home/truonghieu/Downloads/Uk362/keyhook",
-		"/home/truonghieu/Downloads/Uk362/newkey",
-		"/home/truonghieu/Downloads/Uk362/byteio",
+		"/home/truonghieu/Downloads/Uk362/wayland-client/src",
 		"/usr/include",
 		"/usr/include/c++/16",
 		"/usr/include/c++/16/x86_64-redhat-linux",
@@ -627,19 +598,7 @@
 	"SETTINGS_FILE" : "/home/truonghieu/Downloads/Uk362/build/CMakeFiles/ibus-engine-unikey-wayland_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
-		[ "/home/truonghieu/Downloads/Uk362/byteio/byteio.cpp", "MU", null ],
-		[ "/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp", "MU", null ],
-		[ "/home/truonghieu/Downloads/Uk362/keyhook/vietkey.cpp", "MU", null ],
-		[ "/home/truonghieu/Downloads/Uk362/newkey/encode.cpp", "MU", null ],
-		[ "/home/truonghieu/Downloads/Uk362/vnconv/charset.cpp", "MU", null ],
-		[ "/home/truonghieu/Downloads/Uk362/vnconv/convert.cpp", "MU", null ],
-		[ "/home/truonghieu/Downloads/Uk362/vnconv/data.cpp", "MU", null ],
-		[ "/home/truonghieu/Downloads/Uk362/vnconv/pattern.cpp", "MU", null ],
-		[
-			"/home/truonghieu/Downloads/Uk362/wayland-client/src/ukengine_wrapper.cpp",
-			"MU",
-			null
-		]
+		[ "/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp", "MU", null ]
 	],
 	"UIC_OPTIONS" : [],
 	"UIC_SEARCH_PATHS" : [],
