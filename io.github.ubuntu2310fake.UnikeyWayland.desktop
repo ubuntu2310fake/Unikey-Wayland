@@ -9,5 +9,6 @@ Type=Application
 Categories=System;Utility;Office;
 StartupNotify=true
 X-KDE-Wayland-VirtualKeyboard=true
+X-KDE-Wayland-Interfaces=zwp_input_method_v1
 X-AppStream-DeveloperName=Trương Hiếu
 X-Developer-Name=Trương Hiếu

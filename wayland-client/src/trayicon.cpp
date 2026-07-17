@@ -42,6 +42,16 @@ TrayIcon::TrayIcon(bool* p_viet_mode, MainWindow* mainWindow, bool is_gnome, QOb
     m_trayMenu = new QMenu();
     m_actionControlPanel = m_trayMenu->addAction("Bảng điều khiển... [CS+F5]");
     m_trayMenu->addSeparator();
+
+    extern bool g_terminal_mode;
+    m_actionTerminalMode = m_trayMenu->addAction("Chế độ Terminal (Chỉ Preedit)");
+    m_actionTerminalMode->setCheckable(true);
+    m_actionTerminalMode->setChecked(g_terminal_mode);
+    connect(m_actionTerminalMode, &QAction::toggled, this, [](bool checked){
+        g_terminal_mode = checked;
+    });
+
+    m_trayMenu->addSeparator();
     m_actionQuit = m_trayMenu->addAction("Kết thúc");
 
     m_trayIcon->setContextMenu(m_trayMenu);

@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/unikey-x11.dir/link.d "CMakeFiles/unikey-x11.dir/unikey-x11_autogen/mocs_compilation.cpp.o" "CMakeFiles/unikey-x11.dir/home/truonghieu/Downloads/Uk362/x11-client/src/main.cpp.o" -o unikey-x11  /home/truonghieu/Downloads/Uk362/wayland-client/src/libbamboo.a -lX11 -lXtst

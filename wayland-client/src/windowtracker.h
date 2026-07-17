@@ -6,6 +6,7 @@
 #include <QDBusAbstractAdaptor>
 #include <QDBusConnection>
 #include <string>
+#include <vector>
 
 class WindowTracker : public QObject {
     Q_OBJECT
@@ -16,6 +17,7 @@ public:
     std::string getActiveWindowClass() const { return m_activeWindowClass; }
     bool isAppExcluded(const std::string& appClass) const;
     void loadExcludedApps();
+    void reloadExcludedApps();
 
 signals:
     void activeWindowChangedSignal(const QString& windowClass);

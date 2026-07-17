@@ -16,6 +16,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QPlainTextEdit>
+#include "windowtracker.h"
 
 MainWindow::MainWindow(bool* p_viet_mode, bool is_gnome, QWidget *parent)
     : QWidget(parent), p_viet_mode(p_viet_mode) {
@@ -321,6 +322,11 @@ void MainWindow::saveConfig() {
     if (preeditFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
         preeditFile.write(m_preeditAppsTextEdit->toPlainText().toUtf8());
         preeditFile.close();
+    }
+    
+    extern WindowTracker* g_windowTracker;
+    if (g_windowTracker) {
+        g_windowTracker->reloadExcludedApps();
     }
 }
 

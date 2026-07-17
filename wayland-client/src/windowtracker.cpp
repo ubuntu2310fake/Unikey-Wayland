@@ -25,19 +25,21 @@ WindowTracker::WindowTracker(QObject *parent) : QObject(parent) {
 
 void WindowTracker::loadExcludedApps() {
     m_excludedApps.clear();
-    QString configDir = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/unikey-wayland";
-    QDir().mkpath(configDir);
-    QString configPath = configDir + "/exclude_apps.txt";
+    QString configPath = QDir::homePath() + "/UnikeyWayland/preedit_apps.txt";
 
     QFile file(configPath);
     if (!file.exists()) {
+        QDir().mkpath(QFileInfo(configPath).absolutePath());
         if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
             QTextStream out(&file);
-            out << "# List applications here that should be completely ignored by Unikey-Wayland (one per line).\n";
-            out << "# They will be forced to English mode.\n";
-            out << "konsole\n";
+            out << "kitty\n";
             out << "alacritty\n";
-            out << "code\n";
+            out << "konsole\n";
+            out << "gnome-terminal\n";
+            out << "xfce4-terminal\n";
+            out << "lxterminal\n";
+            out << "studio\n";
+            out << "java\n";
             file.close();
         }
     }
@@ -52,6 +54,12 @@ void WindowTracker::loadExcludedApps() {
         }
         file.close();
     }
+}
+
+void WindowTracker::reloadExcludedApps() {
+    loadExcludedApps();
+    // Re-evaluate current active window
+    emit activeWindowChangedSignal(QString::fromStdString(m_activeWindowClass));
 }
 
 bool WindowTracker::isAppExcluded(const std::string& appClass) const {

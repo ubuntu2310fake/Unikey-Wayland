@@ -26,6 +26,7 @@ private:
     QSystemTrayIcon* m_trayIcon;
     QMenu* m_trayMenu;
     QAction* m_actionControlPanel;
+    QAction* m_actionTerminalMode;
     QAction* m_actionQuit;
     
     QIcon m_iconV;

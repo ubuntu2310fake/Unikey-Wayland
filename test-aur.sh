@@ -1,0 +1,1 @@
+echo "Test AUR script"
