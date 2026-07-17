@@ -51,8 +51,9 @@ jobs:
           mkdir -p ~/rpmbuild/SOURCES
           mkdir -p ~/rpmbuild/SPECS
           cp wayland-client/build/unikey-wayland ~/rpmbuild/SOURCES/
-          cp unikey-wayland.desktop ~/rpmbuild/SOURCES/
-          cp unikey-wayland.metainfo.xml ~/rpmbuild/SOURCES/
+          cp io.github.ubuntu2310fake.UnikeyWayland.desktop ~/rpmbuild/SOURCES/
+          cp io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml ~/rpmbuild/SOURCES/
+          cp io.github.ubuntu2310fake.UnikeyWayland.svg ~/rpmbuild/SOURCES/
           cp unikey-wayland.spec ~/rpmbuild/SPECS/
           rpmbuild -bb ~/rpmbuild/SPECS/unikey-wayland.spec --define "_topdir $HOME/rpmbuild"
           cp ~/rpmbuild/RPMS/*/*.rpm releases/
@@ -119,8 +120,9 @@ jobs:
           mkdir -p ~/rpmbuild/SPECS
           mkdir -p releases
           cp wayland-client/build/unikey-wayland ~/rpmbuild/SOURCES/
-          cp unikey-wayland.desktop ~/rpmbuild/SOURCES/
-          cp unikey-wayland.metainfo.xml ~/rpmbuild/SOURCES/
+          cp io.github.ubuntu2310fake.UnikeyWayland.desktop ~/rpmbuild/SOURCES/
+          cp io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml ~/rpmbuild/SOURCES/
+          cp io.github.ubuntu2310fake.UnikeyWayland.svg ~/rpmbuild/SOURCES/
           cp unikey-wayland.spec ~/rpmbuild/SPECS/
           rpmbuild -bs ~/rpmbuild/SPECS/unikey-wayland.spec --define "_topdir $HOME/rpmbuild"
           cp ~/rpmbuild/SRPMS/*.src.rpm releases/
