@@ -184,6 +184,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
+          aqtversion: '==3.3.0'
           version: '6.8.0'
           host: 'windows'
           target: 'desktop'
@@ -254,6 +255,7 @@ jobs:
       - name: Install Host Qt (x64)
         uses: jurplel/install-qt-action@v3
         with:
+          aqtversion: '==3.3.0'
           version: '6.8.0'
           host: 'windows'
           target: 'desktop'
@@ -263,6 +265,7 @@ jobs:
       - name: Install Target Qt (ARM64)
         uses: jurplel/install-qt-action@v3
         with:
+          aqtversion: '==3.3.0'
           version: '6.8.0'
           host: 'windows'
           target: 'desktop'
