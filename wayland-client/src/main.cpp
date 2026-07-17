@@ -148,7 +148,7 @@ static bool g_other_pressed = false;
 
 static MainWindow* g_mainWindow = nullptr;
 WindowTracker* g_windowTracker = nullptr;
-bool g_terminal_mode = false;
+
 static bool g_app_excluded = false;
 
 void show_main_window() {
@@ -267,7 +267,7 @@ static void keyboard_key(void* data, struct wl_keyboard* keyboard, uint32_t seri
     }
 
     if (c != 0) {
-        if (state->content_purpose == 12 || g_terminal_mode || g_app_excluded) {
+        if (state->content_purpose == 12 || g_app_excluded) {
             // Preedit mode (Konsole, Kitty, Alacritty, or user-excluded apps)
             // Sử dụng Bamboo CGO
             if (c == '\b') {
@@ -424,7 +424,7 @@ static void keyboard_key(void* data, struct wl_keyboard* keyboard, uint32_t seri
         }
     } else {
         // c == 0 (Phím chức năng, phím tắt Ctrl, Alt, Arrow, Esc...)
-        if (state->content_purpose == 12 || g_terminal_mode || g_app_excluded) {
+        if (state->content_purpose == 12 || g_app_excluded) {
             char* preedit = Bamboo_GetPreeditString();
             if (preedit && strlen(preedit) > 0) {
                 zwp_input_method_context_v1_commit_string(state->context, state->latest_serial, preedit);

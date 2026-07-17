@@ -15,8 +15,8 @@ WindowTracker::WindowTracker(QObject *parent) : QObject(parent) {
 
     // Register DBus object
     new WindowTrackerAdaptor(this);
-    if (!QDBusConnection::sessionBus().registerService("org.unikey.Wayland")) {
-        qWarning() << "Failed to register org.unikey.Wayland DBus service:" << QDBusConnection::sessionBus().lastError().message();
+    if (!QDBusConnection::sessionBus().registerService("io.github.ubuntu2310fake.UnikeyWayland")) {
+        qWarning() << "Failed to register io.github.ubuntu2310fake.UnikeyWayland DBus service:" << QDBusConnection::sessionBus().lastError().message();
     }
     if (!QDBusConnection::sessionBus().registerObject("/WindowTracker", this)) {
         qWarning() << "Failed to register /WindowTracker object";
@@ -105,13 +105,13 @@ void WindowTracker::injectKWinScript() {
     QString scriptCode = 
         "workspace.windowActivated.connect(function(client) {\n"
         "    if (client) {\n"
-        "        callDBus('org.unikey.Wayland', '/WindowTracker', 'org.unikey.Wayland.WindowTracker', 'activeWindowChanged', client.resourceClass.toString());\n"
+        "        callDBus('io.github.ubuntu2310fake.UnikeyWayland', '/WindowTracker', 'io.github.ubuntu2310fake.UnikeyWayland.WindowTracker', 'activeWindowChanged', client.resourceClass.toString());\n"
         "    } else {\n"
-        "        callDBus('org.unikey.Wayland', '/WindowTracker', 'org.unikey.Wayland.WindowTracker', 'activeWindowChanged', '');\n"
+        "        callDBus('io.github.ubuntu2310fake.UnikeyWayland', '/WindowTracker', 'io.github.ubuntu2310fake.UnikeyWayland.WindowTracker', 'activeWindowChanged', '');\n"
         "    }\n"
         "});\n"
         "if (workspace.activeWindow) {\n"
-        "    callDBus('org.unikey.Wayland', '/WindowTracker', 'org.unikey.Wayland.WindowTracker', 'activeWindowChanged', workspace.activeWindow.resourceClass.toString());\n"
+        "    callDBus('io.github.ubuntu2310fake.UnikeyWayland', '/WindowTracker', 'io.github.ubuntu2310fake.UnikeyWayland.WindowTracker', 'activeWindowChanged', workspace.activeWindow.resourceClass.toString());\n"
         "}\n";
 
     // Write to a temporary file

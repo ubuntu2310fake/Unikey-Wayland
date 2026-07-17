@@ -32,7 +32,7 @@ private:
 
 class WindowTrackerAdaptor : public QDBusAbstractAdaptor {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "org.unikey.Wayland.WindowTracker")
+    Q_CLASSINFO("D-Bus Interface", "io.github.ubuntu2310fake.UnikeyWayland.WindowTracker")
 public:
     explicit WindowTrackerAdaptor(WindowTracker *parent) : QDBusAbstractAdaptor(parent), tracker(parent) {}
 public slots:

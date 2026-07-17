@@ -1,4 +1,4 @@
-unikey-wayland (2.0.7~ppa1~noble) noble; urgency=medium
+unikey-wayland (2.0.8~ppa1~noble) noble; urgency=medium
 
   * Fix missing KDE Wayland Virtual Keyboard metadata in desktop file
 
