@@ -1,5 +1,5 @@
 Name:           unikey-wayland
-Version:        2.0.6
+Version:        2.0.7
 Release:        1%{?dist}
 Summary:        Unikey Wayland Input Method for Vietnamese
 Packager:       Trương Hiếu
@@ -71,6 +71,8 @@ chmod 644 %{buildroot}/usr/share/icons/hicolor/scalable/apps/io.github.ubuntu231
 /usr/share/icons/hicolor/scalable/apps/io.github.ubuntu2310fake.UnikeyWayland.svg
 
 %changelog
+* Fri Jul 17 2026 Trương Hiếu - 2.0.7-1
+- Fix missing KDE Wayland Virtual Keyboard metadata in desktop file
 * Fri Jul 17 2026 Trương Hiếu - 2.0.6-1
 - Sửa XML dể đưa lên kho ứng dụng
 * Fri Jul 10 2026 Trương Hiếu - 1.0.3-1

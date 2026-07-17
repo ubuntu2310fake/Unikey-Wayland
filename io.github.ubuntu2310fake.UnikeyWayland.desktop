@@ -1,7 +1,13 @@
 [Desktop Entry]
 Name=Unikey-Wayland
+GenericName=Input Method
+Comment=Vietnamese Input Method for Wayland
 Exec=unikey-wayland
 Icon=io.github.ubuntu2310fake.UnikeyWayland
+Terminal=false
 Type=Application
-Categories=Utility;Office;
+Categories=System;Utility;Office;
 StartupNotify=true
+X-KDE-Wayland-VirtualKeyboard=true
+X-AppStream-DeveloperName=Trương Hiếu
+X-Developer-Name=Trương Hiếu

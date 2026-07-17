@@ -4,6 +4,11 @@ Tất cả các thay đổi đáng chú ý của dự án bộ gõ Unikey Waylan
 
 Định dạng dựa trên [Keep a Changelog](https://keepachangelog.com/vi/1.0.0/).
 
+## [2.0.7] - 2026-07-17
+
+### Đã sửa (Fixed)
+- Sửa lỗi không hiển thị trong danh sách Virtual Keyboard của KDE Wayland do thiếu metadata trong file desktop.
+
 ## [2.0.6] - 2026-07-17
 
 ### Thay đổi (Changed)

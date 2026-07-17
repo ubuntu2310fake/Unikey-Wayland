@@ -1,3 +1,9 @@
+unikey-wayland (2.0.7~ppa1~noble) noble; urgency=medium
+
+  * Fix missing KDE Wayland Virtual Keyboard metadata in desktop file
+
+ -- Truong Hieu <11Leak1234@protonmail.com>  Thu, 17 Jul 2026 00:00:00 +0000
+
 unikey-wayland (2.0.6~ppa1~noble) noble; urgency=medium
 
   * Sửa XML dể đưa lên kho ứng dụng
