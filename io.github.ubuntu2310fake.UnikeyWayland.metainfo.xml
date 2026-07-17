@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+
+  <id>io.github.ubuntu2310fake.UnikeyWayland</id>
+
+  <name>Unikey-Wayland</name>
+
+  <summary>
+    Cross-platform Vietnamese input method for Linux Wayland and Windows
+  </summary>
+
+  <developer id="io.github.ubuntu2310fake">
+    <name>Trương Hiếu</name>
+  </developer>
+
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-only</project_license>
+
+  <launchable type="desktop-id">
+    io.github.ubuntu2310fake.UnikeyWayland.desktop
+  </launchable>
+
+  <url type="homepage">
+    https://github.com/ubuntu2310fake/Unikey-Wayland
+  </url>
+
+  <url type="bugtracker">
+    https://github.com/ubuntu2310fake/Unikey-Wayland/issues
+  </url>
+
+  <url type="vcs-browser">
+    https://github.com/ubuntu2310fake/Unikey-Wayland
+  </url>
+
+  <description>
+    <p>
+      Unikey-Wayland is a free and open-source Vietnamese input method
+      supporting Linux Wayland desktops and Microsoft Windows.
+    </p>
+
+    <p>
+      It is powered by the Bamboo Engine, supports the Telex and VNI
+      input methods, and integrates natively with IBus on Linux while
+      providing a native Windows edition built with Qt 6.
+    </p>
+
+    <p>
+      The project is released under the GNU GPL v3 license and is
+      developed publicly on GitHub with automated CI/CD builds.
+    </p>
+  </description>
+
+  <categories>
+    <category>Utility</category>
+    <category>Office</category>
+  </categories>
+
+  <content_rating type="oars-1.1"/>
+
+  <releases>
+    <release version="2.0.6" date="2026-07-16"/>
+  </releases>
+
+</component>

@@ -3,7 +3,7 @@
 # Chạy script này từ thư mục gốc của dự án: ./package_arch.sh
 set -e
 
-PKGVER="2.0.5"
+PKGVER="2.0.6"
 PKGREL="1"
 # Tự động phát hiện kiến trúc hệ thống
 DETECTED_ARCH=$(uname -m)
@@ -49,17 +49,20 @@ mkdir -p releases
 mkdir -p arch_pkg/usr/bin
 mkdir -p arch_pkg/usr/share/applications
 mkdir -p arch_pkg/usr/share/metainfo
+mkdir -p arch_pkg/usr/share/icons/hicolor/scalable/apps
 
 # 3. Sao chép các tệp tin cấu hình và binary
 echo ">>> Đang sao chép các tệp tin hệ thống..."
 cp wayland-client/build/unikey-wayland arch_pkg/usr/bin/
-cp unikey-wayland.desktop arch_pkg/usr/share/applications/
-cp unikey-wayland.metainfo.xml arch_pkg/usr/share/metainfo/
+cp io.github.ubuntu2310fake.UnikeyWayland.desktop arch_pkg/usr/share/applications/
+cp io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml arch_pkg/usr/share/metainfo/
+cp io.github.ubuntu2310fake.UnikeyWayland.svg arch_pkg/usr/share/icons/hicolor/scalable/apps/
 
 # 4. Thay đổi quyền truy cập tiêu chuẩn
 chmod 755 arch_pkg/usr/bin/unikey-wayland
-chmod 644 arch_pkg/usr/share/applications/unikey-wayland.desktop
-chmod 644 arch_pkg/usr/share/metainfo/unikey-wayland.metainfo.xml
+chmod 644 arch_pkg/usr/share/applications/io.github.ubuntu2310fake.UnikeyWayland.desktop
+chmod 644 arch_pkg/usr/share/metainfo/io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml
+chmod 644 arch_pkg/usr/share/icons/hicolor/scalable/apps/io.github.ubuntu2310fake.UnikeyWayland.svg
 
 # 5. Lấy kích thước cài đặt thực tế (bytes)
 SIZE=$(du -sb arch_pkg/usr | cut -f1)

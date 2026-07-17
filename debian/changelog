@@ -1,3 +1,9 @@
+unikey-wayland (2.0.6~ppa1~noble) noble; urgency=medium
+
+  * Sửa XML dể đưa lên kho ứng dụng
+
+ -- Truong Hieu <11Leak1234@protonmail.com>  Thu, 17 Jul 2026 00:00:00 +0000
+
 unikey-wayland (2.0.5~ppa1~noble) noble; urgency=medium
 
   * Fix X11 app detection for Ibus preedit mode.

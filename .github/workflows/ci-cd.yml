@@ -83,7 +83,7 @@ jobs:
             
             ### Code Signing
             
-            Windows release binaries of Unikey-Wayland are intended to be digitally signed through the SignPath Foundation open-source code signing program.
+            Windows release binaries are intended to be digitally signed through the SignPath Foundation once the application is approved.
           draft: false
           prerelease: false
           files: |

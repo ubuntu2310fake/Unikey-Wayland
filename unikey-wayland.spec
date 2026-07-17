@@ -1,13 +1,14 @@
 Name:           unikey-wayland
-Version:        2.0.5
+Version:        2.0.6
 Release:        1%{?dist}
 Summary:        Unikey Wayland Input Method for Vietnamese
 Packager:       Trương Hiếu
 Vendor:         Trương Hiếu
 
 Source0:        unikey-wayland
-Source1:        unikey-wayland.desktop
-Source2:        unikey-wayland.metainfo.xml
+Source1:        io.github.ubuntu2310fake.UnikeyWayland.desktop
+Source2:        io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml
+Source3:        io.github.ubuntu2310fake.UnikeyWayland.svg
 
 License:        GPL-2.0-or-later
 URL:            https://github.com/ubuntu2310fake/Unikey-Wayland
@@ -49,23 +50,29 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/bin
 mkdir -p %{buildroot}/usr/share/applications
 mkdir -p %{buildroot}/usr/share/metainfo
+mkdir -p %{buildroot}/usr/share/icons/hicolor/scalable/apps
 
 # Copy our pre-compiled files from the SOURCES directory
 cp %{SOURCE0} %{buildroot}/usr/bin/unikey-wayland
-cp %{SOURCE1} %{buildroot}/usr/share/applications/unikey-wayland.desktop
-cp %{SOURCE2} %{buildroot}/usr/share/metainfo/unikey-wayland.metainfo.xml
+cp %{SOURCE1} %{buildroot}/usr/share/applications/io.github.ubuntu2310fake.UnikeyWayland.desktop
+cp %{SOURCE2} %{buildroot}/usr/share/metainfo/io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml
+cp %{SOURCE3} %{buildroot}/usr/share/icons/hicolor/scalable/apps/io.github.ubuntu2310fake.UnikeyWayland.svg
 
 # Ensure correct permissions
 chmod 755 %{buildroot}/usr/bin/unikey-wayland
-chmod 644 %{buildroot}/usr/share/applications/unikey-wayland.desktop
-chmod 644 %{buildroot}/usr/share/metainfo/unikey-wayland.metainfo.xml
+chmod 644 %{buildroot}/usr/share/applications/io.github.ubuntu2310fake.UnikeyWayland.desktop
+chmod 644 %{buildroot}/usr/share/metainfo/io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml
+chmod 644 %{buildroot}/usr/share/icons/hicolor/scalable/apps/io.github.ubuntu2310fake.UnikeyWayland.svg
 
 %files
 /usr/bin/unikey-wayland
-/usr/share/applications/unikey-wayland.desktop
-/usr/share/metainfo/unikey-wayland.metainfo.xml
+/usr/share/applications/io.github.ubuntu2310fake.UnikeyWayland.desktop
+/usr/share/metainfo/io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml
+/usr/share/icons/hicolor/scalable/apps/io.github.ubuntu2310fake.UnikeyWayland.svg
 
 %changelog
+* Fri Jul 17 2026 Trương Hiếu - 2.0.6-1
+- Sửa XML dể đưa lên kho ứng dụng
 * Fri Jul 10 2026 Trương Hiếu - 1.0.3-1
 - Add fallback IBus engine for GNOME Wayland desktop environment
 - Fix preedit text cursor jumping/duplication issues on Terminal emulators

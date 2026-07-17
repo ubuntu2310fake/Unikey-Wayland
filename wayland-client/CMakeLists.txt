@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(unikey-wayland C CXX)
 
 set(CMAKE_CXX_STANDARD 11)
-add_definitions(-DUKW_VERSION="2.0.5")
+add_definitions(-DUKW_VERSION="2.0.6")
 
 # Dependencies
 find_package(PkgConfig REQUIRED)
@@ -107,6 +107,7 @@ if (IBUS_FOUND)
 endif()
 
 install(TARGETS unikey-wayland DESTINATION bin)
-install(FILES ../unikey-wayland.desktop DESTINATION share/applications)
-install(FILES ../unikey-wayland.metainfo.xml DESTINATION share/metainfo)
+install(FILES ../io.github.ubuntu2310fake.UnikeyWayland.desktop DESTINATION share/applications)
+install(FILES ../io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml DESTINATION share/metainfo)
+install(FILES ../io.github.ubuntu2310fake.UnikeyWayland.svg DESTINATION share/icons/hicolor/scalable/apps)
 

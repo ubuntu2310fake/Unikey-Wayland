@@ -4,6 +4,11 @@ Tất cả các thay đổi đáng chú ý của dự án bộ gõ Unikey Waylan
 
 Định dạng dựa trên [Keep a Changelog](https://keepachangelog.com/vi/1.0.0/).
 
+## [2.0.6] - 2026-07-17
+
+### Thay đổi (Changed)
+- Sửa XML dể đưa lên kho ứng dụng
+
 ## [2.0.5] - 2026-07-16
 
 ### Đã sửa (Fixed)

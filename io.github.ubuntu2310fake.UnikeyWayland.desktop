@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Unikey-Wayland
+Exec=unikey-wayland
+Icon=io.github.ubuntu2310fake.UnikeyWayland
+Type=Application
+Categories=Utility;Office;
+StartupNotify=true
