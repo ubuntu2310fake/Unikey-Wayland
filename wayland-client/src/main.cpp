@@ -176,12 +176,22 @@ static void keyboard_key(void* data, struct wl_keyboard* keyboard, uint32_t seri
         return;
     }
 
+    static bool g_switched = false;
+
     // Track modifier key states
     if (state_key == 1) { // Pressed
         if (key == 29 || key == 97) { // Left/Right Ctrl
             g_ctrl_pressed = true;
+            if (!g_shift_pressed && !g_alt_pressed) {
+                g_other_pressed = false;
+                g_switched = false;
+            }
         } else if (key == 42 || key == 54) { // Left/Right Shift
             g_shift_pressed = true;
+            if (!g_ctrl_pressed && !g_alt_pressed) {
+                g_other_pressed = false;
+                g_switched = false;
+            }
         } else if (key == 56 || key == 100) { // Left/Right Alt
             g_alt_pressed = true;
         } else {
@@ -190,25 +200,33 @@ static void keyboard_key(void* data, struct wl_keyboard* keyboard, uint32_t seri
     } else if (state_key == 0) { // Released
         int switchKeyConfig = g_mainWindow ? g_mainWindow->getSwitchKey() : 0;
         if (key == 29 || key == 97) {
-            if (switchKeyConfig == 0 && g_ctrl_pressed && g_shift_pressed && !g_other_pressed) {
+            if (switchKeyConfig == 0 && g_ctrl_pressed && g_shift_pressed && !g_other_pressed && !g_switched) {
                 if (g_mainWindow) {
                     g_mainWindow->setVietMode(!state->viet_mode);
                 } else {
                     state->viet_mode = !state->viet_mode;
                 }
+                g_switched = true;
             }
             g_ctrl_pressed = false;
-            g_other_pressed = false;
+            if (!g_shift_pressed) {
+                g_other_pressed = false;
+                g_switched = false;
+            }
         } else if (key == 42 || key == 54) {
-            if (switchKeyConfig == 0 && g_ctrl_pressed && g_shift_pressed && !g_other_pressed) {
+            if (switchKeyConfig == 0 && g_ctrl_pressed && g_shift_pressed && !g_other_pressed && !g_switched) {
                 if (g_mainWindow) {
                     g_mainWindow->setVietMode(!state->viet_mode);
                 } else {
                     state->viet_mode = !state->viet_mode;
                 }
+                g_switched = true;
             }
             g_shift_pressed = false;
-            g_other_pressed = false;
+            if (!g_ctrl_pressed) {
+                g_other_pressed = false;
+                g_switched = false;
+            }
         } else if (key == 56 || key == 100) {
             g_alt_pressed = false;
             g_other_pressed = false;

@@ -16,6 +16,8 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QPlainTextEdit>
+#include <QDBusMessage>
+#include <QDBusConnection>
 #include "windowtracker.h"
 #include "libbamboo.h"
 
@@ -212,6 +214,15 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 void MainWindow::setVietMode(bool viet) {
     if (p_viet_mode) *p_viet_mode = viet;
     saveConfig();
+
+    QDBusMessage msg = QDBusMessage::createMethodCall(
+        "org.kde.plasmashell",
+        "/org/kde/osdService",
+        "org.kde.osdService",
+        "showText"
+    );
+    msg << QString("input-keyboard") << QString(viet ? "UniKey: Tiếng Việt [V]" : "UniKey: Tiếng Anh [E]");
+    QDBusConnection::sessionBus().send(msg);
 }
 
 QString MainWindow::getConfigPath() const {
