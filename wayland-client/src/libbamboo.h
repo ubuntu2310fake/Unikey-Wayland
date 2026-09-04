@@ -90,6 +90,8 @@ extern "C" {
 #endif
 
 extern void Bamboo_Init(void);
+extern void Bamboo_SetInputMethod(int method);
+extern void Bamboo_SetOptions(_Bool freeMarking, _Bool modernStyle, _Bool spellCheck, _Bool autoRestore);
 extern _Bool Bamboo_CanProcessKey(uint32_t key);
 extern void Bamboo_ProcessKey(uint32_t key);
 extern void Bamboo_RemoveLastChar(void);

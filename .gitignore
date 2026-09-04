@@ -14,3 +14,7 @@ arch_pkg/
 *.a
 *.so
 *~
+wayland-client/src/moc_*.cpp
+wayland-client/src/input-method-unstable-v1-protocol.c
+wayland-client/include/input-method-unstable-v1-client-protocol.h
+

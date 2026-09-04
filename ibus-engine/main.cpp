@@ -8,18 +8,59 @@
 #include <cstdio>
 #include <memory>
 #include <array>
+#include <cstdlib>
+#include <cstring>
 
 #include "libbamboo.h"
 
 static bool g_macroEnabled = false;
 static std::map<std::string, std::string> g_macros;
 
+static bool debug_enabled() {
+    static const bool enabled = [] {
+        const char* value = getenv("UNIKEY_WAYLAND_DEBUG");
+        return value && strcmp(value, "0") != 0;
+    }();
+    return enabled;
+}
+
+static std::string bamboo_string(bool final) {
+    char *value = final ? Bamboo_GetCommitString() : Bamboo_GetPreeditString();
+    std::string result = value ? value : "";
+    if (value) free(value);
+    return result;
+}
+
 struct DelayedCommitData {
     IBusEngine *engine;
     std::string text;
 };
 
-static guint g_focus_out_timer_id = 0;
+static bool json_bool(const std::string& json, const std::string& key, bool fallback) {
+    const size_t key_pos = json.find("\"" + key + "\"");
+    if (key_pos == std::string::npos) return fallback;
+    const size_t colon = json.find(':', key_pos);
+    if (colon == std::string::npos) return fallback;
+    const size_t value = json.find_first_not_of(" \t\r\n", colon + 1);
+    if (value == std::string::npos) return fallback;
+    if (json.compare(value, 4, "true") == 0) return true;
+    if (json.compare(value, 5, "false") == 0) return false;
+    return fallback;
+}
+
+static int json_int(const std::string& json, const std::string& key, int fallback) {
+    const size_t key_pos = json.find("\"" + key + "\"");
+    if (key_pos == std::string::npos) return fallback;
+    const size_t colon = json.find(':', key_pos);
+    if (colon == std::string::npos) return fallback;
+    const size_t value = json.find_first_of("-0123456789", colon + 1);
+    if (value == std::string::npos) return fallback;
+    try {
+        return std::stoi(json.substr(value));
+    } catch (...) {
+        return fallback;
+    }
+}
 
 static gboolean commit_delayed_cb(gpointer user_data) {
     DelayedCommitData *data = static_cast<DelayedCommitData *>(user_data);
@@ -40,6 +81,12 @@ static void reload_macros() {
     std::ifstream f(path);
     if (!f.is_open()) return;
     std::string json((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
+
+    Bamboo_SetInputMethod(json_int(json, "method", 1));
+    Bamboo_SetOptions(json_bool(json, "freeMarking", true),
+                      json_bool(json, "modernStyle", false),
+                      json_bool(json, "spellCheck", false),
+                      json_bool(json, "autoRestore", false));
     
     if (json.find("\"macroEnabled\": true") != std::string::npos || json.find("\"macroEnabled\":true") != std::string::npos) {
         g_macroEnabled = true;
@@ -99,6 +146,31 @@ struct _IBusUnikeyEngine {
 struct _IBusUnikeyEngineClass {
     IBusEngineClass parent;
 };
+
+// Bamboo state is shared by all IBus engine objects.
+static guint g_focus_out_timer_id = 0;
+
+static void delete_composition_and_selection(IBusEngine *engine_base,
+                                             IBusUnikeyEngine *engine,
+                                             guint composition_chars) {
+    if (composition_chars == 0) return;
+
+    gint offset = -static_cast<gint>(composition_chars);
+    guint count = composition_chars;
+    if (engine->has_surrounding_text) {
+        const guint selection_start = std::min(engine->surrounding_cursor,
+                                               engine->surrounding_anchor);
+        const guint selection_end = std::max(engine->surrounding_cursor,
+                                             engine->surrounding_anchor);
+        if (composition_chars <= selection_start) {
+            const guint start = selection_start - composition_chars;
+            offset = static_cast<gint>(start) -
+                     static_cast<gint>(engine->surrounding_cursor);
+            count = selection_end - start;
+        }
+    }
+    ibus_engine_delete_surrounding_text(engine_base, offset, count);
+}
 
 GType ibus_unikey_engine_get_type (void);
 
@@ -252,7 +324,10 @@ static void ibus_unikey_engine_focus_in_id (IBusEngine *engine_base, const gchar
     // We intentionally DO NOT call ibus_unikey_engine_reset here to protect against 
     // Chrome X11 FocusOut/FocusIn storms. The state is only reset by the focus_out timeout.
     
-    g_printerr("FOCUS IN ID: client_id='%s', detail='%s'\n", client_id ? client_id : "NULL", detail ? detail : "NULL");
+    if (debug_enabled()) {
+        g_printerr("FOCUS IN ID: client_id='%s', detail='%s'\n",
+                   client_id ? client_id : "NULL", detail ? detail : "NULL");
+    }
 
     if (!client_id || client_id[0] == '\0') {
         engine->app_wants_preedit = false;
@@ -286,16 +361,18 @@ static void ibus_unikey_engine_focus_in_id (IBusEngine *engine_base, const gchar
         active_x11_class = get_active_window_class_x11();
     }
 
-    g_printerr("APP DETECT: comm='%s', exe='%s', client_id='%s', x11_class='%s', is_x11=%d\n",
-               comm.c_str(), exe.c_str(), client_id_str.c_str(), active_x11_class.c_str(), engine->is_x11);
+    if (debug_enabled()) {
+        g_printerr("APP DETECT: comm='%s', exe='%s', client_id='%s', x11_class='%s', is_x11=%d\n",
+                   comm.c_str(), exe.c_str(), client_id_str.c_str(),
+                   active_x11_class.c_str(), engine->is_x11);
 
-    // Ghi debug ra file vì ibus-daemon nuốt stderr
-    FILE *dbg = fopen("/tmp/ibus-unikey-debug.log", "a");
-    if (dbg) {
-        fprintf(dbg, "APP DETECT: comm='%s', exe='%s', client_id='%s', x11_class='%s', is_x11=%d\n",
-                comm.c_str(), exe.c_str(), client_id_str.c_str(), active_x11_class.c_str(), engine->is_x11);
-        fflush(dbg);
-        fclose(dbg);
+        FILE *dbg = fopen("/tmp/ibus-unikey-debug.log", "a");
+        if (dbg) {
+            fprintf(dbg, "APP DETECT: comm='%s', exe='%s', client_id='%s', x11_class='%s', is_x11=%d\n",
+                    comm.c_str(), exe.c_str(), client_id_str.c_str(),
+                    active_x11_class.c_str(), engine->is_x11);
+            fclose(dbg);
+        }
     }
 
     for (const auto& app : preedit_apps) {
@@ -355,6 +432,7 @@ static void ibus_unikey_engine_class_init (IBusUnikeyEngineClass *klass) {
 
 static void ibus_unikey_engine_init (IBusUnikeyEngine *engine) {
     Bamboo_Init();
+    reload_macros();
     engine->viet_mode = true;
     engine->preedit_string = g_string_new("");
     engine->composed_word = new std::string();
@@ -381,7 +459,11 @@ static void ibus_unikey_engine_destroy (IBusObject *object) {
 
 static gboolean ibus_unikey_engine_process_key_event (IBusEngine *engine_base, guint keyval, guint keycode, guint modifiers) {
     IBusUnikeyEngine *engine = IBUS_UNIKEY_ENGINE (engine_base);
-    g_printerr("KEYVAL: %d, char: %c, use_preedit: %d, has_sur: %d, char_backs: %d\n", keyval, keyval < 128 ? keyval : '?', engine->use_preedit, engine->has_surrounding_text, 0);
+    if (debug_enabled()) {
+        g_printerr("KEYVAL: %d, char: %c, use_preedit: %d, has_sur: %d\n",
+                   keyval, keyval < 128 ? keyval : '?', engine->use_preedit,
+                   engine->has_surrounding_text);
+    }
     
     // Bỏ qua khi nhả phím (key release)
     if (modifiers & IBUS_RELEASE_MASK) {
@@ -420,7 +502,8 @@ static gboolean ibus_unikey_engine_process_key_event (IBusEngine *engine_base, g
     } else {
         // Phím chức năng (Arrow, Esc, F1..., ...): commit preedit nếu có rồi trả phím
         if (engine->use_preedit && engine->preedit_string->len > 0) {
-            IBusText *text = ibus_text_new_from_string(engine->preedit_string->str);
+            const std::string final_word = bamboo_string(true);
+            IBusText *text = ibus_text_new_from_string(final_word.c_str());
             ibus_engine_hide_preedit_text(engine_base);
             g_string_truncate(engine->preedit_string, 0);
             ibus_engine_commit_text(engine_base, text);
@@ -429,13 +512,18 @@ static gboolean ibus_unikey_engine_process_key_event (IBusEngine *engine_base, g
         } else {
             std::string current_word = *(engine->composed_word);
             if (!current_word.empty()) {
-                if (g_macroEnabled && g_macros.find(current_word) != g_macros.end()) {
-                    std::string macro_val = g_macros[current_word];
+                std::string final_word = bamboo_string(true);
+                auto macro = g_macros.find(final_word);
+                if (g_macroEnabled && macro != g_macros.end()) {
+                    final_word = macro->second;
+                }
+                if (final_word != current_word) {
                     int char_backs = g_utf8_strlen(current_word.c_str(), -1);
                     if (char_backs > 0) {
-                        ibus_engine_delete_surrounding_text(engine_base, -char_backs, char_backs);
+                        delete_composition_and_selection(
+                            engine_base, engine, static_cast<guint>(char_backs));
                     }
-                    IBusText *text = ibus_text_new_from_string(macro_val.c_str());
+                    IBusText *text = ibus_text_new_from_string(final_word.c_str());
                     ibus_engine_commit_text(engine_base, text);
                 }
             }
@@ -513,17 +601,22 @@ static gboolean ibus_unikey_engine_process_key_event (IBusEngine *engine_base, g
             }
             Bamboo_RemoveLastChar();
         } else if (!Bamboo_CanProcessKey(c)) {
-            std::string current_word = *(engine->composed_word);
+            const std::string current_word = *(engine->composed_word);
+            std::string final_word = bamboo_string(true);
             *(engine->composed_word) = "";
             Bamboo_Reset();
 
-            if (g_macroEnabled && g_macros.find(current_word) != g_macros.end()) {
-                std::string macro_val = g_macros[current_word];
+            auto macro = g_macros.find(final_word);
+            if (g_macroEnabled && macro != g_macros.end()) {
+                final_word = macro->second;
+            }
+            if (final_word != current_word) {
                 int char_backs = g_utf8_strlen(current_word.c_str(), -1);
                 if (char_backs > 0) {
-                    ibus_engine_delete_surrounding_text(engine_base, -char_backs, char_backs);
+                    delete_composition_and_selection(
+                        engine_base, engine, static_cast<guint>(char_backs));
                 }
-                IBusText *text = ibus_text_new_from_string(macro_val.c_str());
+                IBusText *text = ibus_text_new_from_string(final_word.c_str());
                 ibus_engine_commit_text(engine_base, text);
             }
             return FALSE;
@@ -553,8 +646,8 @@ static gboolean ibus_unikey_engine_process_key_event (IBusEngine *engine_base, g
         }
         
         if (char_backs > 0) {
-            // Trả về đúng nguyên bản github: Luôn xoá bằng delete_surrounding_text
-            ibus_engine_delete_surrounding_text(engine_base, -char_backs, char_backs);
+            delete_composition_and_selection(
+                engine_base, engine, static_cast<guint>(char_backs));
         }
 
         // Commit phần suffix mới
@@ -597,11 +690,12 @@ static void ibus_unikey_engine_focus_in (IBusEngine *engine_base) {
         std::string active_class = get_active_window_class_x11();
         engine->app_wants_preedit = false;
 
-        FILE *dbg = fopen("/tmp/ibus-unikey-debug.log", "a");
-        if (dbg) {
-            fprintf(dbg, "FOCUS_IN X11: active_class='%s'\n", active_class.c_str());
-            fflush(dbg);
-            fclose(dbg);
+        if (debug_enabled()) {
+            FILE *dbg = fopen("/tmp/ibus-unikey-debug.log", "a");
+            if (dbg) {
+                fprintf(dbg, "FOCUS_IN X11: active_class='%s'\n", active_class.c_str());
+                fclose(dbg);
+            }
         }
 
         for (const auto& app : preedit_apps) {
@@ -652,9 +746,8 @@ static void ibus_unikey_engine_property_activate (IBusEngine *engine, const gcha
 
 static gboolean focus_out_timeout_cb(gpointer user_data) {
     IBusUnikeyEngine *engine = IBUS_UNIKEY_ENGINE(user_data);
-    engine->composed_word->clear();
-    Bamboo_Reset();
     g_focus_out_timer_id = 0;
+    ibus_unikey_engine_reset(IBUS_ENGINE(engine));
     return G_SOURCE_REMOVE;
 }
 
@@ -665,7 +758,12 @@ static void ibus_unikey_engine_focus_out(IBusEngine *engine_base) {
         g_source_remove(g_focus_out_timer_id);
     }
     // Trì hoãn việc xoá state 50ms để chống lại lỗi Focus Storm của Chrome
-    g_focus_out_timer_id = g_timeout_add(50, focus_out_timeout_cb, engine);
+    g_focus_out_timer_id = g_timeout_add_full(
+        G_PRIORITY_DEFAULT,
+        50,
+        focus_out_timeout_cb,
+        g_object_ref(engine),
+        g_object_unref);
 }
 
 static void ibus_unikey_engine_reset (IBusEngine *engine_base) {

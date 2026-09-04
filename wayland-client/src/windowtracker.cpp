@@ -52,7 +52,7 @@ void WindowTracker::loadExcludedApps() {
             out << "gnome-terminal\n";
             out << "xfce4-terminal\n";
             out << "lxterminal\n";
-            out << "studio\n";
+            out << "android-studio\n";
             out << "java\n";
             file.close();
         }

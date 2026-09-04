@@ -16,7 +16,10 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QPlainTextEdit>
+#include <QDBusMessage>
+#include <QDBusConnection>
 #include "windowtracker.h"
+#include "libbamboo.h"
 
 MainWindow::MainWindow(bool* p_viet_mode, bool is_gnome, QWidget *parent)
     : QWidget(parent), p_viet_mode(p_viet_mode) {
@@ -184,8 +187,13 @@ void MainWindow::applySettings() {
     int method = m_methodCombo->currentData().toInt();
     int charset = m_charsetCombo->currentData().toInt();
     
-    // Toàn bộ logic tùy chọn phức tạp đã được thay bằng Bamboo CGO hiện đại.
-    // Các UI này giữ lại để không phá vỡ layout, nhưng không cần làm gì ở đây.
+    bool freeMarking = m_freeMarkingCheck->isChecked();
+    bool modernStyle = m_modernStyleCheck->isChecked();
+    bool autoRestore = m_autoRestoreCheck->isChecked();
+    bool spellCheck = m_spellCheckCheck->isChecked();
+
+    Bamboo_SetInputMethod(method);
+    Bamboo_SetOptions(freeMarking, modernStyle, spellCheck, autoRestore);
 
     saveConfig();
 }
@@ -212,6 +220,15 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 void MainWindow::setVietMode(bool viet) {
     if (p_viet_mode) *p_viet_mode = viet;
     saveConfig();
+
+    QDBusMessage msg = QDBusMessage::createMethodCall(
+        "org.kde.plasmashell",
+        "/org/kde/osdService",
+        "org.kde.osdService",
+        "showText"
+    );
+    msg << QString("input-keyboard") << QString(viet ? "UniKey: Tiếng Việt [V]" : "UniKey: Tiếng Anh [E]");
+    QDBusConnection::sessionBus().send(msg);
 }
 
 QString MainWindow::getConfigPath() const {
@@ -272,7 +289,7 @@ void MainWindow::loadConfig() {
         preeditFile.close();
     } else {
         // Default list
-        QString defaults = "kitty\nalacritty\nkonsole\ngnome-terminal\nxfce4-terminal\nlxterminal\nstudio\njava";
+        QString defaults = "kitty\nalacritty\nkonsole\ngnome-terminal\nxfce4-terminal\nlxterminal\nandroid-studio\njava";
         m_preeditAppsTextEdit->setPlainText(defaults);
         QDir().mkpath(QFileInfo(preeditPath).absolutePath());
         if (preeditFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
