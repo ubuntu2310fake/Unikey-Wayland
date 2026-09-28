@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/truonghieu/Downloads/Uk362/wayland-client
+CMAKE_SOURCE_DIR = /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/truonghieu/Downloads/Uk362/build
+CMAKE_BINARY_DIR = /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/unikey-wayland.dir/depend.make
@@ -69,10 +69,10 @@ include CMakeFiles/unikey-wayland.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/unikey-wayland.dir/flags.make
 
-input-method-unstable-v1-protocol.c: /home/truonghieu/Downloads/Uk362/wayland-client/protocols/input-method-unstable-v1.xml
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/truonghieu/Downloads/Uk362/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating input-method-unstable-v1-protocol.c, input-method-unstable-v1-client-protocol.h"
-	/usr/bin/wayland-scanner private-code /home/truonghieu/Downloads/Uk362/wayland-client/protocols/input-method-unstable-v1.xml /home/truonghieu/Downloads/Uk362/build/input-method-unstable-v1-protocol.c
-	/usr/bin/wayland-scanner client-header /home/truonghieu/Downloads/Uk362/wayland-client/protocols/input-method-unstable-v1.xml /home/truonghieu/Downloads/Uk362/build/input-method-unstable-v1-client-protocol.h
+input-method-unstable-v1-protocol.c: /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/protocols/input-method-unstable-v1.xml
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating input-method-unstable-v1-protocol.c, input-method-unstable-v1-client-protocol.h"
+	/usr/bin/wayland-scanner private-code /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/protocols/input-method-unstable-v1.xml /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/input-method-unstable-v1-protocol.c
+	/usr/bin/wayland-scanner client-header /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/protocols/input-method-unstable-v1.xml /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/input-method-unstable-v1-client-protocol.h
 
 input-method-unstable-v1-client-protocol.h: input-method-unstable-v1-protocol.c
 	@$(CMAKE_COMMAND) -E touch_nocreate input-method-unstable-v1-client-protocol.h
@@ -80,9 +80,9 @@ input-method-unstable-v1-client-protocol.h: input-method-unstable-v1-protocol.c
 unikey-wayland_autogen/timestamp: /usr/lib64/qt6/libexec/moc
 unikey-wayland_autogen/timestamp: /usr/lib64/qt6/libexec/uic
 unikey-wayland_autogen/timestamp: CMakeFiles/unikey-wayland.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/truonghieu/Downloads/Uk362/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Automatic MOC and UIC for target unikey-wayland"
-	/usr/bin/cmake -E cmake_autogen /home/truonghieu/Downloads/Uk362/build/CMakeFiles/unikey-wayland_autogen.dir/AutogenInfo.json ""
-	/usr/bin/cmake -E touch /home/truonghieu/Downloads/Uk362/build/unikey-wayland_autogen/timestamp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Automatic MOC and UIC for target unikey-wayland"
+	/usr/bin/cmake -E cmake_autogen /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles/unikey-wayland_autogen.dir/AutogenInfo.json ""
+	/usr/bin/cmake -E touch /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/unikey-wayland_autogen/timestamp
 
 CMakeFiles/unikey-wayland.dir/codegen:
 .PHONY : CMakeFiles/unikey-wayland.dir/codegen
@@ -90,100 +90,100 @@ CMakeFiles/unikey-wayland.dir/codegen:
 CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.o: CMakeFiles/unikey-wayland.dir/flags.make
 CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.o: unikey-wayland_autogen/mocs_compilation.cpp
 CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.o: CMakeFiles/unikey-wayland.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/truonghieu/Downloads/Uk362/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.o -MF CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.o.d -o CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.o -c /home/truonghieu/Downloads/Uk362/build/unikey-wayland_autogen/mocs_compilation.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.o -MF CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.o.d -o CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.o -c /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/unikey-wayland_autogen/mocs_compilation.cpp
 
 CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/truonghieu/Downloads/Uk362/build/unikey-wayland_autogen/mocs_compilation.cpp > CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/unikey-wayland_autogen/mocs_compilation.cpp > CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.i
 
 CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/truonghieu/Downloads/Uk362/build/unikey-wayland_autogen/mocs_compilation.cpp -o CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/unikey-wayland_autogen/mocs_compilation.cpp -o CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.s
 
 CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.o: CMakeFiles/unikey-wayland.dir/flags.make
 CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.o: input-method-unstable-v1-protocol.c
 CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.o: CMakeFiles/unikey-wayland.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/truonghieu/Downloads/Uk362/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.o -MF CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.o.d -o CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.o -c /home/truonghieu/Downloads/Uk362/build/input-method-unstable-v1-protocol.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.o -MF CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.o.d -o CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.o -c /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/input-method-unstable-v1-protocol.c
 
 CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/truonghieu/Downloads/Uk362/build/input-method-unstable-v1-protocol.c > CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/input-method-unstable-v1-protocol.c > CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.i
 
 CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/truonghieu/Downloads/Uk362/build/input-method-unstable-v1-protocol.c -o CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/input-method-unstable-v1-protocol.c -o CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.s
 
 CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o: CMakeFiles/unikey-wayland.dir/flags.make
-CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o: /home/truonghieu/Downloads/Uk362/wayland-client/src/mainwindow.cpp
+CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o: /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/mainwindow.cpp
 CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o: CMakeFiles/unikey-wayland.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/truonghieu/Downloads/Uk362/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o -MF CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o.d -o CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o -c /home/truonghieu/Downloads/Uk362/wayland-client/src/mainwindow.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o -MF CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o.d -o CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o -c /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/mainwindow.cpp
 
 CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/truonghieu/Downloads/Uk362/wayland-client/src/mainwindow.cpp > CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/mainwindow.cpp > CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.i
 
 CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/truonghieu/Downloads/Uk362/wayland-client/src/mainwindow.cpp -o CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/mainwindow.cpp -o CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.s
 
 CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.o: CMakeFiles/unikey-wayland.dir/flags.make
-CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.o: /home/truonghieu/Downloads/Uk362/wayland-client/src/trayicon.cpp
+CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.o: /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/trayicon.cpp
 CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.o: CMakeFiles/unikey-wayland.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/truonghieu/Downloads/Uk362/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.o -MF CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.o.d -o CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.o -c /home/truonghieu/Downloads/Uk362/wayland-client/src/trayicon.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.o -MF CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.o.d -o CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.o -c /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/trayicon.cpp
 
 CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/truonghieu/Downloads/Uk362/wayland-client/src/trayicon.cpp > CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/trayicon.cpp > CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.i
 
 CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/truonghieu/Downloads/Uk362/wayland-client/src/trayicon.cpp -o CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/trayicon.cpp -o CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.s
 
 CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.o: CMakeFiles/unikey-wayland.dir/flags.make
-CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.o: /home/truonghieu/Downloads/Uk362/wayland-client/src/macrodialog.cpp
+CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.o: /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/macrodialog.cpp
 CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.o: CMakeFiles/unikey-wayland.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/truonghieu/Downloads/Uk362/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.o -MF CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.o.d -o CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.o -c /home/truonghieu/Downloads/Uk362/wayland-client/src/macrodialog.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.o -MF CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.o.d -o CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.o -c /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/macrodialog.cpp
 
 CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/truonghieu/Downloads/Uk362/wayland-client/src/macrodialog.cpp > CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/macrodialog.cpp > CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.i
 
 CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/truonghieu/Downloads/Uk362/wayland-client/src/macrodialog.cpp -o CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/macrodialog.cpp -o CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.s
 
 CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.o: CMakeFiles/unikey-wayland.dir/flags.make
-CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.o: /home/truonghieu/Downloads/Uk362/wayland-client/src/windowtracker.cpp
+CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.o: /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/windowtracker.cpp
 CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.o: CMakeFiles/unikey-wayland.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/truonghieu/Downloads/Uk362/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.o -MF CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.o.d -o CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.o -c /home/truonghieu/Downloads/Uk362/wayland-client/src/windowtracker.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.o -MF CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.o.d -o CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.o -c /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/windowtracker.cpp
 
 CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/truonghieu/Downloads/Uk362/wayland-client/src/windowtracker.cpp > CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/windowtracker.cpp > CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.i
 
 CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/truonghieu/Downloads/Uk362/wayland-client/src/windowtracker.cpp -o CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/windowtracker.cpp -o CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.s
 
 CMakeFiles/unikey-wayland.dir/src/main.cpp.o: CMakeFiles/unikey-wayland.dir/flags.make
-CMakeFiles/unikey-wayland.dir/src/main.cpp.o: /home/truonghieu/Downloads/Uk362/wayland-client/src/main.cpp
+CMakeFiles/unikey-wayland.dir/src/main.cpp.o: /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/main.cpp
 CMakeFiles/unikey-wayland.dir/src/main.cpp.o: CMakeFiles/unikey-wayland.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/truonghieu/Downloads/Uk362/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/unikey-wayland.dir/src/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/unikey-wayland.dir/src/main.cpp.o -MF CMakeFiles/unikey-wayland.dir/src/main.cpp.o.d -o CMakeFiles/unikey-wayland.dir/src/main.cpp.o -c /home/truonghieu/Downloads/Uk362/wayland-client/src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/unikey-wayland.dir/src/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/unikey-wayland.dir/src/main.cpp.o -MF CMakeFiles/unikey-wayland.dir/src/main.cpp.o.d -o CMakeFiles/unikey-wayland.dir/src/main.cpp.o -c /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/main.cpp
 
 CMakeFiles/unikey-wayland.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/unikey-wayland.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/truonghieu/Downloads/Uk362/wayland-client/src/main.cpp > CMakeFiles/unikey-wayland.dir/src/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/main.cpp > CMakeFiles/unikey-wayland.dir/src/main.cpp.i
 
 CMakeFiles/unikey-wayland.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/unikey-wayland.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/truonghieu/Downloads/Uk362/wayland-client/src/main.cpp -o CMakeFiles/unikey-wayland.dir/src/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/main.cpp -o CMakeFiles/unikey-wayland.dir/src/main.cpp.s
 
 # Object files for target unikey-wayland
 unikey__wayland_OBJECTS = \
@@ -207,15 +207,15 @@ unikey-wayland: CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.o
 unikey-wayland: CMakeFiles/unikey-wayland.dir/src/main.cpp.o
 unikey-wayland: CMakeFiles/unikey-wayland.dir/build.make
 unikey-wayland: CMakeFiles/unikey-wayland.dir/compiler_depend.ts
-unikey-wayland: /home/truonghieu/Downloads/Uk362/wayland-client/src/libbamboo.a
-unikey-wayland: /usr/lib64/libQt6Widgets.so.6.11.1
-unikey-wayland: /usr/lib64/libQt6Gui.so.6.11.1
-unikey-wayland: /usr/lib64/libQt6DBus.so.6.11.1
-unikey-wayland: /usr/lib64/libQt6Core.so.6.11.1
+unikey-wayland: /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/libbamboo.a
+unikey-wayland: /usr/lib64/libQt6Widgets.so.6.11.2
+unikey-wayland: /usr/lib64/libQt6Gui.so.6.11.2
+unikey-wayland: /usr/lib64/libQt6DBus.so.6.11.2
+unikey-wayland: /usr/lib64/libQt6Core.so.6.11.2
 unikey-wayland: /usr/lib64/libGLX.so
 unikey-wayland: /usr/lib64/libOpenGL.so
 unikey-wayland: CMakeFiles/unikey-wayland.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/truonghieu/Downloads/Uk362/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable unikey-wayland"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable unikey-wayland"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/unikey-wayland.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -229,6 +229,6 @@ CMakeFiles/unikey-wayland.dir/clean:
 CMakeFiles/unikey-wayland.dir/depend: input-method-unstable-v1-client-protocol.h
 CMakeFiles/unikey-wayland.dir/depend: input-method-unstable-v1-protocol.c
 CMakeFiles/unikey-wayland.dir/depend: unikey-wayland_autogen/timestamp
-	cd /home/truonghieu/Downloads/Uk362/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/truonghieu/Downloads/Uk362/wayland-client /home/truonghieu/Downloads/Uk362/wayland-client /home/truonghieu/Downloads/Uk362/build /home/truonghieu/Downloads/Uk362/build /home/truonghieu/Downloads/Uk362/build/CMakeFiles/unikey-wayland.dir/DependInfo.cmake "--color=$(COLOR)" unikey-wayland
+	cd /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles/unikey-wayland.dir/DependInfo.cmake "--color=$(COLOR)" unikey-wayland
 .PHONY : CMakeFiles/unikey-wayland.dir/depend
 

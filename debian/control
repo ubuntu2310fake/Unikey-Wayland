@@ -19,7 +19,7 @@ Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          ibus,
-         qt6-wayland
+         qt6-wayland, dkms
 Description: Unikey Wayland Input Method for Vietnamese
  Unikey-Wayland is a lightweight Vietnamese input method for Wayland environments,
  powered by the UniKey engine and Qt 6 GUI.

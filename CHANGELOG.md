@@ -1,3 +1,9 @@
+## [3.0.0] - 2026-09-28
+- Rewrite core engine as Ring-0 C++ Daemon
+- Fix Wayland Dropped Keys bug (0-delay typing)
+- Natively support Unicode UTF-8 Macros in XKB
+- Eliminate IBus Bamboo dependencies
+
 # Changelog
 
 Tất cả các thay đổi đáng chú ý của dự án bộ gõ Unikey Wayland sẽ được ghi chép trong tệp này.

@@ -1,4 +1,4 @@
-unikey-wayland (2.0.10~ppa1~noble) noble; urgency=medium
+unikey-wayland (3.0.0~ppa1~noble) noble; urgency=medium
 
   * Windows Edition: Optimize KeyboardHookProc latency and batch SendInput calls to eliminate key stroke lag.
 

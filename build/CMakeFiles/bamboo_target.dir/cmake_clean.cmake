@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/truonghieu/Downloads/Uk362/wayland-client/src/libbamboo.a"
-  "/home/truonghieu/Downloads/Uk362/wayland-client/src/libbamboo.h"
+  "/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/libbamboo.a"
+  "/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/libbamboo.h"
   "CMakeFiles/bamboo_target"
 )
 

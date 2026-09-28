@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = "remove" ] || [ "$1" = "upgrade" ]; then
+    systemctl stop ukw.service || true
+    systemctl disable ukw.service || true
+    
+    if command -v dkms >/dev/null 2>&1; then
+        dkms remove -m ukw-driver -v 1.0 --all || true
+    fi
+fi
+
+#DEBHELPER#
+
+exit 0

@@ -1,7 +1,7 @@
 CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.o: \
- /home/truonghieu/Downloads/Uk362/build/unikey-wayland_autogen/mocs_compilation.cpp \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/unikey-wayland_autogen/mocs_compilation.cpp \
  /usr/include/stdc-predef.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/include/windows_macros.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/include/windows_macros.h \
  /usr/include/ctype.h /usr/include/features.h \
  /usr/include/features-time64.h /usr/include/bits/wordsize.h \
  /usr/include/bits/timesize.h /usr/include/sys/cdefs.h \
@@ -18,8 +18,8 @@ CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.o: \
  /usr/include/bits/types/mbstate_t.h \
  /usr/include/bits/types/__mbstate_t.h /usr/include/bits/types/__FILE.h \
  /usr/include/bits/types/FILE.h \
- /home/truonghieu/Downloads/Uk362/build/unikey-wayland_autogen/UVLADIE3JM/moc_macrodialog.cpp \
- /home/truonghieu/Downloads/Uk362/build/unikey-wayland_autogen/UVLADIE3JM/../../../wayland-client/src/macrodialog.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/unikey-wayland_autogen/UVLADIE3JM/moc_macrodialog.cpp \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/unikey-wayland_autogen/UVLADIE3JM/../../../wayland-client/src/macrodialog.h \
  /usr/include/qt6/QtWidgets/QDialog /usr/include/qt6/QtWidgets/qdialog.h \
  /usr/include/qt6/QtWidgets/qtwidgetsglobal.h \
  /usr/include/qt6/QtGui/qtguiglobal.h /usr/include/qt6/QtCore/qglobal.h \
@@ -369,8 +369,8 @@ CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.o: \
  /usr/include/qt6/QtCore/qtmochelpers.h \
  /usr/include/qt6/QtCore/qtmocconstants.h \
  /usr/include/qt6/QtCore/q20algorithm.h \
- /home/truonghieu/Downloads/Uk362/build/unikey-wayland_autogen/UVLADIE3JM/moc_mainwindow.cpp \
- /home/truonghieu/Downloads/Uk362/build/unikey-wayland_autogen/UVLADIE3JM/../../../wayland-client/src/mainwindow.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/unikey-wayland_autogen/UVLADIE3JM/moc_mainwindow.cpp \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/unikey-wayland_autogen/UVLADIE3JM/../../../wayland-client/src/mainwindow.h \
  /usr/include/qt6/QtWidgets/QWidget /usr/include/qt6/QtWidgets/QTabWidget \
  /usr/include/qt6/QtWidgets/QComboBox \
  /usr/include/qt6/QtWidgets/qcombobox.h \
@@ -397,17 +397,16 @@ CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.o: \
  /usr/include/qt6/QtCore/qcoreapplication_platform.h \
  /usr/include/qt6/QtGui/qinputmethod.h \
  /usr/include/qt6/QtGui/qguiapplication_platform.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/include/ukengine_wrapper.h \
- /home/truonghieu/Downloads/Uk362/build/unikey-wayland_autogen/UVLADIE3JM/../../../wayland-client/src/macrodialog.h \
- /home/truonghieu/Downloads/Uk362/build/unikey-wayland_autogen/UVLADIE3JM/moc_trayicon.cpp \
- /home/truonghieu/Downloads/Uk362/build/unikey-wayland_autogen/UVLADIE3JM/../../../wayland-client/src/trayicon.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/unikey-wayland_autogen/UVLADIE3JM/../../../wayland-client/src/macrodialog.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/unikey-wayland_autogen/UVLADIE3JM/moc_trayicon.cpp \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/unikey-wayland_autogen/UVLADIE3JM/../../../wayland-client/src/trayicon.h \
  /usr/include/qt6/QtWidgets/QSystemTrayIcon \
  /usr/include/qt6/QtWidgets/qsystemtrayicon.h \
  /usr/include/qt6/QtWidgets/QMenu /usr/include/qt6/QtWidgets/qmenu.h \
  /usr/include/qt6/QtGui/QAction \
- /home/truonghieu/Downloads/Uk362/build/unikey-wayland_autogen/UVLADIE3JM/../../../wayland-client/src/mainwindow.h \
- /home/truonghieu/Downloads/Uk362/build/unikey-wayland_autogen/UVLADIE3JM/moc_windowtracker.cpp \
- /home/truonghieu/Downloads/Uk362/build/unikey-wayland_autogen/UVLADIE3JM/../../../wayland-client/src/windowtracker.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/unikey-wayland_autogen/UVLADIE3JM/../../../wayland-client/src/mainwindow.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/unikey-wayland_autogen/UVLADIE3JM/moc_windowtracker.cpp \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/unikey-wayland_autogen/UVLADIE3JM/../../../wayland-client/src/windowtracker.h \
  /usr/include/qt6/QtCore/QObject /usr/include/qt6/QtCore/QString \
  /usr/include/qt6/QtDBus/QDBusAbstractAdaptor \
  /usr/include/qt6/QtDBus/qdbusabstractadaptor.h \

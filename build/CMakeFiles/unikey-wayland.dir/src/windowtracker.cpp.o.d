@@ -1,7 +1,7 @@
 CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.o: \
- /home/truonghieu/Downloads/Uk362/wayland-client/src/windowtracker.cpp \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/windowtracker.cpp \
  /usr/include/stdc-predef.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/include/windows_macros.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/include/windows_macros.h \
  /usr/include/ctype.h /usr/include/features.h \
  /usr/include/features-time64.h /usr/include/bits/wordsize.h \
  /usr/include/bits/timesize.h /usr/include/sys/cdefs.h \
@@ -18,7 +18,7 @@ CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.o: \
  /usr/include/bits/types/mbstate_t.h \
  /usr/include/bits/types/__mbstate_t.h /usr/include/bits/types/__FILE.h \
  /usr/include/bits/types/FILE.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/src/windowtracker.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/windowtracker.h \
  /usr/include/qt6/QtCore/QObject /usr/include/qt6/QtCore/qobject.h \
  /usr/include/qt6/QtCore/qobjectdefs.h \
  /usr/include/qt6/QtCore/qnamespace.h /usr/include/qt6/QtCore/qglobal.h \

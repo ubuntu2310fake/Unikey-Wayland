@@ -9,8 +9,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "" "ibus-engine-unikey-wayland_autogen/timestamp" "custom" "ibus-engine-unikey-wayland_autogen/deps"
-  "/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp" "CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.o" "gcc" "CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.o.d"
-  "/home/truonghieu/Downloads/Uk362/build/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp" "CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o" "gcc" "CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o.d"
+  "/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp" "CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.o" "gcc" "CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.o.d"
+  "/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp" "CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o" "gcc" "CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o.d"
   "" "ibus-engine-unikey-wayland" "gcc" "CMakeFiles/ibus-engine-unikey-wayland.dir/link.d"
   )
 

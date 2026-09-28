@@ -3,6 +3,7 @@
 
 #include <QSystemTrayIcon>
 #include <QMenu>
+#include <QTimer>
 #include <QAction>
 #include "mainwindow.h"
 
@@ -13,6 +14,8 @@ public:
     ~TrayIcon();
 
     void updateIcon();
+private slots:
+    void checkStatusFile();
 
 private slots:
     void onTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
@@ -31,6 +34,7 @@ private:
     
     QIcon m_iconV;
     QIcon m_iconE;
+    QTimer* m_timer;
 };
 
 #endif // TRAYICON_H

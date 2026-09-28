@@ -1,7 +1,6 @@
-/home/truonghieu/Downloads/Uk362/build/unikey-wayland_autogen/UVLADIE3JM/moc_mainwindow.cpp: /home/truonghieu/Downloads/Uk362/wayland-client/src/mainwindow.h \
-  /home/truonghieu/Downloads/Uk362/build/unikey-wayland_autogen/moc_predefs.h \
-  /home/truonghieu/Downloads/Uk362/wayland-client/include/ukengine_wrapper.h \
-  /home/truonghieu/Downloads/Uk362/wayland-client/src/macrodialog.h \
+/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/unikey-wayland_autogen/UVLADIE3JM/moc_mainwindow.cpp: /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/mainwindow.h \
+  /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/unikey-wayland_autogen/moc_predefs.h \
+  /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/macrodialog.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \

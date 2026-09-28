@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/truonghieu/Downloads/Uk362/wayland-client
+CMAKE_SOURCE_DIR = /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/truonghieu/Downloads/Uk362/build
+CMAKE_BINARY_DIR = /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build
 
 # Utility rule file for bamboo_target.
 
@@ -66,21 +66,21 @@ include CMakeFiles/bamboo_target.dir/compiler_depend.make
 # Include the progress variables for this target.
 include CMakeFiles/bamboo_target.dir/progress.make
 
-CMakeFiles/bamboo_target: /home/truonghieu/Downloads/Uk362/wayland-client/src/libbamboo.a
+CMakeFiles/bamboo_target: /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/libbamboo.a
 
-/home/truonghieu/Downloads/Uk362/wayland-client/src/libbamboo.a: /home/truonghieu/Downloads/Uk362/wayland-client/src/bamboo_wrapper.go
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/truonghieu/Downloads/Uk362/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating /home/truonghieu/Downloads/Uk362/wayland-client/src/libbamboo.a, /home/truonghieu/Downloads/Uk362/wayland-client/src/libbamboo.h"
-	cd /home/truonghieu/Downloads/Uk362/wayland-client/src && go build -mod=vendor -buildmode=c-archive -o /home/truonghieu/Downloads/Uk362/wayland-client/src/libbamboo.a bamboo_wrapper.go
+/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/libbamboo.a: /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/bamboo_wrapper.go
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/libbamboo.a, /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/libbamboo.h"
+	cd /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src && go build -mod=vendor -buildmode=c-archive -o /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/libbamboo.a bamboo_wrapper.go
 
-/home/truonghieu/Downloads/Uk362/wayland-client/src/libbamboo.h: /home/truonghieu/Downloads/Uk362/wayland-client/src/libbamboo.a
-	@$(CMAKE_COMMAND) -E touch_nocreate /home/truonghieu/Downloads/Uk362/wayland-client/src/libbamboo.h
+/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/libbamboo.h: /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/libbamboo.a
+	@$(CMAKE_COMMAND) -E touch_nocreate /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/libbamboo.h
 
 CMakeFiles/bamboo_target.dir/codegen:
 .PHONY : CMakeFiles/bamboo_target.dir/codegen
 
 bamboo_target: CMakeFiles/bamboo_target
-bamboo_target: /home/truonghieu/Downloads/Uk362/wayland-client/src/libbamboo.a
-bamboo_target: /home/truonghieu/Downloads/Uk362/wayland-client/src/libbamboo.h
+bamboo_target: /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/libbamboo.a
+bamboo_target: /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/libbamboo.h
 bamboo_target: CMakeFiles/bamboo_target.dir/build.make
 .PHONY : bamboo_target
 
@@ -93,6 +93,6 @@ CMakeFiles/bamboo_target.dir/clean:
 .PHONY : CMakeFiles/bamboo_target.dir/clean
 
 CMakeFiles/bamboo_target.dir/depend:
-	cd /home/truonghieu/Downloads/Uk362/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/truonghieu/Downloads/Uk362/wayland-client /home/truonghieu/Downloads/Uk362/wayland-client /home/truonghieu/Downloads/Uk362/build /home/truonghieu/Downloads/Uk362/build /home/truonghieu/Downloads/Uk362/build/CMakeFiles/bamboo_target.dir/DependInfo.cmake "--color=$(COLOR)" bamboo_target
+	cd /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles/bamboo_target.dir/DependInfo.cmake "--color=$(COLOR)" bamboo_target
 .PHONY : CMakeFiles/bamboo_target.dir/depend
 

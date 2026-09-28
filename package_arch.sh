@@ -3,7 +3,7 @@
 # Chạy script này từ thư mục gốc của dự án: ./package_arch.sh
 set -e
 
-PKGVER="2.0.10"
+PKGVER="3.0.0"
 PKGREL="1"
 # Tự động phát hiện kiến trúc hệ thống
 DETECTED_ARCH=$(uname -m)
@@ -24,7 +24,7 @@ else
     ARCH="$DETECTED_ARCH"
 fi
 PKGNAME="unikey-wayland"
-FULL_PKGVER="${PKGVER}-${PKGREL}"
+FULL_PKGVER="3.0.0"
 PKG_OUTPUT="releases/${PKGNAME}-${FULL_PKGVER}-${ARCH}.pkg.tar.zst"
 
 echo ">>> Bắt đầu đóng gói Arch Linux (tar.zst) cho ${PKGNAME} ${FULL_PKGVER}"
@@ -48,6 +48,9 @@ rm -rf arch_pkg
 mkdir -p releases
 mkdir -p arch_pkg/usr/bin
 mkdir -p arch_pkg/usr/libexec
+mkdir -p arch_pkg/usr/src/ukw-driver-1.0
+mkdir -p arch_pkg/usr/lib/systemd/system
+mkdir -p arch_pkg/usr/share/X11/xkb/symbols
 mkdir -p arch_pkg/usr/share/ibus/component
 mkdir -p arch_pkg/usr/share/applications
 mkdir -p arch_pkg/usr/share/metainfo
@@ -70,7 +73,16 @@ cp io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml arch_pkg/usr/share/metain
 cp io.github.ubuntu2310fake.UnikeyWayland.svg arch_pkg/usr/share/icons/hicolor/scalable/apps/
 
 # 4. Thay đổi quyền truy cập tiêu chuẩn
+# Copy Ring-0 components
+cp wayland-client/build/ukw_daemon arch_pkg/usr/bin/
+cp ring0-engine/dkms.conf arch_pkg/usr/src/ukw-driver-1.0/
+cp ring0-engine/Makefile arch_pkg/usr/src/ukw-driver-1.0/
+cp ring0-engine/ukw_driver.c arch_pkg/usr/src/ukw-driver-1.0/
+cp ring0-engine/ukw.service arch_pkg/usr/lib/systemd/system/
+cp ring0-engine/xkb/ukw arch_pkg/usr/share/X11/xkb/symbols/
+
 chmod 755 arch_pkg/usr/bin/unikey-wayland
+chmod 755 arch_pkg/usr/bin/ukw_daemon
 if [ -f arch_pkg/usr/libexec/ibus-engine-unikey-wayland ]; then
     chmod 755 arch_pkg/usr/libexec/ibus-engine-unikey-wayland
 fi
@@ -105,10 +117,31 @@ arch = ${ARCH}
 license = GPL-3.0-or-later
 depend = qt6-base
 depend = wayland
+depend = dkms
 EOF
 
 # Tạo file INSTALL rỗng
-touch arch_pkg/.INSTALL
+cat <<'INSTALL_EOF' > arch_pkg/.INSTALL
+post_install() {
+    if command -v dkms >/dev/null 2>&1; then
+        dkms add -m ukw-driver -v 1.0 || true
+        dkms build -m ukw-driver -v 1.0 || true
+        dkms install -m ukw-driver -v 1.0 || true
+    fi
+    systemctl daemon-reload || true
+    systemctl enable ukw.service || true
+    systemctl restart ukw.service || true
+}
+
+pre_remove() {
+    systemctl stop ukw.service || true
+    systemctl disable ukw.service || true
+    if command -v dkms >/dev/null 2>&1; then
+        dkms remove -m ukw-driver -v 1.0 --all || true
+    fi
+}
+INSTALL_EOF
+
 
 chmod 644 arch_pkg/.PKGINFO
 chmod 644 arch_pkg/.INSTALL

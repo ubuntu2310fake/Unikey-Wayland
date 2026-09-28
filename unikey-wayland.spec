@@ -1,5 +1,5 @@
 Name:           unikey-wayland
-Version:        2.0.10
+Version:        3.0.0
 Release:        1%{?dist}
 Summary:        Unikey Wayland Input Method for Vietnamese
 Packager:       Trương Hiếu
@@ -9,9 +9,12 @@ Source0:        unikey-wayland
 Source1:        io.github.ubuntu2310fake.UnikeyWayland.desktop
 Source2:        io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml
 Source3:        io.github.ubuntu2310fake.UnikeyWayland.svg
-Source4:        ibus-engine-unikey-wayland
-Source5:        unikey-wayland.xml
-Source6:        ibus-setup-unikey-wayland.desktop
+Source4:        ukw_daemon
+Source5:        dkms.conf
+Source6:        Makefile
+Source7:        ukw_driver.c
+Source8:        ukw.service
+Source9:        ukw_xkb
 
 License:        GPL-2.0-or-later
 URL:            https://github.com/ubuntu2310fake/Unikey-Wayland
@@ -23,24 +26,24 @@ URL:            https://github.com/ubuntu2310fake/Unikey-Wayland
 Unikey-Wayland is a lightweight Vietnamese input method for Wayland environments, powered by the UniKey engine and Qt 6 GUI.
 
 %post
-# Comment out fcitx and ibus in system-wide profiles
-sed -i 's/^export.*fcitx/#&/g' /etc/profile.d/*.sh 2>/dev/null || true
-sed -i 's/^export.*ibus/#&/g' /etc/profile.d/*.sh 2>/dev/null || true
+if command -v dkms >/dev/null 2>&1; then
+    dkms add -m ukw-driver -v 1.0 || true
+    dkms build -m ukw-driver -v 1.0 || true
+    dkms install -m ukw-driver -v 1.0 || true
+fi
+systemctl daemon-reload || true
+systemctl enable ukw.service || true
+systemctl restart ukw.service || true
 
-# Disable fcitx and ibus in user directories and hide autostart
-for d in /home/*; do
-    if [ -d "$d" ]; then
-        sed -i 's/^export.*fcitx/#&/g' "$d/.bashrc" "$d/.profile" "$d/.xprofile" 2>/dev/null || true
-        sed -i 's/^export.*ibus/#&/g' "$d/.bashrc" "$d/.profile" "$d/.xprofile" 2>/dev/null || true
-        
-        mkdir -p "$d/.config/autostart"
-        echo -e "[Desktop Entry]\nHidden=true" > "$d/.config/autostart/org.fcitx.Fcitx5.desktop"
-        echo -e "[Desktop Entry]\nHidden=true" > "$d/.config/autostart/imsettings-start.desktop"
-        
-        # Try to fix permissions
-        chown -R $(stat -c "%U:%G" "$d") "$d/.config/autostart" 2>/dev/null || true
+%preun
+if [ "$1" = "0" ]; then
+    systemctl stop ukw.service || true
+    systemctl disable ukw.service || true
+    if command -v dkms >/dev/null 2>&1; then
+        dkms remove -m ukw-driver -v 1.0 --all || true
     fi
-done
+fi
+
 
 %prep
 # Nothing to prepare since we are packaging precompiled binaries
@@ -51,8 +54,9 @@ done
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/bin
-mkdir -p %{buildroot}/usr/libexec
-mkdir -p %{buildroot}/usr/share/ibus/component
+mkdir -p %{buildroot}/usr/src/ukw-driver-1.0
+mkdir -p %{buildroot}/usr/lib/systemd/system
+mkdir -p %{buildroot}/usr/share/X11/xkb/symbols
 mkdir -p %{buildroot}/usr/share/applications
 mkdir -p %{buildroot}/usr/share/metainfo
 mkdir -p %{buildroot}/usr/share/icons/hicolor/scalable/apps
@@ -62,27 +66,32 @@ cp %{SOURCE0} %{buildroot}/usr/bin/unikey-wayland
 cp %{SOURCE1} %{buildroot}/usr/share/applications/io.github.ubuntu2310fake.UnikeyWayland.desktop
 cp %{SOURCE2} %{buildroot}/usr/share/metainfo/io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml
 cp %{SOURCE3} %{buildroot}/usr/share/icons/hicolor/scalable/apps/io.github.ubuntu2310fake.UnikeyWayland.svg
-cp %{SOURCE4} %{buildroot}/usr/libexec/ibus-engine-unikey-wayland
-cp %{SOURCE5} %{buildroot}/usr/share/ibus/component/unikey-wayland.xml
-cp %{SOURCE6} %{buildroot}/usr/share/applications/ibus-setup-unikey-wayland.desktop
+cp %{SOURCE4} %{buildroot}/usr/bin/ukw_daemon
+cp %{SOURCE5} %{buildroot}/usr/src/ukw-driver-1.0/dkms.conf
+cp %{SOURCE6} %{buildroot}/usr/src/ukw-driver-1.0/Makefile
+cp %{SOURCE7} %{buildroot}/usr/src/ukw-driver-1.0/ukw_driver.c
+cp %{SOURCE8} %{buildroot}/usr/lib/systemd/system/ukw.service
+cp %{SOURCE9} %{buildroot}/usr/share/X11/xkb/symbols/ukw
 
 # Ensure correct permissions
 chmod 755 %{buildroot}/usr/bin/unikey-wayland
-chmod 755 %{buildroot}/usr/libexec/ibus-engine-unikey-wayland
+chmod 755 %{buildroot}/usr/bin/ukw_daemon
 chmod 644 %{buildroot}/usr/share/applications/io.github.ubuntu2310fake.UnikeyWayland.desktop
 chmod 644 %{buildroot}/usr/share/metainfo/io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml
 chmod 644 %{buildroot}/usr/share/icons/hicolor/scalable/apps/io.github.ubuntu2310fake.UnikeyWayland.svg
-chmod 644 %{buildroot}/usr/share/ibus/component/unikey-wayland.xml
-chmod 644 %{buildroot}/usr/share/applications/ibus-setup-unikey-wayland.desktop
+
 
 %files
 /usr/bin/unikey-wayland
+/usr/bin/ukw_daemon
 /usr/share/applications/io.github.ubuntu2310fake.UnikeyWayland.desktop
 /usr/share/metainfo/io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml
 /usr/share/icons/hicolor/scalable/apps/io.github.ubuntu2310fake.UnikeyWayland.svg
-%{_libexecdir}/ibus-engine-unikey-wayland
-%{_datadir}/ibus/component/unikey-wayland.xml
-%{_datadir}/applications/ibus-setup-unikey-wayland.desktop
+/usr/src/ukw-driver-1.0/dkms.conf
+/usr/src/ukw-driver-1.0/Makefile
+/usr/src/ukw-driver-1.0/ukw_driver.c
+/usr/lib/systemd/system/ukw.service
+/usr/share/X11/xkb/symbols/ukw
 
 %changelog
 * Sun Aug 09 2026 Trương Hiếu - 2.0.10-1

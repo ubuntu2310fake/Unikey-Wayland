@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/truonghieu/Downloads/Uk362/wayland-client
+CMAKE_SOURCE_DIR = /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/truonghieu/Downloads/Uk362/build
+CMAKE_BINARY_DIR = /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/ibus-engine-unikey-wayland.dir/depend.make
@@ -72,9 +72,9 @@ include CMakeFiles/ibus-engine-unikey-wayland.dir/flags.make
 ibus-engine-unikey-wayland_autogen/timestamp: /usr/lib64/qt6/libexec/moc
 ibus-engine-unikey-wayland_autogen/timestamp: /usr/lib64/qt6/libexec/uic
 ibus-engine-unikey-wayland_autogen/timestamp: CMakeFiles/ibus-engine-unikey-wayland.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/truonghieu/Downloads/Uk362/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target ibus-engine-unikey-wayland"
-	/usr/bin/cmake -E cmake_autogen /home/truonghieu/Downloads/Uk362/build/CMakeFiles/ibus-engine-unikey-wayland_autogen.dir/AutogenInfo.json ""
-	/usr/bin/cmake -E touch /home/truonghieu/Downloads/Uk362/build/ibus-engine-unikey-wayland_autogen/timestamp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target ibus-engine-unikey-wayland"
+	/usr/bin/cmake -E cmake_autogen /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles/ibus-engine-unikey-wayland_autogen.dir/AutogenInfo.json ""
+	/usr/bin/cmake -E touch /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/ibus-engine-unikey-wayland_autogen/timestamp
 
 CMakeFiles/ibus-engine-unikey-wayland.dir/codegen:
 .PHONY : CMakeFiles/ibus-engine-unikey-wayland.dir/codegen
@@ -82,46 +82,46 @@ CMakeFiles/ibus-engine-unikey-wayland.dir/codegen:
 CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o: CMakeFiles/ibus-engine-unikey-wayland.dir/flags.make
 CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o: ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp
 CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o: CMakeFiles/ibus-engine-unikey-wayland.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/truonghieu/Downloads/Uk362/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o -MF CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o.d -o CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o -c /home/truonghieu/Downloads/Uk362/build/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o -MF CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o.d -o CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o -c /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp
 
 CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/truonghieu/Downloads/Uk362/build/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp > CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp > CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.i
 
 CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/truonghieu/Downloads/Uk362/build/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp -o CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp -o CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.s
 
-CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.o: CMakeFiles/ibus-engine-unikey-wayland.dir/flags.make
-CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.o: /home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp
-CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.o: CMakeFiles/ibus-engine-unikey-wayland.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/truonghieu/Downloads/Uk362/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.o -MF CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.o.d -o CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.o -c /home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp
+CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.o: CMakeFiles/ibus-engine-unikey-wayland.dir/flags.make
+CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.o: /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp
+CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.o: CMakeFiles/ibus-engine-unikey-wayland.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.o -MF CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.o.d -o CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.o -c /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp
 
-CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp > CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.i
+CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp > CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.i
 
-CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp -o CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.s
+CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp -o CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.s
 
 # Object files for target ibus-engine-unikey-wayland
 ibus__engine__unikey__wayland_OBJECTS = \
 "CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o" \
-"CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.o"
+"CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.o"
 
 # External object files for target ibus-engine-unikey-wayland
 ibus__engine__unikey__wayland_EXTERNAL_OBJECTS =
 
 ibus-engine-unikey-wayland: CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o
-ibus-engine-unikey-wayland: CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.o
+ibus-engine-unikey-wayland: CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.o
 ibus-engine-unikey-wayland: CMakeFiles/ibus-engine-unikey-wayland.dir/build.make
 ibus-engine-unikey-wayland: CMakeFiles/ibus-engine-unikey-wayland.dir/compiler_depend.ts
-ibus-engine-unikey-wayland: /home/truonghieu/Downloads/Uk362/wayland-client/src/libbamboo.a
+ibus-engine-unikey-wayland: /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/libbamboo.a
 ibus-engine-unikey-wayland: CMakeFiles/ibus-engine-unikey-wayland.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/truonghieu/Downloads/Uk362/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable ibus-engine-unikey-wayland"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable ibus-engine-unikey-wayland"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ibus-engine-unikey-wayland.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -133,6 +133,6 @@ CMakeFiles/ibus-engine-unikey-wayland.dir/clean:
 .PHONY : CMakeFiles/ibus-engine-unikey-wayland.dir/clean
 
 CMakeFiles/ibus-engine-unikey-wayland.dir/depend: ibus-engine-unikey-wayland_autogen/timestamp
-	cd /home/truonghieu/Downloads/Uk362/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/truonghieu/Downloads/Uk362/wayland-client /home/truonghieu/Downloads/Uk362/wayland-client /home/truonghieu/Downloads/Uk362/build /home/truonghieu/Downloads/Uk362/build /home/truonghieu/Downloads/Uk362/build/CMakeFiles/ibus-engine-unikey-wayland.dir/DependInfo.cmake "--color=$(COLOR)" ibus-engine-unikey-wayland
+	cd /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles/ibus-engine-unikey-wayland.dir/DependInfo.cmake "--color=$(COLOR)" ibus-engine-unikey-wayland
 .PHONY : CMakeFiles/ibus-engine-unikey-wayland.dir/depend
 

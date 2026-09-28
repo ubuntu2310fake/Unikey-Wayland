@@ -1,0 +1,12 @@
+[Unit]
+Description=Unikey Wayland Ring 0 Daemon
+After=multi-user.target
+
+[Service]
+ExecStart=/usr/bin/ukw_daemon
+Restart=always
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

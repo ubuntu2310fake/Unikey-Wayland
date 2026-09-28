@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/truonghieu/Downloads/Uk362/wayland-client
+CMAKE_SOURCE_DIR = /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/truonghieu/Downloads/Uk362/build
+CMAKE_BINARY_DIR = /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build
 
 # Utility rule file for unikey-wayland_autogen.
 
@@ -71,9 +71,9 @@ CMakeFiles/unikey-wayland_autogen: unikey-wayland_autogen/timestamp
 unikey-wayland_autogen/timestamp: /usr/lib64/qt6/libexec/moc
 unikey-wayland_autogen/timestamp: /usr/lib64/qt6/libexec/uic
 unikey-wayland_autogen/timestamp: CMakeFiles/unikey-wayland_autogen.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/truonghieu/Downloads/Uk362/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target unikey-wayland"
-	/usr/bin/cmake -E cmake_autogen /home/truonghieu/Downloads/Uk362/build/CMakeFiles/unikey-wayland_autogen.dir/AutogenInfo.json ""
-	/usr/bin/cmake -E touch /home/truonghieu/Downloads/Uk362/build/unikey-wayland_autogen/timestamp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target unikey-wayland"
+	/usr/bin/cmake -E cmake_autogen /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles/unikey-wayland_autogen.dir/AutogenInfo.json ""
+	/usr/bin/cmake -E touch /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/unikey-wayland_autogen/timestamp
 
 CMakeFiles/unikey-wayland_autogen.dir/codegen:
 .PHONY : CMakeFiles/unikey-wayland_autogen.dir/codegen
@@ -92,6 +92,6 @@ CMakeFiles/unikey-wayland_autogen.dir/clean:
 .PHONY : CMakeFiles/unikey-wayland_autogen.dir/clean
 
 CMakeFiles/unikey-wayland_autogen.dir/depend:
-	cd /home/truonghieu/Downloads/Uk362/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/truonghieu/Downloads/Uk362/wayland-client /home/truonghieu/Downloads/Uk362/wayland-client /home/truonghieu/Downloads/Uk362/build /home/truonghieu/Downloads/Uk362/build /home/truonghieu/Downloads/Uk362/build/CMakeFiles/unikey-wayland_autogen.dir/DependInfo.cmake "--color=$(COLOR)" unikey-wayland_autogen
+	cd /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles/unikey-wayland_autogen.dir/DependInfo.cmake "--color=$(COLOR)" unikey-wayland_autogen
 .PHONY : CMakeFiles/unikey-wayland_autogen.dir/depend
 

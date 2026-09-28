@@ -1,3 +1,5 @@
+#include <fcntl.h>
+#include <unistd.h>
 #include "mainwindow.h"
 // Constants previously defined in keycons.h
 #define TELEX_INPUT 1
@@ -113,15 +115,6 @@ MainWindow::MainWindow(bool* p_viet_mode, bool is_gnome, QWidget *parent)
     macroLayout->addStretch();
     m_tabWidget->addTab(tabMacro, "Gõ tắt");
 
-    // --- Tab Danh sách loại trừ ---
-    QWidget* tabExclude = new QWidget();
-    QVBoxLayout* excludeLayout = new QVBoxLayout(tabExclude);
-    QLabel* excludeLabel = new QLabel("Các ứng dụng tự động dùng gạch chân (Preedit):\n(Một dòng cho mỗi ứng dụng, ví dụ: kitty, studio, java)");
-    m_preeditAppsTextEdit = new QPlainTextEdit(this);
-    excludeLayout->addWidget(excludeLabel);
-    excludeLayout->addWidget(m_preeditAppsTextEdit);
-    m_tabWidget->addTab(tabExclude, "Danh sách loại trừ");
-
     // --- Tab Thông tin ---
     QWidget* tabAbout = new QWidget();
     QVBoxLayout* aboutLayout = new QVBoxLayout(tabAbout);
@@ -142,7 +135,7 @@ MainWindow::MainWindow(bool* p_viet_mode, bool is_gnome, QWidget *parent)
 #ifdef UKW_VERSION
     versionStr = QString(UKW_VERSION);
 #endif
-    QLabel* infoLabel = new QLabel(is_gnome ? "Khởi nguồn từ mã nguồn Unikey nhưng logic sử dụng Bamboo Engine<br>Chạy dưới chế độ IBus Engine<br>Phiên bản: " + versionStr : "Khởi nguồn từ mã nguồn Unikey nhưng logic sử dụng Bamboo Engine<br>Viết lại UI bằng Qt 6 cho KDE Plasma Wayland<br>Phiên bản: " + versionStr);
+    QLabel* infoLabel = new QLabel(is_gnome ? "Khởi nguồn từ mã nguồn Unikey nhưng logic đã được chuyển sang Kernel Ring 0<br>Chạy dưới chế độ IBus Engine<br>Phiên bản: " + versionStr : "Khởi nguồn từ mã nguồn Unikey nhưng logic đã được chuyển sang Kernel Ring 0<br>Viết lại UI bằng Qt 6 cho KDE Plasma Wayland<br>Phiên bản: " + versionStr);
     infoLabel->setAlignment(Qt::AlignCenter);
     aboutLayout->addStretch();
     aboutLayout->addWidget(titleLabel);
@@ -168,7 +161,6 @@ MainWindow::MainWindow(bool* p_viet_mode, bool is_gnome, QWidget *parent)
     connect(m_spellCheckCheck, &QCheckBox::stateChanged, this, &MainWindow::applySettings);
     connect(m_macroCheck, &QCheckBox::stateChanged, this, &MainWindow::applySettings);
     connect(m_evHotkeyCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::applySettings);
-    connect(m_preeditAppsTextEdit, &QPlainTextEdit::textChanged, this, &MainWindow::applySettings);
     
     connect(m_macroTableBtn, &QPushButton::clicked, this, &MainWindow::onMacroButtonClicked);
     connect(m_closeBtn, &QPushButton::clicked, this, &MainWindow::onCloseClicked);
@@ -212,6 +204,13 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 void MainWindow::setVietMode(bool viet) {
     if (p_viet_mode) *p_viet_mode = viet;
     saveConfig();
+    int fd = open("/tmp/ukw_cmd", O_WRONLY | O_NONBLOCK);
+    if (fd >= 0) {
+        std::string cmd = viet ? "MODE:VI;" : "MODE:EN;";
+        cmd += "SWITCH:" + std::to_string(getSwitchKey()) + ";";
+        write(fd, cmd.c_str(), cmd.length());
+        ::close(fd);
+    }
 }
 
 QString MainWindow::getConfigPath() const {
@@ -264,22 +263,7 @@ void MainWindow::loadConfig() {
         }
     }
 
-    // Load preedit apps list
-    QString preeditPath = QDir::homePath() + "/UnikeyWayland/preedit_apps.txt";
-    QFile preeditFile(preeditPath);
-    if (preeditFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        m_preeditAppsTextEdit->setPlainText(QString::fromUtf8(preeditFile.readAll()));
-        preeditFile.close();
-    } else {
-        // Default list
-        QString defaults = "kitty\nalacritty\nkonsole\ngnome-terminal\nxfce4-terminal\nlxterminal\nstudio\njava";
-        m_preeditAppsTextEdit->setPlainText(defaults);
-        QDir().mkpath(QFileInfo(preeditPath).absolutePath());
-        if (preeditFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-            preeditFile.write(defaults.toUtf8());
-            preeditFile.close();
-        }
-    }
+
 
     m_loadingConfig = false;
 }
@@ -311,23 +295,26 @@ void MainWindow::saveConfig() {
         }
         obj["macros"] = macroObj;
         
+
         QJsonDocument doc(obj);
         file.write(doc.toJson());
         file.close();
     }
-
-    // Save preedit apps list
-    QString preeditPath = QDir::homePath() + "/UnikeyWayland/preedit_apps.txt";
-    QFile preeditFile(preeditPath);
-    if (preeditFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        preeditFile.write(m_preeditAppsTextEdit->toPlainText().toUtf8());
-        preeditFile.close();
-    }
     
-    extern WindowTracker* g_windowTracker;
-    if (g_windowTracker) {
-        g_windowTracker->reloadExcludedApps();
+    std::string macro_cmd = "MACRO:" + std::string(m_macroCheck->isChecked() ? "1" : "0") + ":";
+    for (const auto& pair : m_macros) {
+        macro_cmd += pair.first + "=" + pair.second + ";";
     }
+    macro_cmd += "SWITCH:" + std::to_string(getSwitchKey()) + ";";
+    macro_cmd += (p_viet_mode && *p_viet_mode) ? "MODE:VI;" : "MODE:EN;";
+    int fd = open("/tmp/ukw_cmd", O_WRONLY | O_NONBLOCK);
+    if (fd >= 0) {
+        write(fd, macro_cmd.c_str(), macro_cmd.length());
+        ::close(fd);
+    }
+
+
+
 }
 
 void MainWindow::selectTab(const QString& name) {

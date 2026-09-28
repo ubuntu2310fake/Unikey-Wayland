@@ -18,7 +18,7 @@
             <license>GPL</license>
             <author>Trương Hiếu</author>
             <icon>ibus-unikey</icon>
-            <layout>us</layout>
+            <layout>ukw</layout>
             <longname>Unikey (Wayland Engine)</longname>
             <description>Unikey Input Method Engine for GNOME</description>
             <rank>99</rank>

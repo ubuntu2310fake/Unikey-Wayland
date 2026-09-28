@@ -1,7 +1,7 @@
 CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o: \
- /home/truonghieu/Downloads/Uk362/wayland-client/src/mainwindow.cpp \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/mainwindow.cpp \
  /usr/include/stdc-predef.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/include/windows_macros.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/include/windows_macros.h \
  /usr/include/ctype.h /usr/include/features.h \
  /usr/include/features-time64.h /usr/include/bits/wordsize.h \
  /usr/include/bits/timesize.h /usr/include/sys/cdefs.h \
@@ -18,7 +18,7 @@ CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o: \
  /usr/include/bits/types/mbstate_t.h \
  /usr/include/bits/types/__mbstate_t.h /usr/include/bits/types/__FILE.h \
  /usr/include/bits/types/FILE.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/src/mainwindow.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/mainwindow.h \
  /usr/include/qt6/QtWidgets/QWidget /usr/include/qt6/QtWidgets/qwidget.h \
  /usr/include/qt6/QtWidgets/qtwidgetsglobal.h \
  /usr/include/qt6/QtGui/qtguiglobal.h /usr/include/qt6/QtCore/qglobal.h \
@@ -379,8 +379,7 @@ CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o: \
  /usr/include/qt6/QtCore/qcoreapplication_platform.h \
  /usr/include/qt6/QtGui/qinputmethod.h \
  /usr/include/qt6/QtGui/qguiapplication_platform.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/include/ukengine_wrapper.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/src/macrodialog.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/macrodialog.h \
  /usr/include/qt6/QtWidgets/QDialog /usr/include/qt6/QtWidgets/qdialog.h \
  /usr/include/qt6/QtWidgets/QTableWidget \
  /usr/include/qt6/QtWidgets/qtablewidget.h \
@@ -393,7 +392,6 @@ CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o: \
  /usr/include/qt6/QtGui/qtextcursor.h \
  /usr/include/qt6/QtGui/qtextformat.h /usr/include/qt6/QtGui/qpen.h \
  /usr/include/qt6/QtGui/qtextoption.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/src/../../keyhook/keycons.h \
  /usr/include/qt6/QtCore/QJsonDocument \
  /usr/include/qt6/QtCore/qjsondocument.h \
  /usr/include/qt6/QtCore/qjsonparseerror.h \
@@ -438,4 +436,12 @@ CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o: \
  /usr/include/qt6/QtWidgets/qtextedit.h \
  /usr/include/qt6/QtGui/qabstracttextdocumentlayout.h \
  /usr/include/qt6/QtGui/qtextlayout.h /usr/include/qt6/QtGui/qglyphrun.h \
- /usr/include/qt6/QtGui/qrawfont.h /usr/include/qt6/QtGui/qfontdatabase.h
+ /usr/include/qt6/QtGui/qrawfont.h /usr/include/qt6/QtGui/qfontdatabase.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/windowtracker.h \
+ /usr/include/qt6/QtCore/QObject /usr/include/qt6/QtCore/QString \
+ /usr/include/qt6/QtDBus/QDBusAbstractAdaptor \
+ /usr/include/qt6/QtDBus/qdbusabstractadaptor.h \
+ /usr/include/qt6/QtDBus/qtdbusglobal.h \
+ /usr/include/qt6/QtDBus/qtdbusexports.h \
+ /usr/include/qt6/QtDBus/QDBusConnection \
+ /usr/include/qt6/QtDBus/qdbusconnection.h

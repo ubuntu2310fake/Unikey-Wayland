@@ -1,7 +1,7 @@
 {
 	"InstallScripts" : 
 	[
-		"/home/truonghieu/Downloads/Uk362/build/cmake_install.cmake"
+		"/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/cmake_install.cmake"
 	],
 	"Parallel" : false
 }

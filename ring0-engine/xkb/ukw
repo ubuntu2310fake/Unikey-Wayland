@@ -1,0 +1,21 @@
+default partial alphanumeric_keys
+xkb_symbols "basic" {
+    include "us(basic)"
+    name[Group1]= "Vietnamese (Kernel Driver)";
+
+    // 7 Phím kép (100% Non-Dead Keys)
+    key <LSGT> { [ abreve, Abreve ] };             // 86  -> ă
+    key <AB11> { [ acircumflex, Acircumflex ] };     // 89  -> â
+    key <KATA> { [ ecircumflex, Ecircumflex ] };     // 90  -> ê
+    key <HENK> { [ ocircumflex, Ocircumflex ] };     // 92  -> ô
+    key <HKTG> { [ dstroke, Dstroke ] };             // 93  -> đ
+    key <MUHE> { [ uhorn, Uhorn ] };                 // 94  -> ư
+    key <KPEQ> { [ ohorn, Ohorn ] };                 // 117 -> ơ
+
+    // 5 Dấu thanh
+    key <HNGL> { [ U0301, U0301 ] }; // 122 -> Sắc
+    key <HJCV> { [ U0300, U0300 ] }; // 123 -> Huyền
+    key <AE13> { [ U0309, U0309 ] }; // 124 -> Hỏi
+    key <I129> { [ U0303, U0303 ] }; // 121 -> Ngã
+    key <HIRA> { [ U0323, U0323 ] }; // 91 -> Nặng
+};

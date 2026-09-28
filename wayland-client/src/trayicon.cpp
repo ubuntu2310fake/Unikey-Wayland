@@ -1,3 +1,5 @@
+#include <fstream>
+#include <string>
 #include "trayicon.h"
 #include <QApplication>
 #include <QPainter>
@@ -55,6 +57,11 @@ TrayIcon::TrayIcon(bool* p_viet_mode, MainWindow* mainWindow, bool is_gnome, QOb
     connect(m_actionQuit, &QAction::triggered, this, &TrayIcon::onQuit);
 
     updateIcon();
+
+    m_timer = new QTimer(this);
+    connect(m_timer, &QTimer::timeout, this, &TrayIcon::checkStatusFile);
+    m_timer->start(200);
+
     m_trayIcon->show();
 
     // Start timer to poll status for hotkey updates
@@ -111,6 +118,11 @@ void TrayIcon::onTrayIconActivated(QSystemTrayIcon::ActivationReason reason) {
                 m_mainWindow->setVietMode(*p_viet_mode);
             }
             updateIcon();
+
+    m_timer = new QTimer(this);
+    connect(m_timer, &QTimer::timeout, this, &TrayIcon::checkStatusFile);
+    m_timer->start(200);
+
             onShowControlPanel();
         } else {
             // Single click: toggle E/V
@@ -119,6 +131,11 @@ void TrayIcon::onTrayIconActivated(QSystemTrayIcon::ActivationReason reason) {
                 m_mainWindow->setVietMode(*p_viet_mode);
             }
             updateIcon();
+
+    m_timer = new QTimer(this);
+    connect(m_timer, &QTimer::timeout, this, &TrayIcon::checkStatusFile);
+    m_timer->start(200);
+
         }
         clickTimer.restart();
     } else if (reason == QSystemTrayIcon::DoubleClick || reason == QSystemTrayIcon::MiddleClick) {
@@ -137,4 +154,17 @@ void TrayIcon::onShowControlPanel() {
 
 void TrayIcon::onQuit() {
     QApplication::quit();
+}
+
+void TrayIcon::checkStatusFile() {
+    std::ifstream f("/tmp/ukw_status");
+    if (f.is_open()) {
+        std::string s;
+        f >> s;
+        bool is_vi = (s == "VI");
+        if (*p_viet_mode != is_vi) {
+            *p_viet_mode = is_vi;
+            updateIcon();
+        }
+    }
 }

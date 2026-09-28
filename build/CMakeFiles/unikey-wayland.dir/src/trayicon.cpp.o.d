@@ -1,7 +1,7 @@
 CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.o: \
- /home/truonghieu/Downloads/Uk362/wayland-client/src/trayicon.cpp \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/trayicon.cpp \
  /usr/include/stdc-predef.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/include/windows_macros.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/include/windows_macros.h \
  /usr/include/ctype.h /usr/include/features.h \
  /usr/include/features-time64.h /usr/include/bits/wordsize.h \
  /usr/include/bits/timesize.h /usr/include/sys/cdefs.h \
@@ -18,7 +18,7 @@ CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.o: \
  /usr/include/bits/types/mbstate_t.h \
  /usr/include/bits/types/__mbstate_t.h /usr/include/bits/types/__FILE.h \
  /usr/include/bits/types/FILE.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/src/trayicon.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/trayicon.h \
  /usr/include/qt6/QtWidgets/QSystemTrayIcon \
  /usr/include/qt6/QtWidgets/qsystemtrayicon.h \
  /usr/include/qt6/QtWidgets/qtwidgetsglobal.h \
@@ -332,8 +332,7 @@ CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.o: \
  /usr/include/qt6/QtWidgets/qsizepolicy.h \
  /usr/include/qt6/QtGui/qcursor.h /usr/include/qt6/QtGui/qbitmap.h \
  /usr/include/qt6/QtGui/QAction \
- /home/truonghieu/Downloads/Uk362/wayland-client/include/ukengine_wrapper.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/src/mainwindow.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/mainwindow.h \
  /usr/include/qt6/QtWidgets/QWidget /usr/include/qt6/QtWidgets/QTabWidget \
  /usr/include/qt6/QtWidgets/qtabwidget.h \
  /usr/include/qt6/QtWidgets/QComboBox \
@@ -385,7 +384,7 @@ CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.o: \
  /usr/include/qt6/QtCore/qcoreapplication_platform.h \
  /usr/include/qt6/QtGui/qinputmethod.h \
  /usr/include/qt6/QtGui/qguiapplication_platform.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/src/macrodialog.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/macrodialog.h \
  /usr/include/qt6/QtWidgets/QDialog /usr/include/qt6/QtWidgets/qdialog.h \
  /usr/include/qt6/QtWidgets/QTableWidget \
  /usr/include/qt6/QtWidgets/qtablewidget.h \

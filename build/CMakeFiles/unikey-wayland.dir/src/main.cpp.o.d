@@ -1,7 +1,7 @@
 CMakeFiles/unikey-wayland.dir/src/main.cpp.o: \
- /home/truonghieu/Downloads/Uk362/wayland-client/src/main.cpp \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/main.cpp \
  /usr/include/stdc-predef.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/include/windows_macros.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/include/windows_macros.h \
  /usr/include/ctype.h /usr/include/features.h \
  /usr/include/features-time64.h /usr/include/bits/wordsize.h \
  /usr/include/bits/timesize.h /usr/include/sys/cdefs.h \
@@ -169,7 +169,14 @@ CMakeFiles/unikey-wayland.dir/src/main.cpp.o: \
  /usr/include/c++/16/bits/basic_ios.tcc \
  /usr/include/c++/16/bits/ostream_print.h \
  /usr/include/c++/16/bits/ostream.tcc /usr/include/c++/16/istream \
- /usr/include/c++/16/bits/istream.tcc /usr/include/c++/16/vector \
+ /usr/include/c++/16/bits/istream.tcc /usr/include/c++/16/algorithm \
+ /usr/include/c++/16/bits/stl_algo.h \
+ /usr/include/c++/16/bits/algorithmfwd.h \
+ /usr/include/c++/16/bits/stl_heap.h \
+ /usr/include/c++/16/bits/uniform_int_dist.h \
+ /usr/include/c++/16/bits/stl_tempbuf.h \
+ /usr/include/c++/16/pstl/glue_algorithm_defs.h \
+ /usr/include/c++/16/pstl/execution_defs.h /usr/include/c++/16/vector \
  /usr/include/c++/16/bits/stl_uninitialized.h \
  /usr/include/c++/16/bits/stl_vector.h \
  /usr/include/c++/16/bits/stl_bvector.h \
@@ -213,13 +220,6 @@ CMakeFiles/unikey-wayland.dir/src/main.cpp.o: \
  /usr/include/qt6/QtCore/qcontainerfwd.h \
  /usr/include/qt6/QtCore/qsysinfo.h /usr/include/qt6/QtCore/qlogging.h \
  /usr/include/qt6/QtCore/qflags.h /usr/include/qt6/QtCore/qcompare_impl.h \
- /usr/include/c++/16/algorithm /usr/include/c++/16/bits/stl_algo.h \
- /usr/include/c++/16/bits/algorithmfwd.h \
- /usr/include/c++/16/bits/stl_heap.h \
- /usr/include/c++/16/bits/uniform_int_dist.h \
- /usr/include/c++/16/bits/stl_tempbuf.h \
- /usr/include/c++/16/pstl/glue_algorithm_defs.h \
- /usr/include/c++/16/pstl/execution_defs.h \
  /usr/include/qt6/QtCore/qatomic.h /usr/include/qt6/QtCore/qbasicatomic.h \
  /usr/include/qt6/QtCore/qatomic_cxx11.h \
  /usr/include/qt6/QtCore/qgenericatomic.h \
@@ -361,7 +361,7 @@ CMakeFiles/unikey-wayland.dir/src/main.cpp.o: \
  /usr/include/qt6/QtGui/qguiapplication_platform.h \
  /usr/include/qt6/QtCore/QSocketNotifier \
  /usr/include/qt6/QtCore/qsocketnotifier.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/src/mainwindow.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/mainwindow.h \
  /usr/include/qt6/QtWidgets/QWidget /usr/include/qt6/QtWidgets/qwidget.h \
  /usr/include/qt6/QtGui/qaction.h /usr/include/qt6/QtGui/qkeysequence.h \
  /usr/include/qt6/QtGui/qicon.h /usr/include/qt6/QtGui/qpalette.h \
@@ -409,8 +409,7 @@ CMakeFiles/unikey-wayland.dir/src/main.cpp.o: \
  /usr/include/qt6/QtCore/QRect /usr/include/qt6/QtCore/QSize \
  /usr/include/qt6/QtCore/QSizeF /usr/include/qt6/QtGui/QTransform \
  /usr/include/qt6/QtGui/qscreen_platform.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/include/ukengine_wrapper.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/src/macrodialog.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/macrodialog.h \
  /usr/include/qt6/QtWidgets/QDialog /usr/include/qt6/QtWidgets/qdialog.h \
  /usr/include/qt6/QtWidgets/QTableWidget \
  /usr/include/qt6/QtWidgets/qtablewidget.h \
@@ -423,18 +422,18 @@ CMakeFiles/unikey-wayland.dir/src/main.cpp.o: \
  /usr/include/qt6/QtGui/qtextcursor.h \
  /usr/include/qt6/QtGui/qtextformat.h /usr/include/qt6/QtGui/qpen.h \
  /usr/include/qt6/QtGui/qtextoption.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/src/trayicon.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/trayicon.h \
  /usr/include/qt6/QtWidgets/QSystemTrayIcon \
  /usr/include/qt6/QtWidgets/qsystemtrayicon.h \
  /usr/include/qt6/QtWidgets/QMenu /usr/include/qt6/QtWidgets/qmenu.h \
  /usr/include/qt6/QtGui/QAction \
- /home/truonghieu/Downloads/Uk362/build/input-method-unstable-v1-client-protocol.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/src/../include/ukengine_wrapper.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/src/windowtracker.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/input-method-unstable-v1-client-protocol.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/windowtracker.h \
  /usr/include/qt6/QtCore/QObject /usr/include/qt6/QtCore/QString \
  /usr/include/qt6/QtDBus/QDBusAbstractAdaptor \
  /usr/include/qt6/QtDBus/qdbusabstractadaptor.h \
  /usr/include/qt6/QtDBus/qtdbusglobal.h \
  /usr/include/qt6/QtDBus/qtdbusexports.h \
  /usr/include/qt6/QtDBus/QDBusConnection \
- /usr/include/qt6/QtDBus/qdbusconnection.h
+ /usr/include/qt6/QtDBus/qdbusconnection.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/libbamboo.h

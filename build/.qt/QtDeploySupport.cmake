@@ -26,6 +26,7 @@ endif()
 if(QT_DEPLOY_PREFIX STREQUAL "")
     set(QT_DEPLOY_PREFIX .)
 endif()
+get_filename_component(QT_DEPLOY_PREFIX "${QT_DEPLOY_PREFIX}" ABSOLUTE)
 if(NOT QT_DEPLOY_IGNORED_LIB_DIRS)
     set(QT_DEPLOY_IGNORED_LIB_DIRS "/lib64;/lib")
 endif()
@@ -35,7 +36,7 @@ set(__QT_DEPLOY_SYSTEM_NAME "Linux")
 set(__QT_DEPLOY_SHARED_LIBRARY_SUFFIX ".so")
 set(__QT_DEPLOY_IS_SHARED_LIBS_BUILD "ON")
 set(__QT_DEPLOY_TOOL "GRD")
-set(__QT_DEPLOY_IMPL_DIR "/home/truonghieu/Downloads/Uk362/build/.qt")
+set(__QT_DEPLOY_IMPL_DIR "/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/.qt")
 set(__QT_DEPLOY_VERBOSE "")
 set(__QT_CMAKE_EXPORT_NAMESPACE "Qt6")
 set(__QT_LIBINFIX "")
@@ -60,7 +61,7 @@ set(__QT_DEPLOY_QT_DEBUG_POSTFIX "")
 
 # Define the CMake commands to be made available during deployment.
 set(__qt_deploy_support_files
-    "/home/truonghieu/Downloads/Uk362/build/.qt/QtDeployTargets.cmake"
+    "/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/.qt/QtDeployTargets.cmake"
     "/usr/lib64/cmake/Qt6Core/Qt6CoreDeploySupport.cmake"
 )
 foreach(__qt_deploy_support_file IN LISTS __qt_deploy_support_files)

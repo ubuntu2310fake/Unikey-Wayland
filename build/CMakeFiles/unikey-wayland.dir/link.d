@@ -4,25 +4,18 @@ unikey-wayland: \
   /usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o \
   CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.o \
   CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.o \
-  CMakeFiles/unikey-wayland.dir/home/truonghieu/Downloads/Uk362/keyhook/vietkey.cpp.o \
-  CMakeFiles/unikey-wayland.dir/home/truonghieu/Downloads/Uk362/newkey/encode.cpp.o \
-  CMakeFiles/unikey-wayland.dir/home/truonghieu/Downloads/Uk362/vnconv/convert.cpp.o \
-  CMakeFiles/unikey-wayland.dir/home/truonghieu/Downloads/Uk362/vnconv/charset.cpp.o \
-  CMakeFiles/unikey-wayland.dir/home/truonghieu/Downloads/Uk362/vnconv/data.cpp.o \
-  CMakeFiles/unikey-wayland.dir/home/truonghieu/Downloads/Uk362/vnconv/pattern.cpp.o \
-  CMakeFiles/unikey-wayland.dir/home/truonghieu/Downloads/Uk362/byteio/byteio.cpp.o \
-  CMakeFiles/unikey-wayland.dir/src/ukengine_wrapper.cpp.o \
   CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o \
   CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.o \
   CMakeFiles/unikey-wayland.dir/src/macrodialog.cpp.o \
   CMakeFiles/unikey-wayland.dir/src/windowtracker.cpp.o \
   CMakeFiles/unikey-wayland.dir/src/main.cpp.o \
   /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/libwayland-client.so \
-  /usr/lib64/libQt6Widgets.so.6.11.1 \
+  /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/libbamboo.a \
+  /usr/lib64/libQt6Widgets.so.6.11.2 \
   /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/librt.a \
-  /usr/lib64/libQt6Gui.so.6.11.1 \
-  /usr/lib64/libQt6DBus.so.6.11.1 \
-  /usr/lib64/libQt6Core.so.6.11.1 \
+  /usr/lib64/libQt6Gui.so.6.11.2 \
+  /usr/lib64/libQt6DBus.so.6.11.2 \
+  /usr/lib64/libQt6Core.so.6.11.2 \
   /usr/lib64/libGLX.so \
   /usr/lib64/libOpenGL.so \
   /usr/lib/gcc/x86_64-redhat-linux/16/libgcc_s_asneeded.so \
@@ -118,22 +111,6 @@ CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.o:
 
 CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.o:
 
-CMakeFiles/unikey-wayland.dir/home/truonghieu/Downloads/Uk362/keyhook/vietkey.cpp.o:
-
-CMakeFiles/unikey-wayland.dir/home/truonghieu/Downloads/Uk362/newkey/encode.cpp.o:
-
-CMakeFiles/unikey-wayland.dir/home/truonghieu/Downloads/Uk362/vnconv/convert.cpp.o:
-
-CMakeFiles/unikey-wayland.dir/home/truonghieu/Downloads/Uk362/vnconv/charset.cpp.o:
-
-CMakeFiles/unikey-wayland.dir/home/truonghieu/Downloads/Uk362/vnconv/data.cpp.o:
-
-CMakeFiles/unikey-wayland.dir/home/truonghieu/Downloads/Uk362/vnconv/pattern.cpp.o:
-
-CMakeFiles/unikey-wayland.dir/home/truonghieu/Downloads/Uk362/byteio/byteio.cpp.o:
-
-CMakeFiles/unikey-wayland.dir/src/ukengine_wrapper.cpp.o:
-
 CMakeFiles/unikey-wayland.dir/src/mainwindow.cpp.o:
 
 CMakeFiles/unikey-wayland.dir/src/trayicon.cpp.o:
@@ -146,15 +123,17 @@ CMakeFiles/unikey-wayland.dir/src/main.cpp.o:
 
 /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/libwayland-client.so:
 
-/usr/lib64/libQt6Widgets.so.6.11.1:
+/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/src/libbamboo.a:
+
+/usr/lib64/libQt6Widgets.so.6.11.2:
 
 /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/librt.a:
 
-/usr/lib64/libQt6Gui.so.6.11.1:
+/usr/lib64/libQt6Gui.so.6.11.2:
 
-/usr/lib64/libQt6DBus.so.6.11.1:
+/usr/lib64/libQt6DBus.so.6.11.2:
 
-/usr/lib64/libQt6Core.so.6.11.1:
+/usr/lib64/libQt6Core.so.6.11.2:
 
 /usr/lib64/libGLX.so:
 

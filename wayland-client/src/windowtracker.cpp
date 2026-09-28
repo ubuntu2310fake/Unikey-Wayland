@@ -83,7 +83,14 @@ bool WindowTracker::isAppExcluded(const std::string& appClass) const {
         lowerClass += std::tolower(c);
     }
     
+    bool is_vscode = (lowerClass.find("visual studio code") != std::string::npos ||
+                      lowerClass.find("code - oss") != std::string::npos ||
+                      lowerClass.find("vscodium") != std::string::npos);
+
     for (const auto& excluded : m_excludedApps) {
+        if (is_vscode && excluded == "studio") {
+            continue; // Bỏ qua chữ "studio" nếu là VS Code
+        }
         if (lowerClass.find(excluded) != std::string::npos) {
             return true;
         }

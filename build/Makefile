@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/truonghieu/Downloads/Uk362/wayland-client
+CMAKE_SOURCE_DIR = /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/truonghieu/Downloads/Uk362/build
+CMAKE_BINARY_DIR = /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,9 +132,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/truonghieu/Downloads/Uk362/build/CMakeFiles /home/truonghieu/Downloads/Uk362/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/truonghieu/Downloads/Uk362/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -201,19 +201,6 @@ ibus-engine-unikey-wayland/fast:
 .PHONY : ibus-engine-unikey-wayland/fast
 
 #=============================================================================
-# Target rules for targets named unikey-x11
-
-# Build rule for target.
-unikey-x11: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 unikey-x11
-.PHONY : unikey-x11
-
-# fast build rule for target.
-unikey-x11/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/unikey-x11.dir/build.make CMakeFiles/unikey-x11.dir/build
-.PHONY : unikey-x11/fast
-
-#=============================================================================
 # Target rules for targets named unikey-wayland_autogen_timestamp_deps
 
 # Build rule for target.
@@ -265,79 +252,29 @@ ibus-engine-unikey-wayland_autogen/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ibus-engine-unikey-wayland_autogen.dir/build.make CMakeFiles/ibus-engine-unikey-wayland_autogen.dir/build
 .PHONY : ibus-engine-unikey-wayland_autogen/fast
 
-#=============================================================================
-# Target rules for targets named unikey-x11_autogen_timestamp_deps
-
-# Build rule for target.
-unikey-x11_autogen_timestamp_deps: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 unikey-x11_autogen_timestamp_deps
-.PHONY : unikey-x11_autogen_timestamp_deps
-
-# fast build rule for target.
-unikey-x11_autogen_timestamp_deps/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/unikey-x11_autogen_timestamp_deps.dir/build.make CMakeFiles/unikey-x11_autogen_timestamp_deps.dir/build
-.PHONY : unikey-x11_autogen_timestamp_deps/fast
-
-#=============================================================================
-# Target rules for targets named unikey-x11_autogen
-
-# Build rule for target.
-unikey-x11_autogen: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 unikey-x11_autogen
-.PHONY : unikey-x11_autogen
-
-# fast build rule for target.
-unikey-x11_autogen/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/unikey-x11_autogen.dir/build.make CMakeFiles/unikey-x11_autogen.dir/build
-.PHONY : unikey-x11_autogen/fast
-
-home/truonghieu/Downloads/Uk362/ibus-engine/main.o: home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.o
-.PHONY : home/truonghieu/Downloads/Uk362/ibus-engine/main.o
+home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.o: home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.o
+.PHONY : home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.o
 
 # target to build an object file
-home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ibus-engine-unikey-wayland.dir/build.make CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.o
-.PHONY : home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.o
+home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ibus-engine-unikey-wayland.dir/build.make CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.o
+.PHONY : home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.o
 
-home/truonghieu/Downloads/Uk362/ibus-engine/main.i: home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.i
-.PHONY : home/truonghieu/Downloads/Uk362/ibus-engine/main.i
-
-# target to preprocess a source file
-home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ibus-engine-unikey-wayland.dir/build.make CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.i
-.PHONY : home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.i
-
-home/truonghieu/Downloads/Uk362/ibus-engine/main.s: home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.s
-.PHONY : home/truonghieu/Downloads/Uk362/ibus-engine/main.s
-
-# target to generate assembly for a file
-home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ibus-engine-unikey-wayland.dir/build.make CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.s
-.PHONY : home/truonghieu/Downloads/Uk362/ibus-engine/main.cpp.s
-
-home/truonghieu/Downloads/Uk362/x11-client/src/main.o: home/truonghieu/Downloads/Uk362/x11-client/src/main.cpp.o
-.PHONY : home/truonghieu/Downloads/Uk362/x11-client/src/main.o
-
-# target to build an object file
-home/truonghieu/Downloads/Uk362/x11-client/src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/unikey-x11.dir/build.make CMakeFiles/unikey-x11.dir/home/truonghieu/Downloads/Uk362/x11-client/src/main.cpp.o
-.PHONY : home/truonghieu/Downloads/Uk362/x11-client/src/main.cpp.o
-
-home/truonghieu/Downloads/Uk362/x11-client/src/main.i: home/truonghieu/Downloads/Uk362/x11-client/src/main.cpp.i
-.PHONY : home/truonghieu/Downloads/Uk362/x11-client/src/main.i
+home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.i: home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.i
+.PHONY : home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.i
 
 # target to preprocess a source file
-home/truonghieu/Downloads/Uk362/x11-client/src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/unikey-x11.dir/build.make CMakeFiles/unikey-x11.dir/home/truonghieu/Downloads/Uk362/x11-client/src/main.cpp.i
-.PHONY : home/truonghieu/Downloads/Uk362/x11-client/src/main.cpp.i
+home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ibus-engine-unikey-wayland.dir/build.make CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.i
+.PHONY : home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.i
 
-home/truonghieu/Downloads/Uk362/x11-client/src/main.s: home/truonghieu/Downloads/Uk362/x11-client/src/main.cpp.s
-.PHONY : home/truonghieu/Downloads/Uk362/x11-client/src/main.s
+home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.s: home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.s
+.PHONY : home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.s
 
 # target to generate assembly for a file
-home/truonghieu/Downloads/Uk362/x11-client/src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/unikey-x11.dir/build.make CMakeFiles/unikey-x11.dir/home/truonghieu/Downloads/Uk362/x11-client/src/main.cpp.s
-.PHONY : home/truonghieu/Downloads/Uk362/x11-client/src/main.cpp.s
+home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ibus-engine-unikey-wayland.dir/build.make CMakeFiles/ibus-engine-unikey-wayland.dir/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.s
+.PHONY : home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.cpp.s
 
 ibus-engine-unikey-wayland_autogen/mocs_compilation.o: ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o
 .PHONY : ibus-engine-unikey-wayland_autogen/mocs_compilation.o
@@ -531,30 +468,6 @@ unikey-wayland_autogen/mocs_compilation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/unikey-wayland.dir/build.make CMakeFiles/unikey-wayland.dir/unikey-wayland_autogen/mocs_compilation.cpp.s
 .PHONY : unikey-wayland_autogen/mocs_compilation.cpp.s
 
-unikey-x11_autogen/mocs_compilation.o: unikey-x11_autogen/mocs_compilation.cpp.o
-.PHONY : unikey-x11_autogen/mocs_compilation.o
-
-# target to build an object file
-unikey-x11_autogen/mocs_compilation.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/unikey-x11.dir/build.make CMakeFiles/unikey-x11.dir/unikey-x11_autogen/mocs_compilation.cpp.o
-.PHONY : unikey-x11_autogen/mocs_compilation.cpp.o
-
-unikey-x11_autogen/mocs_compilation.i: unikey-x11_autogen/mocs_compilation.cpp.i
-.PHONY : unikey-x11_autogen/mocs_compilation.i
-
-# target to preprocess a source file
-unikey-x11_autogen/mocs_compilation.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/unikey-x11.dir/build.make CMakeFiles/unikey-x11.dir/unikey-x11_autogen/mocs_compilation.cpp.i
-.PHONY : unikey-x11_autogen/mocs_compilation.cpp.i
-
-unikey-x11_autogen/mocs_compilation.s: unikey-x11_autogen/mocs_compilation.cpp.s
-.PHONY : unikey-x11_autogen/mocs_compilation.s
-
-# target to generate assembly for a file
-unikey-x11_autogen/mocs_compilation.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/unikey-x11.dir/build.make CMakeFiles/unikey-x11.dir/unikey-x11_autogen/mocs_compilation.cpp.s
-.PHONY : unikey-x11_autogen/mocs_compilation.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -572,17 +485,11 @@ help:
 	@echo "... ibus-engine-unikey-wayland_autogen_timestamp_deps"
 	@echo "... unikey-wayland_autogen"
 	@echo "... unikey-wayland_autogen_timestamp_deps"
-	@echo "... unikey-x11_autogen"
-	@echo "... unikey-x11_autogen_timestamp_deps"
 	@echo "... ibus-engine-unikey-wayland"
 	@echo "... unikey-wayland"
-	@echo "... unikey-x11"
-	@echo "... home/truonghieu/Downloads/Uk362/ibus-engine/main.o"
-	@echo "... home/truonghieu/Downloads/Uk362/ibus-engine/main.i"
-	@echo "... home/truonghieu/Downloads/Uk362/ibus-engine/main.s"
-	@echo "... home/truonghieu/Downloads/Uk362/x11-client/src/main.o"
-	@echo "... home/truonghieu/Downloads/Uk362/x11-client/src/main.i"
-	@echo "... home/truonghieu/Downloads/Uk362/x11-client/src/main.s"
+	@echo "... home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.o"
+	@echo "... home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.i"
+	@echo "... home/truonghieu/Downloads/Unikey-Wayland-2.0.8/ibus-engine/main.s"
 	@echo "... ibus-engine-unikey-wayland_autogen/mocs_compilation.o"
 	@echo "... ibus-engine-unikey-wayland_autogen/mocs_compilation.i"
 	@echo "... ibus-engine-unikey-wayland_autogen/mocs_compilation.s"
@@ -607,9 +514,6 @@ help:
 	@echo "... unikey-wayland_autogen/mocs_compilation.o"
 	@echo "... unikey-wayland_autogen/mocs_compilation.i"
 	@echo "... unikey-wayland_autogen/mocs_compilation.s"
-	@echo "... unikey-x11_autogen/mocs_compilation.o"
-	@echo "... unikey-x11_autogen/mocs_compilation.i"
-	@echo "... unikey-x11_autogen/mocs_compilation.s"
 .PHONY : help
 
 

@@ -1,7 +1,7 @@
 CMakeFiles/ibus-engine-unikey-wayland.dir/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp.o: \
- /home/truonghieu/Downloads/Uk362/build/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/ibus-engine-unikey-wayland_autogen/mocs_compilation.cpp \
  /usr/include/stdc-predef.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/include/windows_macros.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/include/windows_macros.h \
  /usr/include/ctype.h /usr/include/features.h \
  /usr/include/features-time64.h /usr/include/bits/wordsize.h \
  /usr/include/bits/timesize.h /usr/include/sys/cdefs.h \

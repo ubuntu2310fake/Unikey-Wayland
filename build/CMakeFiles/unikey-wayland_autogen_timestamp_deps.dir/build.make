@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/truonghieu/Downloads/Uk362/wayland-client
+CMAKE_SOURCE_DIR = /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/truonghieu/Downloads/Uk362/build
+CMAKE_BINARY_DIR = /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build
 
 # Utility rule file for unikey-wayland_autogen_timestamp_deps.
 
@@ -68,10 +68,10 @@ include CMakeFiles/unikey-wayland_autogen_timestamp_deps.dir/progress.make
 
 CMakeFiles/unikey-wayland_autogen_timestamp_deps: input-method-unstable-v1-protocol.c
 
-input-method-unstable-v1-protocol.c: /home/truonghieu/Downloads/Uk362/wayland-client/protocols/input-method-unstable-v1.xml
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/truonghieu/Downloads/Uk362/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating input-method-unstable-v1-protocol.c, input-method-unstable-v1-client-protocol.h"
-	/usr/bin/wayland-scanner private-code /home/truonghieu/Downloads/Uk362/wayland-client/protocols/input-method-unstable-v1.xml /home/truonghieu/Downloads/Uk362/build/input-method-unstable-v1-protocol.c
-	/usr/bin/wayland-scanner client-header /home/truonghieu/Downloads/Uk362/wayland-client/protocols/input-method-unstable-v1.xml /home/truonghieu/Downloads/Uk362/build/input-method-unstable-v1-client-protocol.h
+input-method-unstable-v1-protocol.c: /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/protocols/input-method-unstable-v1.xml
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating input-method-unstable-v1-protocol.c, input-method-unstable-v1-client-protocol.h"
+	/usr/bin/wayland-scanner private-code /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/protocols/input-method-unstable-v1.xml /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/input-method-unstable-v1-protocol.c
+	/usr/bin/wayland-scanner client-header /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/protocols/input-method-unstable-v1.xml /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/input-method-unstable-v1-client-protocol.h
 
 input-method-unstable-v1-client-protocol.h: input-method-unstable-v1-protocol.c
 	@$(CMAKE_COMMAND) -E touch_nocreate input-method-unstable-v1-client-protocol.h
@@ -94,6 +94,6 @@ CMakeFiles/unikey-wayland_autogen_timestamp_deps.dir/clean:
 .PHONY : CMakeFiles/unikey-wayland_autogen_timestamp_deps.dir/clean
 
 CMakeFiles/unikey-wayland_autogen_timestamp_deps.dir/depend:
-	cd /home/truonghieu/Downloads/Uk362/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/truonghieu/Downloads/Uk362/wayland-client /home/truonghieu/Downloads/Uk362/wayland-client /home/truonghieu/Downloads/Uk362/build /home/truonghieu/Downloads/Uk362/build /home/truonghieu/Downloads/Uk362/build/CMakeFiles/unikey-wayland_autogen_timestamp_deps.dir/DependInfo.cmake "--color=$(COLOR)" unikey-wayland_autogen_timestamp_deps
+	cd /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles/unikey-wayland_autogen_timestamp_deps.dir/DependInfo.cmake "--color=$(COLOR)" unikey-wayland_autogen_timestamp_deps
 .PHONY : CMakeFiles/unikey-wayland_autogen_timestamp_deps.dir/depend
 

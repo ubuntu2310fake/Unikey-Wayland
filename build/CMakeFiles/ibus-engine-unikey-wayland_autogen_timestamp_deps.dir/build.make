@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/truonghieu/Downloads/Uk362/wayland-client
+CMAKE_SOURCE_DIR = /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/truonghieu/Downloads/Uk362/build
+CMAKE_BINARY_DIR = /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build
 
 # Utility rule file for ibus-engine-unikey-wayland_autogen_timestamp_deps.
 
@@ -81,6 +81,6 @@ CMakeFiles/ibus-engine-unikey-wayland_autogen_timestamp_deps.dir/clean:
 .PHONY : CMakeFiles/ibus-engine-unikey-wayland_autogen_timestamp_deps.dir/clean
 
 CMakeFiles/ibus-engine-unikey-wayland_autogen_timestamp_deps.dir/depend:
-	cd /home/truonghieu/Downloads/Uk362/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/truonghieu/Downloads/Uk362/wayland-client /home/truonghieu/Downloads/Uk362/wayland-client /home/truonghieu/Downloads/Uk362/build /home/truonghieu/Downloads/Uk362/build /home/truonghieu/Downloads/Uk362/build/CMakeFiles/ibus-engine-unikey-wayland_autogen_timestamp_deps.dir/DependInfo.cmake "--color=$(COLOR)" ibus-engine-unikey-wayland_autogen_timestamp_deps
+	cd /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/CMakeFiles/ibus-engine-unikey-wayland_autogen_timestamp_deps.dir/DependInfo.cmake "--color=$(COLOR)" ibus-engine-unikey-wayland_autogen_timestamp_deps
 .PHONY : CMakeFiles/ibus-engine-unikey-wayland_autogen_timestamp_deps.dir/depend
 

@@ -51,9 +51,12 @@ jobs:
           mkdir -p ~/rpmbuild/SOURCES
           mkdir -p ~/rpmbuild/SPECS
           cp wayland-client/build/unikey-wayland ~/rpmbuild/SOURCES/
-          cp wayland-client/build/ibus-engine-unikey-wayland ~/rpmbuild/SOURCES/
-          cp ibus-engine/unikey-wayland.xml ~/rpmbuild/SOURCES/
-          cp ibus-engine/ibus-setup-unikey-wayland.desktop ~/rpmbuild/SOURCES/
+          cp wayland-client/build/ukw_daemon ~/rpmbuild/SOURCES/
+          cp ring0-engine/dkms.conf ~/rpmbuild/SOURCES/
+          cp ring0-engine/Makefile ~/rpmbuild/SOURCES/
+          cp ring0-engine/ukw_driver.c ~/rpmbuild/SOURCES/
+          cp ring0-engine/ukw.service ~/rpmbuild/SOURCES/
+          cp ring0-engine/xkb/ukw ~/rpmbuild/SOURCES/ukw_xkb
           cp io.github.ubuntu2310fake.UnikeyWayland.desktop ~/rpmbuild/SOURCES/
           cp io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml ~/rpmbuild/SOURCES/
           cp io.github.ubuntu2310fake.UnikeyWayland.svg ~/rpmbuild/SOURCES/
@@ -123,9 +126,12 @@ jobs:
           mkdir -p ~/rpmbuild/SPECS
           mkdir -p releases
           cp wayland-client/build/unikey-wayland ~/rpmbuild/SOURCES/
-          cp wayland-client/build/ibus-engine-unikey-wayland ~/rpmbuild/SOURCES/
-          cp ibus-engine/unikey-wayland.xml ~/rpmbuild/SOURCES/
-          cp ibus-engine/ibus-setup-unikey-wayland.desktop ~/rpmbuild/SOURCES/
+          cp wayland-client/build/ukw_daemon ~/rpmbuild/SOURCES/
+          cp ring0-engine/dkms.conf ~/rpmbuild/SOURCES/
+          cp ring0-engine/Makefile ~/rpmbuild/SOURCES/
+          cp ring0-engine/ukw_driver.c ~/rpmbuild/SOURCES/
+          cp ring0-engine/ukw.service ~/rpmbuild/SOURCES/
+          cp ring0-engine/xkb/ukw ~/rpmbuild/SOURCES/ukw_xkb
           cp io.github.ubuntu2310fake.UnikeyWayland.desktop ~/rpmbuild/SOURCES/
           cp io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml ~/rpmbuild/SOURCES/
           cp io.github.ubuntu2310fake.UnikeyWayland.svg ~/rpmbuild/SOURCES/

@@ -1,7 +1,7 @@
 CMakeFiles/unikey-wayland.dir/input-method-unstable-v1-protocol.c.o: \
- /home/truonghieu/Downloads/Uk362/build/input-method-unstable-v1-protocol.c \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/build/input-method-unstable-v1-protocol.c \
  /usr/include/stdc-predef.h \
- /home/truonghieu/Downloads/Uk362/wayland-client/include/windows_macros.h \
+ /home/truonghieu/Downloads/Unikey-Wayland-2.0.8/wayland-client/include/windows_macros.h \
  /usr/include/ctype.h /usr/include/features.h \
  /usr/include/features-time64.h /usr/include/bits/wordsize.h \
  /usr/include/bits/timesize.h /usr/include/sys/cdefs.h \
