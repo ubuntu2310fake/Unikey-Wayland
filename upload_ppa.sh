@@ -5,7 +5,7 @@
 set -e
 
 PKGNAME="unikey-wayland"
-VERSION="3.0.2"
+VERSION="3.0.3"
 REVISION="${PPA_REVISION:-ppa1}"
 GPG_KEY="${PPA_GPG_KEY_ID}"
 FTP_SERVER="${PPA_FTP_SERVER}"

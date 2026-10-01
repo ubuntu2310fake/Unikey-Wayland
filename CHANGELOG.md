@@ -1,3 +1,6 @@
+## [3.0.3] - 2026-10-01
+- Sửa lỗi gõ dấu (Huyền, Sắc, Hỏi, Ngã, Nặng) trên các chữ in hoa làm mất chữ hoặc chập chờn.
+
 ## [3.0.2] - 2026-10-01
 - Sửa lỗi DKMS biên dịch sai vermagic khi nâng cấp Linux Kernel (sử dụng KVER thay vì uname -r)
 - Tự động nạp module ukw_driver bằng modules-load.d và ExecStartPre trong systemd

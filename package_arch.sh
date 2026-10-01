@@ -3,7 +3,7 @@
 # Chạy script này từ thư mục gốc của dự án: ./package_arch.sh
 set -e
 
-PKGVER="3.0.2"
+PKGVER="3.0.3"
 PKGREL="1"
 # Tự động phát hiện kiến trúc hệ thống
 DETECTED_ARCH=$(uname -m)
@@ -24,7 +24,7 @@ else
     ARCH="$DETECTED_ARCH"
 fi
 PKGNAME="unikey-wayland"
-FULL_PKGVER="3.0.2"
+FULL_PKGVER="3.0.3"
 PKG_OUTPUT="releases/${PKGNAME}-${FULL_PKGVER}-${ARCH}.pkg.tar.zst"
 
 echo ">>> Bắt đầu đóng gói Arch Linux (tar.zst) cho ${PKGNAME} ${FULL_PKGVER}"

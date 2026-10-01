@@ -1,3 +1,9 @@
+unikey-wayland (3.0.3~ppa1~noble) noble; urgency=medium
+
+  * Release 3.0.3: Fix tone injection dropping uppercase letters (F/S/R/X/J).
+
+ -- Truong Hieu <11Leak1234@protonmail.com>  Thu, 01 Oct 2026 20:12:00 +0700
+
 unikey-wayland (3.0.2~ppa1~noble) noble; urgency=medium
 
   * Release 3.0.2: Fix DKMS kernel version matching, auto-load ukw_driver on boot, update version in about dialog.
