@@ -209,11 +209,11 @@ int char_to_keycode(char c) {
 }
 
 bool looks_vietnamese(const std::vector<int>& word) {
-    for (int k : word) if (is_vn_special(k)) return true;
+    for (int k : word) if (is_vn_special(abs(k))) return true;
     bool in_vowel = false;
     int vowel_groups = 0;
     for (int k : word) {
-        bool v = is_vowel(k);
+        bool v = is_vowel(abs(k));
         if (v && !in_vowel) { vowel_groups++; in_vowel = true; }
         else if (!v) in_vowel = false;
     }
@@ -223,24 +223,24 @@ bool looks_vietnamese(const std::vector<int>& word) {
 int find_vowel_pos(const std::vector<int>& buf) {
     int len = buf.size();
     for (int i = len - 1; i >= 0; i--) {
-        int c = buf[i];
+        int c = abs(buf[i]);
         if (c == KEY_VN_OW || c == KEY_VN_EE || c == KEY_VN_OO ||
             c == KEY_VN_AW || c == KEY_VN_AA || c == KEY_VN_UW) return i;
     }
     int last_vowel_idx = -1;
     for (int i = len - 1; i >= 0; i--) {
-        if (is_vowel(buf[i])) { last_vowel_idx = i; break; }
+        if (is_vowel(abs(buf[i]))) { last_vowel_idx = i; break; }
     }
     if (last_vowel_idx == -1) return -1;
     int first_vowel_idx = last_vowel_idx;
-    while (first_vowel_idx > 0 && is_vowel(buf[first_vowel_idx - 1])) first_vowel_idx--;
+    while (first_vowel_idx > 0 && is_vowel(abs(buf[first_vowel_idx - 1]))) first_vowel_idx--;
     int count = last_vowel_idx - first_vowel_idx + 1;
     if (count == 1) return first_vowel_idx;
     if (count >= 2) {
-        if (first_vowel_idx > 0 && buf[first_vowel_idx-1] == KEY_G && buf[first_vowel_idx] == KEY_I) return first_vowel_idx + 1;
-        if (first_vowel_idx > 0 && buf[first_vowel_idx-1] == KEY_Q && buf[first_vowel_idx] == KEY_U) return first_vowel_idx + 1;
-        if ((buf[first_vowel_idx] == KEY_O && (buf[first_vowel_idx+1] == KEY_A || buf[first_vowel_idx+1] == KEY_E)) ||
-            (buf[first_vowel_idx] == KEY_U && buf[first_vowel_idx+1] == KEY_Y)) return first_vowel_idx + 1;
+        if (first_vowel_idx > 0 && abs(buf[first_vowel_idx-1]) == KEY_G && abs(buf[first_vowel_idx]) == KEY_I) return first_vowel_idx + 1;
+        if (first_vowel_idx > 0 && abs(buf[first_vowel_idx-1]) == KEY_Q && abs(buf[first_vowel_idx]) == KEY_U) return first_vowel_idx + 1;
+        if ((abs(buf[first_vowel_idx]) == KEY_O && (abs(buf[first_vowel_idx+1]) == KEY_A || abs(buf[first_vowel_idx+1]) == KEY_E)) ||
+            (abs(buf[first_vowel_idx]) == KEY_U && abs(buf[first_vowel_idx+1]) == KEY_Y)) return first_vowel_idx + 1;
         if (len > last_vowel_idx + 1) return first_vowel_idx + 1;
         return first_vowel_idx;
     }
@@ -328,14 +328,33 @@ int main() {
     pthread_create(&tid, NULL, cmd_listener, NULL);
     
     update_status();
-    std::vector<int> word;
+    std::vector<int> word; // negative means shifted
     int cur_tone = 0, tone_pos = -1;
     bool held[KEY_MAX] = {};
     bool other_pressed = false;
 
 
+    
+    int mice_fd = open("/dev/input/mice", O_RDONLY | O_NONBLOCK);
+    
     ukw_event ev;
-    while (read(g_fd, &ev, sizeof(ev)) == sizeof(ev)) {
+    while (1) {
+        if (mice_fd >= 0) {
+            unsigned char mbuf[3];
+            if (read(mice_fd, mbuf, 3) == 3) {
+                if (mbuf[0] & 1) { // Left click
+                    pthread_mutex_lock(&lock);
+                    word.clear(); cur_tone = 0; tone_pos = -1;
+                    pthread_mutex_unlock(&lock);
+                }
+            }
+        }
+        
+        if (read(g_fd, &ev, sizeof(ev)) != sizeof(ev)) {
+            usleep(1000);
+            continue;
+        }
+
         if (ev.type != EV_KEY) { write(g_fd, &ev, sizeof(ev)); continue; }
 
         int code = ev.code, value = ev.value;
@@ -432,38 +451,38 @@ int main() {
         if (looks_vietnamese(word)) {
             if (code == KEY_W) {
                 for (int i = word.size() - 1; i >= 0; i--) {
-                    if (word[i] == KEY_O) {
+                    if (abs(word[i]) == KEY_O) {
                         target = KEY_VN_OW; target_pos = i;
                         if (i > 0 && word[i-1] == KEY_U) { target2 = KEY_VN_UW; target_pos2 = i - 1; }
                         break;
-                    } else if (word[i] == KEY_U) { target = KEY_VN_UW; target_pos = i; break;
-                    } else if (word[i] == KEY_A) { target = KEY_VN_AW; target_pos = i; break;
-                    } else if (word[i] == KEY_VN_OW) {
+                    } else if (abs(word[i]) == KEY_U) { target = KEY_VN_UW; target_pos = i; break;
+                    } else if (abs(word[i]) == KEY_A) { target = KEY_VN_AW; target_pos = i; break;
+                    } else if (abs(word[i]) == KEY_VN_OW) {
                         target = KEY_O; target_pos = i; cancel_dau = true;
                         if (i > 0 && word[i-1] == KEY_VN_UW) { target2 = KEY_U; target_pos2 = i - 1; }
                         break;
-                    } else if (word[i] == KEY_VN_UW) { target = KEY_U; target_pos = i; cancel_dau = true; break;
-                    } else if (word[i] == KEY_VN_AW) { target = KEY_A; target_pos = i; cancel_dau = true; break; }
+                    } else if (abs(word[i]) == KEY_VN_UW) { target = KEY_U; target_pos = i; cancel_dau = true; break;
+                    } else if (abs(word[i]) == KEY_VN_AW) { target = KEY_A; target_pos = i; cancel_dau = true; break; }
                 }
             } else if (code == KEY_A) {
                 for (int i = word.size() - 1; i >= 0; i--) {
-                    if (word[i] == KEY_A) { target = KEY_VN_AA; target_pos = i; break; }
-                    else if (word[i] == KEY_VN_AA) { target = KEY_A; target_pos = i; cancel_dau = true; break; }
+                    if (abs(word[i]) == KEY_A) { target = KEY_VN_AA; target_pos = i; break; }
+                    else if (abs(word[i]) == KEY_VN_AA) { target = KEY_A; target_pos = i; cancel_dau = true; break; }
                 }
             } else if (code == KEY_E) {
                 for (int i = word.size() - 1; i >= 0; i--) {
-                    if (word[i] == KEY_E) { target = KEY_VN_EE; target_pos = i; break; }
-                    else if (word[i] == KEY_VN_EE) { target = KEY_E; target_pos = i; cancel_dau = true; break; }
+                    if (abs(word[i]) == KEY_E) { target = KEY_VN_EE; target_pos = i; break; }
+                    else if (abs(word[i]) == KEY_VN_EE) { target = KEY_E; target_pos = i; cancel_dau = true; break; }
                 }
             } else if (code == KEY_O) {
                 for (int i = word.size() - 1; i >= 0; i--) {
-                    if (word[i] == KEY_O) { target = KEY_VN_OO; target_pos = i; break; }
-                    else if (word[i] == KEY_VN_OO) { target = KEY_O; target_pos = i; cancel_dau = true; break; }
+                    if (abs(word[i]) == KEY_O) { target = KEY_VN_OO; target_pos = i; break; }
+                    else if (abs(word[i]) == KEY_VN_OO) { target = KEY_O; target_pos = i; cancel_dau = true; break; }
                 }
             } else if (code == KEY_D) {
                 for (int i = word.size() - 1; i >= 0; i--) {
-                    if (word[i] == KEY_D) { target = KEY_VN_DD; target_pos = i; break; }
-                    else if (word[i] == KEY_VN_DD) { target = KEY_D; target_pos = i; cancel_dau = true; break; }
+                    if (abs(word[i]) == KEY_D) { target = KEY_VN_DD; target_pos = i; break; }
+                    else if (abs(word[i]) == KEY_VN_DD) { target = KEY_D; target_pos = i; cancel_dau = true; break; }
                 }
             }
         }
@@ -473,17 +492,16 @@ int main() {
             release_alpha(g_fd, held);
             
             std::vector<int> new_word = word;
-            new_word[target_pos] = target;
-            if (target_pos2 != -1) new_word[target_pos2] = target2;
-            if (cancel_dau) new_word.push_back(code);
+            new_word[target_pos] = (word[target_pos] < 0) ? -target : target;
+            if (target_pos2 != -1) new_word[target_pos2] = (word[target_pos2] < 0) ? -target2 : target2;
+            if (cancel_dau) new_word.push_back(held[KEY_LEFTSHIFT] || held[KEY_RIGHTSHIFT] ? -code : code);
             
             int new_tone_pos = (cur_tone != 0) ? find_vowel_pos(new_word) : -1;
             int start_pos = target_pos2 != -1 ? target_pos2 : target_pos;
             if (tone_pos != -1 && tone_pos < start_pos) start_pos = tone_pos;
             if (new_tone_pos != -1 && new_tone_pos < start_pos) start_pos = new_tone_pos;
             
-            int bs_count = word.size() - start_pos + 1; // +1 pass through
-            if (cur_tone != 0 && tone_pos != -1 && tone_pos >= start_pos) bs_count += 1;
+            int bs_count = word.size() - start_pos + 1;
             
             for (int i = 0; i < bs_count; i++) tap(g_fd, KEY_BACKSPACE);
             
@@ -491,7 +509,9 @@ int main() {
             tone_pos = new_tone_pos;
             
             for (int i = start_pos; i < word.size(); i++) {
-                tap(g_fd, word[i]);
+                int c = word[i];
+                if (c < 0) tap_shift(g_fd, -c);
+                else tap(g_fd, c);
                 if (cur_tone != 0 && i == tone_pos) tap(g_fd, cur_tone);
             }
             continue;
@@ -516,7 +536,7 @@ int main() {
                 
                 if (tone == cur_tone) {
                     new_cur_tone = 0; new_tone_pos = -1;
-                    new_word.push_back(code);
+                    new_word.push_back(held[KEY_LEFTSHIFT] || held[KEY_RIGHTSHIFT] ? -code : code);
                 } else {
                     new_cur_tone = tone; new_tone_pos = vpos;
                 }
@@ -526,7 +546,6 @@ int main() {
                 if (new_tone_pos != -1 && new_tone_pos < start_pos) start_pos = new_tone_pos;
                 
                 int bs_count = word.size() - start_pos + 1;
-                if (cur_tone != 0 && tone_pos != -1 && tone_pos >= start_pos) bs_count += 1;
                 
                 for (int i = 0; i < bs_count; i++) tap(g_fd, KEY_BACKSPACE);
                 

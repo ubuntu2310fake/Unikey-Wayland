@@ -3,7 +3,7 @@
 # Chạy script này từ thư mục gốc của dự án: ./package_arch.sh
 set -e
 
-PKGVER="3.0.0"
+PKGVER="3.0.1"
 PKGREL="1"
 # Tự động phát hiện kiến trúc hệ thống
 DETECTED_ARCH=$(uname -m)
@@ -24,7 +24,7 @@ else
     ARCH="$DETECTED_ARCH"
 fi
 PKGNAME="unikey-wayland"
-FULL_PKGVER="3.0.0"
+FULL_PKGVER="3.0.1"
 PKG_OUTPUT="releases/${PKGNAME}-${FULL_PKGVER}-${ARCH}.pkg.tar.zst"
 
 echo ">>> Bắt đầu đóng gói Arch Linux (tar.zst) cho ${PKGNAME} ${FULL_PKGVER}"
@@ -79,7 +79,8 @@ cp ring0-engine/dkms.conf arch_pkg/usr/src/ukw-driver-1.0/
 cp ring0-engine/Makefile arch_pkg/usr/src/ukw-driver-1.0/
 cp ring0-engine/ukw_driver.c arch_pkg/usr/src/ukw-driver-1.0/
 cp ring0-engine/ukw.service arch_pkg/usr/lib/systemd/system/
-cp ring0-engine/xkb/ukw arch_pkg/usr/share/X11/xkb/symbols/
+mkdir -p arch_pkg/usr/share/unikey-wayland
+cp ring0-engine/xkb/ukw arch_pkg/usr/share/unikey-wayland/ukw_xkb
 
 chmod 755 arch_pkg/usr/bin/unikey-wayland
 chmod 755 arch_pkg/usr/bin/ukw_daemon
@@ -123,6 +124,7 @@ EOF
 # Tạo file INSTALL rỗng
 cat <<'INSTALL_EOF' > arch_pkg/.INSTALL
 post_install() {
+    cp /usr/share/unikey-wayland/ukw_xkb /usr/share/X11/xkb/symbols/ukw 2>/dev/null || true
     if command -v dkms >/dev/null 2>&1; then
         dkms add -m ukw-driver -v 1.0 || true
         dkms build -m ukw-driver -v 1.0 || true
@@ -139,6 +141,10 @@ pre_remove() {
     if command -v dkms >/dev/null 2>&1; then
         dkms remove -m ukw-driver -v 1.0 --all || true
     fi
+}
+
+post_remove() {
+    rm -f /usr/share/X11/xkb/symbols/ukw
 }
 INSTALL_EOF
 

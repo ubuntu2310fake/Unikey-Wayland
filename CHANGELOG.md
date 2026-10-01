@@ -1,3 +1,9 @@
+## [3.0.1] - 2026-10-01\n- Fix Arch Linux packaging conflict with xkeyboard-config\n- Fix backspace logic deleting consonants and failing to retain capitalized state\n- Monitor mouse events to reset macro engine properly on focus change\n- Show first-run configuration guide on launch\n\n## [3.0.0] - 2026-10-01
+- Rewrite core engine as Ring-0 C++ Daemon
+- Fix Wayland Dropped Keys bug (0-delay typing)
+- Natively support Unicode UTF-8 Macros in XKB
+- Eliminate IBus Bamboo dependencies
+
 ## [3.0.0] - 2026-09-28
 - Rewrite core engine as Ring-0 C++ Daemon
 - Fix Wayland Dropped Keys bug (0-delay typing)
