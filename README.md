@@ -11,31 +11,35 @@ Giao diện cấu hình chia Tab và quản lý gõ tắt được thiết kế 
 > 
 > **Hiện tại đã hỗ trợ mọi Desktop Environment** (KDE Plasma, GNOME, X11, Sway, Window Managers...) và **hỗ trợ song song cả hai kiến trúc x86_64 & ARM64 (aarch64)** nhờ việc tích hợp song song cả Native Wayland Protocol, IBus Engine và tối ưu hóa biên dịch ngoại tuyến.
 
-## Hướng Dẫn Kích Hoạt Sau Khi Cài Đặt
+## Hướng Dẫn Kích Hoạt (Kiến trúc Ring-0 mới)
 
-### 1. Trên KDE Plasma (Wayland Session)
-Sau khi cài đặt gói tương ứng cho distro của bạn, hãy làm theo các bước sau để kích hoạt bộ gõ:
+Bắt đầu từ phiên bản 3.0.0, Unikey-Wayland đã loại bỏ hoàn toàn Wayland Protocol cũ và IBus, chuyển sang kiến trúc **Ring-0 Kernel Daemon**.
+Bạn **KHÔNG CẦN** sử dụng Virtual Keyboard hay IBus nữa! Thay vào đó, hãy kích hoạt bộ gõ thông qua XKB Layout.
+
+### 1. Trên KDE Plasma
+Sau khi cài đặt, hãy làm theo các bước sau để kích hoạt bộ gõ:
 1. Mở **System Settings** (Cài đặt hệ thống).
-2. Tìm đến mục **Keyboard** (Bàn phím) -> **Virtual Keyboard** (Bàn phím ảo).
-3. Chọn **Unikey-Wayland** (hoặc tích chọn để kích hoạt nó).
-4. Nhấn **Apply**.
-5. Nhấp đúp chuột vào biểu tượng chữ **V/E** ở khay hệ thống (System Tray) hoặc nhấn tổ hợp phím `Ctrl + Shift + F5` để mở Bảng điều khiển cấu hình bộ gõ.
+2. Tìm đến mục **Keyboard** (Bàn phím) -> **Layouts**.
+3. Bấm **Add** để thêm Layout mới. Tìm kiếm `English (US)` và ở mục Variant, hãy chọn **Vietnamese (Kernel Driver)**.
+4. Xóa các Layout thừa và đặt `Vietnamese (Kernel Driver)` làm mặc định.
+5. Mở tiếp mục **Virtual Keyboard** (Bàn phím ảo) (Nằm ngay dưới mục Keyboard).
+6. Chọn **Unikey-Wayland** (hoặc tích chọn để kích hoạt nó) và nhấn **Apply**.
+7. Biểu tượng chữ **V/E** ở khay hệ thống (System Tray) sẽ xuất hiện. Bạn có thể bấm chuột hoặc nhấn `Ctrl + Shift` / `Alt + Z` để chuyển đổi chế độ gõ.
 
-### 2. Trên GNOME Wayland & Môi trường X11 (Sử dụng IBus Engine)
-Do GNOME sử dụng IBus làm nền tảng gõ mặc định, gói cài đặt đã bao gồm sẵn một IBus Engine tương thích.
+### 2. Trên GNOME Wayland & Môi trường X11
 1. Mở **Settings** (Cài đặt) -> **Keyboard** (Bàn phím).
-2. Tại mục *Input Sources*, nhấn dấu cộng (+) và thêm bộ gõ **Vietnamese (Unikey-Wayland)**.
-3. Đảm bảo biến môi trường `GTK_IM_MODULE=ibus` và `QT_IM_MODULE=ibus` được hệ thống kích hoạt.
-4. Chuyển đổi bộ gõ bằng phím tắt `Super + Space`.
-5. Bạn có thể mở Bảng điều khiển bằng cách chuột phải vào biểu tượng IBus trên thanh Top Bar (Khay hệ thống) và chọn **Preferences**.
+2. Tại mục *Input Sources*, nhấn dấu cộng (+) và tìm bàn phím **Vietnamese (Kernel Driver)**.
+3. Chuyển sang bàn phím này và gõ tiếng Việt.
+4. **Chú ý:** Nếu bạn đang dùng IBus hoặc Fcitx, hãy tắt hoặc gỡ cài đặt chúng, vì kiến trúc Ring-0 tự chạy ngầm độc lập!
 
 ### 3. Trên Windows (Unikey-Wayland Windows Edition)
 1. Tải về file `UnikeyWayland-Windows-x64.zip` hoặc `UnikeyWayland-Windows-ARM64.zip` từ mục **[Releases](https://github.com/ubuntu2310fake/Unikey-Wayland/releases)**.
 2. Giải nén thư mục tải về.
-3. Nhấp đúp chuột vào file `setup.bat` (chương trình sẽ tự động yêu cầu nâng quyền Admin, cài đặt ứng dụng vào `C:\Program Files\UnikeyWayland`, tạo Shortcut ngoài Desktop/Start Menu và tự động kích hoạt bộ gõ).
+3. Nhấp đúp chuột vào file `setup.bat` (chương trình sẽ tự động yêu cầu quyền Admin, cài đặt ứng dụng vào `C:\Program Files\UnikeyWayland`, tạo Shortcut ngoài Desktop và tự động kích hoạt bộ gõ).
 4. Bạn có thể mở Bảng điều khiển bằng cách nhấp đúp vào biểu tượng chữ **V/E** dưới khay hệ thống (System Tray).
 
 ---
+
 
 ## Tải Xuống (Downloads)
 

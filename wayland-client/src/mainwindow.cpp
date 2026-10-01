@@ -1,3 +1,4 @@
+#include <QMessageBox>
 #include <QSettings>
 #include <fcntl.h>
 #include <unistd.h>
@@ -21,7 +22,7 @@
 #include <QPlainTextEdit>
 #include "windowtracker.h"
 
-MainWindow::MainWindow(bool* p_viet_mode, bool is_gnome, QWidget *parent)
+MainWindow::MainWindow(bool* p_viet_mode, bool is_gnome, QWidget *parent, bool show_guide)
     : QWidget(parent), p_viet_mode(p_viet_mode) {
     setWindowTitle("Unikey-Wayland");
     setFixedSize(450, 360);
@@ -175,7 +176,7 @@ MainWindow::MainWindow(bool* p_viet_mode, bool is_gnome, QWidget *parent)
         QMessageBox::information(this, "Cập nhật Kiến trúc Ring-0 (Bản 3.0+)",
             "Unikey Wayland đã được nâng cấp lên kiến trúc Kernel Ring-0 mạnh mẽ hơn!\n\n"
             "Để gõ tiếng Việt ở các Desktop Environment, bạn CẦN làm theo hướng dẫn sau:\n\n"
-            "1. KDE Plasma: Vào Settings -> Keyboard -> Layouts -> Thêm bàn phím 'Vietnamese (Kernel Driver)' (Nằm trong nhóm English/US). Đặt nó làm mặc định.\n"
+            "1. KDE Plasma:\n   - Vào Settings -> Keyboard -> Layouts -> Thêm bàn phím 'Vietnamese (Kernel Driver)'. Đặt nó làm mặc định.\n   - Vào Settings -> Keyboard -> Virtual Keyboard -> Kích hoạt 'Unikey-Wayland'.\n"
             "2. GNOME: Vào Settings -> Keyboard -> Input Sources -> Thêm 'Vietnamese (Kernel Driver)'.\n\n"
             "Chú ý: Bạn KHÔNG CẦN dùng IBus hay Fcitx nữa. Engine Ring-0 hoạt động độc lập ở tầng Kernel!");
         settings.setValue("guide_v3_shown", true);

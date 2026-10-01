@@ -16,7 +16,7 @@
 class MainWindow : public QWidget {
     Q_OBJECT
 public:
-    explicit MainWindow(bool* p_viet_mode, bool is_gnome = false, QWidget *parent = nullptr);
+    explicit MainWindow(bool* p_viet_mode, bool is_gnome = false, QWidget *parent = nullptr, bool show_guide = false);
     void setVietMode(bool viet);
 
 protected:
