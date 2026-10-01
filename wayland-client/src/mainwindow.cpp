@@ -133,11 +133,11 @@ MainWindow::MainWindow(bool* p_viet_mode, bool is_gnome, QWidget *parent, bool s
     }
     QLabel* titleLabel = new QLabel(title);
     titleLabel->setAlignment(Qt::AlignCenter);
-    QString versionStr = QString("2.0.2");
+    QString versionStr = QString("3.0.2");
 #ifdef UKW_VERSION
     versionStr = QString(UKW_VERSION);
 #endif
-    QLabel* infoLabel = new QLabel(is_gnome ? "Khởi nguồn từ mã nguồn Unikey nhưng logic đã được chuyển sang Kernel Ring 0<br>Chạy dưới chế độ IBus Engine<br>Phiên bản: " + versionStr : "Khởi nguồn từ mã nguồn Unikey nhưng logic đã được chuyển sang Kernel Ring 0<br>Viết lại UI bằng Qt 6 cho KDE Plasma Wayland<br>Phiên bản: " + versionStr);
+    QLabel* infoLabel = new QLabel("Khởi nguồn từ mã nguồn Unikey, logic nhập liệu chuyển sang Kernel Ring 0<br>Giao diện cấu hình viết bằng Qt 6<br>Phiên bản: " + versionStr);
     infoLabel->setAlignment(Qt::AlignCenter);
     aboutLayout->addStretch();
     aboutLayout->addWidget(titleLabel);

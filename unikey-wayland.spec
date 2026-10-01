@@ -1,5 +1,5 @@
 Name:           unikey-wayland
-Version:        3.0.1
+Version:        3.0.2
 Release:        1%{?dist}
 Summary:        Unikey Wayland Input Method for Vietnamese
 Packager:       Trương Hiếu
@@ -15,6 +15,7 @@ Source6:        Makefile
 Source7:        ukw_driver.c
 Source8:        ukw.service
 Source9:        ukw_xkb
+Source10:       ukw.conf
 
 License:        GPL-2.0-or-later
 URL:            https://github.com/ubuntu2310fake/Unikey-Wayland
@@ -56,6 +57,7 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/bin
 mkdir -p %{buildroot}/usr/src/ukw-driver-1.0
 mkdir -p %{buildroot}/usr/lib/systemd/system
+mkdir -p %{buildroot}/usr/lib/modules-load.d
 mkdir -p %{buildroot}/usr/share/X11/xkb/symbols
 mkdir -p %{buildroot}/usr/share/applications
 mkdir -p %{buildroot}/usr/share/metainfo
@@ -72,6 +74,7 @@ cp %{SOURCE6} %{buildroot}/usr/src/ukw-driver-1.0/Makefile
 cp %{SOURCE7} %{buildroot}/usr/src/ukw-driver-1.0/ukw_driver.c
 cp %{SOURCE8} %{buildroot}/usr/lib/systemd/system/ukw.service
 cp %{SOURCE9} %{buildroot}/usr/share/X11/xkb/symbols/ukw
+cp %{SOURCE10} %{buildroot}/usr/lib/modules-load.d/ukw.conf
 
 # Ensure correct permissions
 chmod 755 %{buildroot}/usr/bin/unikey-wayland
@@ -79,6 +82,7 @@ chmod 755 %{buildroot}/usr/bin/ukw_daemon
 chmod 644 %{buildroot}/usr/share/applications/io.github.ubuntu2310fake.UnikeyWayland.desktop
 chmod 644 %{buildroot}/usr/share/metainfo/io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml
 chmod 644 %{buildroot}/usr/share/icons/hicolor/scalable/apps/io.github.ubuntu2310fake.UnikeyWayland.svg
+chmod 644 %{buildroot}/usr/lib/modules-load.d/ukw.conf
 
 
 %files
@@ -91,6 +95,7 @@ chmod 644 %{buildroot}/usr/share/icons/hicolor/scalable/apps/io.github.ubuntu231
 /usr/src/ukw-driver-1.0/Makefile
 /usr/src/ukw-driver-1.0/ukw_driver.c
 /usr/lib/systemd/system/ukw.service
+/usr/lib/modules-load.d/ukw.conf
 /usr/share/X11/xkb/symbols/ukw
 
 %changelog

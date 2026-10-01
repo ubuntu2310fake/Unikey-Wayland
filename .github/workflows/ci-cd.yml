@@ -56,6 +56,7 @@ jobs:
           cp ring0-engine/Makefile ~/rpmbuild/SOURCES/
           cp ring0-engine/ukw_driver.c ~/rpmbuild/SOURCES/
           cp ring0-engine/ukw.service ~/rpmbuild/SOURCES/
+          cp ring0-engine/ukw.conf ~/rpmbuild/SOURCES/
           cp ring0-engine/xkb/ukw ~/rpmbuild/SOURCES/ukw_xkb
           cp io.github.ubuntu2310fake.UnikeyWayland.desktop ~/rpmbuild/SOURCES/
           cp io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml ~/rpmbuild/SOURCES/
@@ -131,6 +132,7 @@ jobs:
           cp ring0-engine/Makefile ~/rpmbuild/SOURCES/
           cp ring0-engine/ukw_driver.c ~/rpmbuild/SOURCES/
           cp ring0-engine/ukw.service ~/rpmbuild/SOURCES/
+          cp ring0-engine/ukw.conf ~/rpmbuild/SOURCES/
           cp ring0-engine/xkb/ukw ~/rpmbuild/SOURCES/ukw_xkb
           cp io.github.ubuntu2310fake.UnikeyWayland.desktop ~/rpmbuild/SOURCES/
           cp io.github.ubuntu2310fake.UnikeyWayland.metainfo.xml ~/rpmbuild/SOURCES/

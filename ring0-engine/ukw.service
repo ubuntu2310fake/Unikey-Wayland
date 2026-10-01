@@ -3,8 +3,10 @@ Description=Unikey Wayland Ring 0 Daemon
 After=multi-user.target
 
 [Service]
+ExecStartPre=-/sbin/modprobe ukw_driver
 ExecStart=/usr/bin/ukw_daemon
 Restart=always
+RestartSec=2
 User=root
 Group=root
 

@@ -1,3 +1,9 @@
+## [3.0.2] - 2026-10-01
+- Sửa lỗi DKMS biên dịch sai vermagic khi nâng cấp Linux Kernel (sử dụng KVER thay vì uname -r)
+- Tự động nạp module ukw_driver bằng modules-load.d và ExecStartPre trong systemd
+- Daemon tự động modprobe ukw_driver và thử lại nếu chưa có /dev/ukw
+- Cập nhật số phiên bản 3.0.2 đồng bộ trong tab Giới thiệu / Thông tin
+
 ## [3.0.1] - 2026-10-01\n- Fix Arch Linux packaging conflict with xkeyboard-config\n- Fix backspace logic deleting consonants and failing to retain capitalized state\n- Monitor mouse events to reset macro engine properly on focus change\n- Show first-run configuration guide on launch\n\n## [3.0.0] - 2026-10-01
 - Rewrite core engine as Ring-0 C++ Daemon
 - Fix Wayland Dropped Keys bug (0-delay typing)

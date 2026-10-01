@@ -3,7 +3,7 @@
 # Chạy script này từ thư mục gốc của dự án: ./package_arch.sh
 set -e
 
-PKGVER="3.0.1"
+PKGVER="3.0.2"
 PKGREL="1"
 # Tự động phát hiện kiến trúc hệ thống
 DETECTED_ARCH=$(uname -m)
@@ -24,7 +24,7 @@ else
     ARCH="$DETECTED_ARCH"
 fi
 PKGNAME="unikey-wayland"
-FULL_PKGVER="3.0.1"
+FULL_PKGVER="3.0.2"
 PKG_OUTPUT="releases/${PKGNAME}-${FULL_PKGVER}-${ARCH}.pkg.tar.zst"
 
 echo ">>> Bắt đầu đóng gói Arch Linux (tar.zst) cho ${PKGNAME} ${FULL_PKGVER}"
@@ -79,6 +79,8 @@ cp ring0-engine/dkms.conf arch_pkg/usr/src/ukw-driver-1.0/
 cp ring0-engine/Makefile arch_pkg/usr/src/ukw-driver-1.0/
 cp ring0-engine/ukw_driver.c arch_pkg/usr/src/ukw-driver-1.0/
 cp ring0-engine/ukw.service arch_pkg/usr/lib/systemd/system/
+mkdir -p arch_pkg/usr/lib/modules-load.d
+cp ring0-engine/ukw.conf arch_pkg/usr/lib/modules-load.d/
 mkdir -p arch_pkg/usr/share/unikey-wayland
 cp ring0-engine/xkb/ukw arch_pkg/usr/share/unikey-wayland/ukw_xkb
 

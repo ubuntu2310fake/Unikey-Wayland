@@ -321,7 +321,13 @@ void* cmd_listener(void* arg) {
 
 int main() {
     signal(SIGINT, handle_exit); signal(SIGTERM, handle_exit);
-    g_fd = open("/dev/ukw", O_RDWR);
+    for (int retry = 0; retry < 10; retry++) {
+        g_fd = open("/dev/ukw", O_RDWR);
+        if (g_fd >= 0) break;
+        int ret = system("modprobe ukw_driver 2>/dev/null");
+        (void)ret;
+        usleep(500000);
+    }
     if (g_fd < 0) { std::cerr << "Cannot open /dev/ukw\n"; return 1; }
     
     pthread_t tid;
