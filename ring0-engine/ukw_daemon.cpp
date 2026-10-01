@@ -558,7 +558,9 @@ int main() {
                 word = new_word; cur_tone = new_cur_tone; tone_pos = new_tone_pos;
                 
                 for (int i = start_pos; i < word.size(); i++) {
-                    tap(g_fd, word[i]);
+                    int c = word[i];
+                    if (c < 0) tap_shift(g_fd, -c);
+                    else tap(g_fd, c);
                     if (cur_tone != 0 && i == tone_pos) tap(g_fd, cur_tone);
                 }
                 continue;
